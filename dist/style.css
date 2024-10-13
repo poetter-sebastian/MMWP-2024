@@ -1,0 +1,28 @@
+.slide-footer {
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+    opacity: 0.66;
+    padding: 0.5em;
+    text-align: center;
+}
+
+.medium {
+    font-size: 1.8rem;
+}
+
+.mt-1 {
+    margin-top: 10vh !important;
+}
+
+.mmt-1 {
+    margin-top: -10vh !important;
+}
+
+.container{
+    width: 90% !important;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+    text-align: left;
+}

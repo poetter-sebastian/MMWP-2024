@@ -1,0 +1,728 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>MMWP2024 - LV01</title>
+
+		<link rel="stylesheet" href="../dist/reset.css">
+		<link rel="stylesheet" href="../dist/reveal.css">
+		<link rel="stylesheet" href="../dist/theme/white.css">
+		<link rel="stylesheet" href="../dist/style.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="../plugin/highlight/monokai.css">
+		<link rel="stylesheet" href="../plugin/simplemenu/simplemenu.css">
+		<link rel="stylesheet" href="../plugin/copycode/copycode.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-transition="fade" data-state="hide-menubar hide-menu">
+					<h1>Organisation und Einführung in HTML5, CSS3 und JS</h1>
+					<h3>MMWP2024 - LV01</h3>
+				</section>
+				<section data-name="TOC" data-sm="false">
+					<h4>Inhaltsverzeichniss</h4>
+					<ul class="menu"></ul>
+				</section>
+				<section data-name="Organisation">
+					<section>
+						<h4>Veranstaltung</h4>
+						<ul>
+							<li>Wöchentliche Vorlesung <br>(DO 15:30-17:00, Sebastian Pötter)</li>
+							<li>Wöchentliche Übungen <br>(FR 09:30-15:00, Sebastian Pötter, Ben Beckschäfer)</li>
+							<li>3 Belege für Prüfungszulassung</li>
+							<li>Alternative Prüfungsform: Projektarbeit</li>
+							<li>Sonst wie im Modulux: schriftliche Prüfung (120min)</li>
+						</ul>
+					</section>
+					<section class="w-100">
+						<h4 class="">Opal - Modulkurs</h4>
+						<p class="r-fit-text">
+							Wählen Sie sich in den Kurs über Opal, den QR-Code oder dem Link in den Kurs ein.<br>
+							<a href="https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/46557921282" title="Multimediale Webprogrammierung (C741) - WISE2024" target="_blank">
+								https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/46557921282
+							</a>
+						</p>
+						<img class="r-stretch" src="../images/vl1/qrcode.png" alt="https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/46557921282">
+					</section>
+					<section>
+						<h4>opal - Seminargruppen</h4>
+						<p>
+							Teilen Sie sich in den Seminaren ein (nur so viel Platz wie im Seminarraum).<br>
+							<a href="https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/46557921282/CourseNode/1728441152683815006">
+								https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/46557921282/CourseNode/1728441152683815006
+							</a>
+						</p>
+					</section>
+					<section>
+						<h4>Modulschwerpunkte</h4>
+						<ul>
+							<li>Einführung in Webprogrammierung (HTML5, CSS3, ECMAScript-Javascript)</li>
+							<li>Einführung in die Browser API</li>
+							<li>Vorstellung von HTML/CSS/JS-Frameworks</li>
+							<li>Verwendung von Medien im Browser (Text, Bild, Ton, Video)</li>
+							<li>Barrierefreiheit, SEO und Ladezeitenoptimierung</li>
+							<li>Selbständige Vertiefung, Erwerb praktischer Erfahrungen</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Prüfungsvorleistung (Belege)</h4>
+						<ol class="r-fit-text">
+							<li>Erstellung einer OnePage-Seite mit Grid- und Flexbox-Design
+								<ul>
+									<li>Verschiedene Layouts</li>
+									<li>4 Container mit passend gewählten Layout und Inhalten</li>
+								</ul>
+							</li>
+							<li>Erstellung einer responsiven OnePager-Seite mithilfe eines Frameworks
+								<ul>
+									<li>Wahlweise Bootstrap5 oder ähnlichen Framework/Bibliothek</li>
+									<li>Header mit Navigationsmenü (Sprunganker zu Inhalten)</li>
+									<li>6 Container mit passend gewählten Layout und Inhalten</li>
+									<li>Einbindung von SVG- oder Canvas-Elementen</li>
+									<li>Footer-Element</li>
+								</ul>
+							</li>
+							<li>Vortrag zu Webtechnologien oder Web-frameworks in den Seminaren
+								<ul>
+									<li>3 Personen je Gruppe (5min pro Person)</li>
+									<li>5 Minuten für Fragen</li>
+									<li>Vorstellung und Eingliederung der Technologie</li>
+									<li>Beispiele oder Anwendungsfälle präsentieren</li>
+									<li>Zukünftige Entwicklungen und Möglichkeiten aufzeigen</li>
+								</ul>
+							</li>
+						</ol>
+					</section>
+					<section>
+						<h4>Alternative Prüfungsform</h4>
+						<ul>
+							<li>Erarbeitung eines Web-Portfolios (SEO Optimierung, möglichst barrierefrei und Ladezeitenoptimiert)</li>
+							<li>Alle Übungen und Belege gesammelt, aufbereitet auf einer kleinen eigenen Seiten</li>
+							<li>Einsatz von verschiedenen Medienformaten zur Darstellung</li>
+							<li>Einsatz von weiteren Javascript-Interaction (nicht nur aus den Übungen)</li>
+							<li>Bericht (2-3 Seiten) über eingesetzte Medien, Erfahrung und Lernerkenntnissen</li>
+						</ul>
+					</section>
+				</section>
+				<section data-name="Aktuelle und historische Daten">
+					<section>
+						<h4 class="mt-1">Anfänge des Internets</h4>
+						<figure class="">
+							<img src="../images/vl1/infografik-geschichte-des-internets.jpg" alt="Anfänge des Internets">
+							<figcaption class="mmt-1">
+								<a href="https://www.tk-gisbertz.de/news/telekommunikation/geschichte-des-internets-wie-das-world-wide-web-entstand/" target="_blank">Source</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4 class="mt-1">Die erste Internetseite</h4>
+						<iframe src="https://info.cern.ch/hypertext/WWW/TheProject.html" class="r-stretch"></iframe>
+						<a href="https://info.cern.ch/hypertext/WWW/TheProject.html" target="_blank">Source</a>
+					</section>
+					<section>
+						<h4 class="mt-1">Webentwicklung - 1</h4>
+						<img src="../images/vl1/webdev.png" style="margin-left: -25%; width: 100vw; max-height: none; max-width: none" alt="Webtech Versionen">
+					</section>
+					<section>
+						<h4 class="mt-1">Webentwicklung - 2</h4>
+						<img src="../images/vl1/webdev2.png" style="margin-left: -25%; width: 100vw; max-height: none; max-width: none" alt="Webtech Beschreibung">
+					</section>
+					<section>
+						<h4>Übersicht von Webtechnologien</h4>
+						<figure class="">
+							<img src="../images/vl1/webtech.png" style="height: 600px" alt="Anfänge des Internets">
+							<figcaption class="">
+								<a href="https://de.wikipedia.org/wiki/HTML5#/media/Datei:HTML5-Spezifikations-%C3%9Cbersicht.svg" target="_blank">Source</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Begrifflichkeiten rund um Webtechnologien</h4>
+						<figure class="">
+							<img src="../images/vl1/begriffe.png" style="margin-left: -25%; width: 100vw; max-height: none; max-width: none" alt="Anfänge des Internets">
+							<figcaption class="">
+								<a href="https://shashvatshukla.medium.com/framework-vs-library-vs-platform-vs-api-vs-sdk-vs-toolkits-vs-ide-50a9473999db" target="_blank">Source</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4 class="mt-1">Aktuelle Bewegung</h4>
+						<ul class="">
+							<li>Accessible Rich Internet Applications (ARIA)</li>
+							<li>Mobile first (neuer Stand 2024)</li>
+							<li>Dezentrale Interoperablität (ab ca. 2014)
+								<ul>
+									<li>ActivityPUP (Protokoll)</li>
+									<li>Distributed Web (Blockchain)</li>
+								</ul>
+							</li>
+							<li>VR/XR/AR Webpages</li>
+							<li>Single-Page Application (SPAs)</li>
+							<li>Serverless Architecture</li>
+							<li>Progessive Web Apps (PWA)</li>
+							<li>Low-/No-Code Webpages</li>
+						</ul>
+					</section>
+					<section>
+						<h4 class="mt-1">Aktuelle Bewegung - ActivityPUP</h4>
+						<ul>
+							<li><a href="https://mastodon.social" target="_blank">Mastodon</a>, <a href="https://bsky.app/" target="_blank">BlueSky</a>, <a href="https://www.threads.net/" target="_blank">Threads</a> als Microblogging</li>
+							<li><a href="https://join-lemmy.org/" target="_blank">Lemmy</a>, <a href="https://kbin.earth/" target="_blank">KBin</a> als Forumservice</li>
+							<li><a href="https://peertube.tv/" target="_blank">Peertube</a>, <a href="https://www.funkwhale.audio/" target="_blank">Funkwhale</a>, <a href="https://castopod.org/" target="_blank">Castopod</a> oder <a href="https://pixelfed.org/" target="_blank">Pixelfed</a> für Multimedia-Anwendungen</li>
+							<li><a href="https://owncast.online/">OwnCast</a> für Livestreaming</li>
+							<li><a href="https://codeburger.org/flohmarkt/flohmarkt" target="_blank">"Flohmarkt"</a> als dezentraler (lokaler) Marktplatz</li>
+							<li><a href="https://github.com/Goldfish-Social/Goldfish">"Goldfish Social"</a> als Kurzvideo Platform</li>
+						</ul>
+					</section>
+					<section>
+						<h4 class="mt-1">Aktuelle Bewegung - Distributed Web</h4>
+						<ul>
+							<li>Blockchain Domain Name Systems (B-DNS)</li>
+							<li><a href="https://brave.com/brave-rewards/" target="_blank">Brave Ad system</a> als Cryptocurrency ADs-System</li>
+							<li>Decentralized applications (dapps)</li>
+						</ul>
+					</section>
+					<section>
+						<h4 class="mt-1">Aktuelle Bewegung - VR/XR/AR Webpages</h4>
+						<ul>
+							<li><a href="https://immersiveweb.dev/" target="_blank">Immersives Web Toolkit</a> (VR, XR, AR)</li>
+							<li><a href="https://threejs.org/" target="_blank">Three.js (WebGPU und Canvas)</a></li>
+							<li><a href="https://needle.tools/" target="_blank">Needle (Unity with WebAssembly und WebGPU</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4 class="mt-1">Aktuelle Bewegung - Single-Page Application (SPAs)</h4>
+						<ul>
+							<li>Kein Neuladen der Seite, alle Inhalte werden vorab oder asynchron geladen</li>
+							<li>Schlechtes SEO, wenn keine Inhalte vorab compiliert wurden</li>
+							<li><a href="https://react.dev/" target="_blank">React</a></li>
+							<li><a href="https://svelte.dev/" target="_blank">Svelte</a></li>
+							<li><a href="https://vuejs.org/" target="_blank">Vue</a></li>
+							<li><a href="https://angular.dev/" target="_blank">Angular</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4 class="mt-1">Aktuelle Bewegung - Progessive Web-Apps (PWA)</h4>
+						<ul>
+							<li>Installierbare Website als Browser-App</li>
+							<li>Serviceworker und Webmanifest zur Einstellung und Synchronisierung der Web-App</li>
+							<li>Viele SPAs unterstützen PWAs</li>
+						</ul>
+					</section>
+					<section>
+						<h4 class="mt-1">Aktuelle Bewegung - Low-/No-Code Webpages</h4>
+						<ul>
+							<li>Keine/wenige Programmierkenntnisse nötig</li>
+							<li>Baukastensystem für Webseitenerstellung, z.B.:</li>
+							<li><a href="https://webflow.com/" target="_blank">Webflow</a></li>
+							<li><a href="https://wordpress.com/" target="_blank">Wordpress</a></li>
+							<li><a href="https://www.wix.com/builder/no-code" target="_blank">Wix</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4><a href="https://privacytests.org/" target="_blank">Übersicht von modernen Browsern</a></h4>
+						<ul>
+							<li>Chromium/Blink-Based Browser:
+								<ul>
+									<li>Google Chrome</li>
+									<li>Microsoft Edge</li>
+									<li>Opera</li>
+									<li>Brave</li>
+								</ul>
+							</li>
+							<li>Gecko/Quantum-Based (Free HTML layout engine):
+								<ul>
+									<li>Mozilla Firefox</li>
+									<li>TOR (-Browser)</li>
+									<li>Mullvad</li>
+									<li>Waterfox</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+				</section>
+				<section data-name="Strukturen von Webseiten">
+					<section>
+						<h4>Aufbau von Webseiten</h4>
+						<ul>
+							<li>Serverstruktur zur Bereitstellung</li>
+							<li>HTML Dokument<br>
+								Wie ein Netzwerkpaket aufgebaut
+								<ul>
+									<li>Header (Meta-Daten und Bibliotheken)</li>
+									<li>Body (Struktur, Asynchrone Bibliotheken)</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Statische Webseiten</h4>
+						<figure class="">
+							<img src="../images/vl1/static-html.png" alt="Static loading">
+							<figcaption class="">
+								<a href="https://developer.mozilla.org/en-US/docs/Learn/Server-side/First_steps/Introduction" target="_blank">Source</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Dynamische Webseiten</h4>
+						<figure class="">
+							<img src="../images/vl1/dynamic.png" alt="Dynamic Loading">
+							<figcaption class="">
+								<a href="https://developer.mozilla.org/en-US/docs/Learn/Server-side/First_steps/Introduction" target="_blank">Source</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Deklarative versus Imperative Programmierung</h4>
+						<p class="r-fit-text">
+							Bei deklarativer Programmierung wird
+							vorgegeben, mit welchen Eingabeparametern
+							welche qualitative Anweisung vom Computer
+							auszuführen ist und (implizit) was als Ergebnis
+							erwartet wird. => „Was ist umzusetzen.“
+						</p>
+						<p class="r-fit-text">
+							Dabei wird es der ausführenden Applikation
+							überlassen, welche Algorithmen angewandt
+							werden und wie das Ergebnis dann dargestellt
+							wird. „Wie ist es umzusetzen.“ (z.B. durch
+							Browser Engines bei HTML5)
+						</p>
+						<p class="r-fit-text">
+							Für das dynamische Verhalten der
+							Applikationen (z.B. nach Interaktion mit
+							dem Nutzer) sind imperative
+							Programmanteile zulässig, um die
+							meist festgelegte Syntax deklarativer
+							Programmiersprachen um neue
+							Funktionalitäten erweitern zu können
+							oder um den Quellcode (z.B. via DOM)
+							dynamisch zu verändern. Bei HTML5
+							ist es JavaScript, das eingesetzt wird.
+						</p>
+					</section>
+					<section>
+						<h4>Beispiele für imperative Sprachen - 1</h4>
+						<ul>
+							<li>HTML, CSS mit JavaScript als imperativem Teil</li>
+							<li>VRML, X3D, Collada und andere 3D-Sprachen</li>
+							<li>XSLT und XSL -FO als Darstellungssprachen zu XML</li>
+							<li>SQL, XQuery, SPARQL als Datenbank- oder XML-Abfragesprachen</li>
+							<li>Funktionale Sprachen (Gofer, Haskell, Erlang, F#, Joy, Julia, Scala, Swift)</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Beispiele für imperative Sprachen - 2</h4>
+						<ul>
+							<li>Logische Sprachen (z. B. Prolog) und funktional- logische Sprachen (z. B. Babel, Escher, Curry, Oz)</li>
+							<li>Datenflusssprachen (z. B. Valoder Linda)</li>
+							<li>Synchrone Programmiersprachen (z. B. Lustre)</li>
+							<li>Aufbauwerkzeuge (z. B. make oder Ant)</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Vorteile</h4>
+						<ul class="">
+							<li>Die Programme sind kürzer, leichter zu verstehen</li>
+							<li>
+								Es besteht Zugriff auf den Quellcode zum Zeitpunkt
+								der Ausführung – die Semantik des Programmes kann
+								erkannt werden, Screenreader können auf Metadaten
+								und Programmlogik zur Laufzeit zugreifen
+							</li>
+							<li>
+								Die Programme sind leichter der Programmverifikation
+								zugänglich. Es kann mit standardisierten
+								Abarbeitungsapplikationen gearbeitet werden (Browser,
+								Player, Parser, Runtimes, Prozessoren)
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Nachteile</h4>
+						<ul class="">
+							<li>
+								Verschiedene Abarbeitungsapplikationen können intern
+								verschiedene Algorithmen und Darstellungsvorschriften
+								verwenden – es ergeben sich evtl. unterschiedliche
+								Resultate bei gleichem Code (Webseite auf Firefox und Chrom anders)
+							</li>
+							<li>
+								Die Performanz unterschiedlicher Abarbeitungs-
+								applikationen unterscheidet sich mitunter sehr, wobei
+								Verbesserungen nur experimentell ermittelt werden
+								können
+							</li>
+							<li>
+								Existenz von Hacks, Workarounds, Tricks jenseits der
+								standardisierten Syntax der Sprache
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h4>XML</h4>
+						<ul class="">
+							<li>
+								XML (Extensible Markup Language) ist eine Struktursprache, die HTML ähnelt, aber keine vordefinierten Tags verwendet.
+								Stattdessen werden eigenen Tags benutzt, die selbst definiert werden müssen.
+							</li>
+							<li>
+								XML wurde für die Speicherung und den Transport von Daten entwickelt und is weiterhin ein gängiger Standard.
+							</li>
+							<li>
+								Dokument mit einer Baumstruktur, bei dem es ein Root-Element gibt. Die Kodierung von XLM-Dokumenten erfolgt in einem Format, das sowohl für Menschen als auch für Maschinen lesbar ist.
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h4>XML - Syntax</h4>
+						<pre><code data-trim data-noescape data-line-numbers>
+							&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+							&lt;note&gt;
+							   &lt;to&gt;reciever&lt;/to&gt;
+							   &lt;from&gt;sender&lt;/from&gt;
+							   &lt;heading&gt;Heading&lt;/heading&gt;
+							   &lt;body&gt;Add Content Here&lt;/body&gt;
+							&lt;/note&gt;
+						</code></pre>
+					</section>
+					<section>
+						<h4>Was HyperText/HyperMedia bedeutet</h4>
+						<ul>
+							<li>
+								Systeme zur Verarbeitung von Dokumenten auf der Basis nicht-linear verknüpfter Daten werden Hypertext-Systeme genannt. Anders, als vom Namen her zu erwarten, behandeln diese Systeme nicht nur reine Textdokumente.
+							</li>
+							<li>
+								Hypertext-Systeme gehen in der Regel von einer Darstellung der Dokumentstruktur als gerichteter Graph aus (Baumstruktur oder DOM-Struktur).
+							</li>
+							<li>
+								Die Knoten verkörpern die grundlegenden Informationseinheiten, und die gerichteten Kanten stellen Bezüge zwischen den Informationseinheiten (Links, Verweise) her
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h4>XHTML</h4>
+						<pre><code data-trim data-noescape data-line-numbers>
+							&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.1//EN&quot;
+							&quot;http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd&quot;&gt;
+							&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+							&lt;head&gt;
+							&lt;title&gt;Title of document&lt;/title&gt;
+							&lt;/head&gt;
+							&lt;body&gt;
+							Zeilenumbruch
+							
+							&lt;br&gt;&lt;/br&gt;
+	
+							&lt;p&gt;some content here...&lt;/p&gt;
+	
+							&lt;/body&gt;
+							&lt;/html&gt;
+						</code></pre>
+					</section>
+					<section>
+						<h4>XML</h4>
+						<a href="https://www.w3schools.com/Html/html_xhtml.asp" target="_blank">XHTML vs HTML</a>
+					</section>
+					<section>
+						<h4>Aufbau von HTML5</h4>
+						<ul>
+							<li>HTML-Dokumente besitzen HEADER </li>
+							<li><a href="https://www.w3schools.com/Html/html_intro.asp" target="_blank">Struktur von HTML5</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Cascading style sheets</h4>
+						<p>
+							Cascading Style Sheets (CSS) ist eine Stylesheet-Sprache,
+							mit der die Darstellung eines in HTML oder XML beschrieben wird.
+						</p>
+						<p>
+							CSS beschreibt, wie Elemente auf dem Bildschirm, auf Papier,
+							in Sprache oder auf anderen Medien dargestellt werden sollen.
+						</p>
+						<p>
+							Beschriebe Styles kaskadieren von der obersten Ebene bis zum beschriebenen Element.
+						</p>
+					</section>
+					<section>
+						<h4>HTML Styling</h4>
+						<a href="https://www.w3schools.com/Html/html_css.asp" target="_blank">HTML5 Styling</a>
+					</section>
+					<section>
+						<h4>Trennung von Content und Styling</h4>
+						<ul>
+							<li>Konzept von HTML als Struktur und CSS als Styling</li>
+							<li>Auslagerung des Styles in separate Datei (CSS-Datei)</li>
+						</ul>
+					</section>
+					<section>
+						<h4>CSS - Kaskadierung - 1</h4>
+						<pre>
+							<code>
+&lt;style&gt;
+	body {
+		color: lightblue;
+	}
+	h1 {
+		color: white;
+	}
+	.h1 {
+		font-family: red;
+	}
+	&lt;/style&gt;
+&lt;h1 class=&quot;h1&quot; style=&quot;color:black&quot;&gt;My First CSS Example&lt;/h1&gt;
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>CSS - Kaskadierung - 2</h4>
+						<pre>
+							<code>
+&lt;style&gt;
+	body {
+		color: lightblue;
+	}
+	h1 {
+		color: white !important;
+	}
+	.h1 {
+		font-family: red;
+	}
+&lt;/style&gt;
+&lt;h1 class=&quot;h1&quot; style=&quot;color:black&quot;&gt;My First CSS Example&lt;/h1&gt;
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>CSS-Compilesprachen</h4>
+						<ul>
+							<li>Preprocessor-Sprachen zum Erzeugen von CSS über Scriptsprachen</li>
+							<li>Compiler erzeugt aus Preprocessor die eigentliche Sprache</li>
+							<li><a href="https://sass-lang.com/" target="_blank">SASS (SCSS)</a></li>
+							<li><a href="https://lesscss.org/" target="_blank">Less</a></li>
+							<li><a href="https://stylus-lang.com/" target="_blank">Stylus</a></li>
+							<li>Auch Angular, Vue und ähnliche SPAs erzeugen eigenes CSS</li>
+						</ul>
+					</section>
+					<section>
+						<h4>SASS zu CSS</h4>
+						<ul>
+							<li>SASS oder SCSS ist eine Preprocessor-Sprache, welche in CSS compiliert und miniert wird</li>
+							<li>Erweiterung der CSS-Syntax durch Funktionen, Variablen und mehr</li>
+							<li>Siehe: <a href="https://sass-lang.com/guide/" target="_blank">SASS-lang.com</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Dynamisches Ändern von Inhalten - 1</h4>
+						<ul>
+							<li>Statische Seiten mit HTML, CSS bieten (bis jetzt) wenig Interaktions möglichkeiten</li>
+							<li>HTML und CSS sind zustandslos, keine Möglichkeit zur Speicherung von Zuständen</li>
+							<li>Kein Zugriff auf BrowserAPI über HTML</li>
+							<li>Was könnten Interaktionsmöglichkeiten sein?</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Dynamisches Ändern von Inhalten - 2</h4>
+						<ul>
+							<li>Laden von (neuen) Inhalten</li>
+							<li>Speichern von Daten (z.B. bei Logins)</li>
+							<li>Auf User-Interaktionen reagieren (z.B. Mausklicks)</li>
+							<li>Auf Endgeräten installieren (PWAs)</li>
+							<li>DOM-Tree Manipulation ausführen</li>
+						</ul>
+					</section>
+					<section>
+						<h4>ECMAScript</h4>
+						<ul>
+							<li>Ist ein Standard für Skriptsprachen, einschließlich JavaScript, JScript und ActionScript</li>
+							<li>Standard zum Ausführen und Interpretieren von ECMA-Scriptsprachen (z.B. javascript)</li>
+							<li>Möglichkeit der dynamischen Manipulation während der Laufzeit (Beim Aufrufen des HTML-Dokuments)</li>
+							<li>JavaScript ist somit eine high-level oft "just-in-time" Interpreter- oder Compiler Sprache, die dem ECMAScript-Standard entspricht</li>
+							<li>Mehr dazu in späteren Veranstaltungen</li>
+						</ul>
+					</section>
+					<section>
+						<h4>ECMAScript versionen - 1</h4>
+						<figure class="">
+							<img src="../images/vl1/ecmascript.jpg" alt="Ecmascript">
+							<figcaption class="">
+								<a href="https://www.slideshare.net/dvoituron/a-la-dcouverte-de-typescript" target="_blank">Source</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4><a href="https://www.w3schools.com/Js/js_versions.asp" target="_blank">ECMAScript versionen - 2</a></h4>
+						<ul>
+							<li>
+								ES2017 (Object-Entries, String operations)
+							</li>
+							<li>
+								ES2018 (Async iterators, Promise API)
+							</li>
+							<li>
+								ES2019 (FlatMap, Optional catch binding)
+							</li>
+							<li>
+								ES2020 (BigInt, Dynamic library import, For-in order)
+							</li>
+							<li>
+								ES2022 (Logical assignment operator, Promise Any)
+							</li>
+							<li>
+								ES2023 (Top-level async await, Private instance fields, methods, and accessors)
+							</li>
+							<li>
+								ES2024 (Array Finding Methods, Array Sorting Algorithm)
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Superscripts und Compilesprachen</h4>
+						<ul>
+							<li>Compilersprachen zur Erweiterung von Javascript auf Basis von ECMAScript-Standard</li>
+							<li><a href="https://www.typescriptlang.org/" target="_blank">TypeScript</a></li>
+							<li><a href="https://www.scala-js.org/" target="_blank">Scala</a></li>
+							<li><a href="https://coffeescript.org/" target="_blank">Coffee-Script</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Typescript</h4>
+						<ul>
+							<li>
+								TypeScript ist eine von ECMAScript abgeleitete Skriptsprache, die mehr als JavaScript ES6-13 kann, unter anderem ist sie typensicher
+							</li>
+							<li>
+								Es kann so zu JavaScript kompiliert werden, dass es für jedes Betriebssystem und jeden Webbrowser lauffähigen Javscript-Code ergibt
+							</li>
+							<li>
+								Man kann TypeScript-Code aus JavaScript heraus aufrufen, man kann JavaScript-Bibliotheken in TypeScript-Code einbinden
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h4>ECMAScript versionen - 1</h4>
+						<figure class="">
+							<img src="../images/vl1/typescript.png" alt="Typescript">
+							<figcaption class="">
+								<a href="https://www.slideshare.net/dvoituron/a-la-dcouverte-de-typescript" target="_blank">Source</a>
+							</figcaption>
+						</figure>
+					</section>
+				</section>
+				<section data-name="Tools und Entwicklungshilfen">
+					<section>
+						<h4>IDE's</h4>
+						<ul>
+							<li>Texteditoren, Notepad++, Sublime Text, oder anderen Texteditoren</li>
+							<li>Online: <a href="https://codepen.io/" target="_blank">Codepen</a></li>
+							<li><a href="https://github.com/pulsar-edit" target="_blank">Pulsar Edit (Opensource)</a></li>
+							<li><a href="https://marketplace.eclipse.org/free-tagging/html-editor" target="_blank">Eclipse (Eclipse Foundation)</a></li>
+							<li><a href="https://www.jetbrains.com/webstorm/" target="_blank">Web-/PHP-Storm (Jetbrains)</a></li>
+							<li><a href="https://www.adobe.com/products/dreamweaver.html" target="_blank">Adobe Dreamweaver (Adobe)</a></li>
+							<li><a href="https://code.visualstudio.com/" target="_blank">Visual Studio code (Microsoft)</a></li>
+							<li><a href="https://aws.amazon.com/de/cloud9/" target="_blank">Cloud 9 (Amazon)</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Browserconsole</h4>
+						<p>Jeder Browser besitzt eine Browserconosole mit nützlichen Tools, welche meist mit F12 geöffnet werden kann.</p>
+					</section>
+					<section>
+						<h4>Webtools</h4>
+						<ul>
+							<li><a href="https://search.google.com/search-console/" target="_blank">Google Search console</a></li>
+							<li><a href="https://github.com/GoogleChrome/lighthouse?tab=readme-ov-file#using-lighthouse-in-chrome-devtools" target="_blank">Lighthouse</a></li>
+							<li><a href="https://developers.google.com/speed" target="_blank">PageSpeed-Tools</a></li>
+							<li><a href="https://www.mozilla.org/en-US/firefox/developer/" target="_blank">Firefox Webdeveloper</a></li>
+							<li><a href="https://firefox-dev.tools/" target="_blank">Firefox Devoper tools</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Sehr hilfreiche Seiten</h4>
+						<ul>
+							<li><a href="https://www.w3schools.com">W3schools</a></li>
+							<li><a href="https://stackoverflow.com">StackOverflow <3</a></li>
+							<li><a href="https://developer.mozilla.org/en-US/">Mozilla Dev</a></li>
+							<li><a href="https://developers.google.com/focus/web-development">Google Dev</a></li>
+							<li><a href="https://web.archive.org/">Web Archive</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Guides und Tutorials</h4>
+						<ul>
+							<li><a href="https://web.dev/learn/?hl=de" target="_blank">Google Learn (Web.dev)</a></li>
+							<li><a href="https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web" target="_blank">Mozilla Web Docs</a></li>
+							<li><a href="https://www.w3schools.com/html/default.asp" target="_blank">W3C-Schools HTML</a></li>
+							<li><a href="https://www.w3schools.com/css/default.asp" target="_blank">W3C-Schools CSS</a></li>
+							<li><a href="https://www.w3schools.com/js/default.asp" target="_blank">W3C-Schools JS</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Literatur</h4>
+						<ul class="r-fit-text">
+							<li>R. Steinmetz, Multimedia-Technologie.
+								Grundlagen, Komponenten und Systeme.,
+								Springer-Verlag, 2000</li>
+							<li>H. Erlenkötter, XML – Extensible Markup
+								Language von Anfang an, Rowohlt
+								Taschenbuch
+								Verlag, Reinbek bei Hamburg, 2001/2003</li>
+							<li>G. Born, Jetzt lerne ich XML, Verlag Markt+
+								Technik, München, 2001</li>
+							<li>Juan Diego Gauchat, „HTML5 for
+								Masterminds“, 3rd edition,
+								Eigenverlag, März 2017</li>
+							<li>Ranjan, Alok, Abhilasha Sinha, and Ranjit Battewad. JavaScript for modern web development: 
+								building a web application using HTML, CSS, and JavaScript. BPB Publications, 2020.</li>
+							<li>Herron, David. Node. js Web Development: Server-side web development made easy with Node 14 using practical examples. Packt Publishing Ltd, 2020.
+							</li>
+							<li>
+								Iskandar, Taufan Fadhilah, et al. "Comparison between client-side and server-side rendering in the web development." IOP Conference Series: Materials Science and Engineering. Vol. 801. No. 1. IOP Publishing, 2020.
+							</li>
+						</ul>
+					</section>
+				</section>
+				<section>
+					<h4>Abspann</h4>
+					<p>
+						Erstes Level geschafft, weitere Folgen!
+					</p>
+					<p>Fragen und Feedback?</p>
+				</section>
+			</div>
+		</div>
+		<footer class="slide-footer">
+			Sebastian Pötter - HTWK - MMWP2024 - VL01 - Organisation und Einführung in Browsertechnologien
+		</footer>
+		<script src="../dist/reveal.js"></script>
+		<script src="../plugin/notes/notes.js"></script>
+		<script src="../plugin/markdown/markdown.js"></script>
+		<script src="../plugin/highlight/highlight.js"></script>
+		<script src="../plugin/simplemenu/simplemenu.js"></script>
+		<script src="../plugin/copycode/copycode.js"></script>
+		<script>
+			Reveal.initialize({
+				maxScale: 1.0,
+				margin: 0.2,
+				controls: true,
+				progress: true,
+				center: true,
+				hash: true,
+				slideNumber: 'c/t',
+				plugins: [RevealMarkdown, RevealHighlight, RevealNotes, CopyCode, Simplemenu],
+				simplemenu: {
+					barhtml: {
+						header: "<div class='menubar' style='font-size: 1.5rem'><ul class='menu'></ul></div>",
+						footer: ""
+					}
+				},
+			});
+		</script>
+	</body>
+</html>
