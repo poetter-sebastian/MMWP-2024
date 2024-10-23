@@ -1,0 +1,1048 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>MMWP2024 - LV02</title>
+
+		<link rel="stylesheet" href="../dist/reset.css">
+		<link rel="stylesheet" href="../dist/reveal.css">
+		<link rel="stylesheet" href="../dist/theme/white.css">
+		<link rel="stylesheet" href="../dist/style.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="../plugin/highlight/monokai.css">
+		<link rel="stylesheet" href="../plugin/simplemenu/simplemenu.css">
+		<link rel="stylesheet" href="../plugin/copycode/copycode.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-transition="fade" data-state="hide-menubar hide-menu">
+					<h1>HTML5 Layouting und Einführung in Bootstrap</h1>
+					<h3>MMWP2024 - LV02</h3>
+				</section>
+				<section data-name="TOC" data-sm="false">
+					<h4>Inhaltsverzeichnis</h4>
+					<ul class="menu"></ul>
+				</section>
+				<section data-name="Organisation">
+					<section>
+						<h4>Inhaltsschwerpunkte</h4>
+						<ul>
+							<li>Historische HTML-Layouts</li>
+							<li>HTML5 Layout-Modelle</li>
+							<li>CSS3 Stylings</li>
+							<li>Einführung in Bootstrap5</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Voraussetzung</h4>
+						<p>Der Ausgangspunkt dieser Vorlesungsreihe ist das Wissen in klassischer Webprogrammierung</p>
+						<ul>
+							<li>HTML 4.01, XHTML 1.0 – Programmierung statischer Webseiten mit Medien</li>
+							<li>CSS 2.0 – Kaskade der CSS-Anweisungen, Boxenmodell (Standard), klassischer div-Boxen-Programmierstil</li>
+							<li>JavaScript – DOM-Modell, AJAX-Methoden, Reaktion auf Nutzerinteraktionen, Manipulations-möglichkeiten von HTML-Dokumenten im Browser</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Ziele von modernen Webdesigns</h4>
+						<ul>
+							<li>Neue Herangehensweisen an klassische Webprogrammierung aufzeigen</li>
+							<li>Dabei sollen die in HTML5, HTML5 APIs, CSS 3 und JavaScript-Frameworks auftauchenden neuen Programmiermöglichkeiten in wesentlichen Elementen mit eingeführt werden</li>
+							<li>Vorstellung aktueller Browserkompatibilitäten bei HTML5 Elementen und CSS-Regeln</li>
+						</ul>
+					</section>
+				</section>
+				<section data-name="Klassisches HTML-Layout">
+					<section>
+						<h4>Herangehensweise</h4>
+						<ul>
+							<li>Egal, ob künstlerisches Design der Website oder strikt rechteckiges, lückenloses Boxendesign – am Anfang steht eine Vorstellung von der zukünftigen Flächenaufteilung der Webseiten</li>
+							<li>Weiterhin ist entscheidend, ob man zuerst für Smartphones und kleine Bildschirme entwirft, oder zuerst für Desktops und Netbooks</li>
+							<li>Beachtung der Mobile-First-Regel, falls die geplante Webseite von Suchmaschinen gut bewertet werden soll</li>
+							<li>Beachtung von verschiedenen Bildgrößen Mithilfe von Responsive- bzw. Fluid Design</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Table-Layout - 1</h4>
+						<p>"Früher" wurden Webseiten über Tabellen aufgebaut, um somit verschiedene Reihen und Spalten zu ermöglichen</p>
+						<div style="height: 500px; overflow: scroll !important;">
+							<table width="100%" style="height: 100%;" cellpadding="10" cellspacing="0" border="0">
+								<tr>
+									<!-- ============ HEADER SECTION ============== -->
+									<td colspan="3" style="height: 100px;" bgcolor="#777d6a"><h1>Website Logo</h1></td></tr>
+								<tr>
+									<!-- ============ LEFT COLUMN (MENU) ============== -->
+									<td width="20%" valign="top" bgcolor="#999f8e">
+										<a href="#">Menu link</a><br>
+										<a href="#">Menu link</a><br>
+										<a href="#">Menu link</a><br>
+										<a href="#">Menu link</a><br>
+										<a href="#">Menu link</a>
+									</td>
+									<!-- ============ MIDDLE COLUMN (CONTENT) ============== -->
+									<td width="55%" valign="top" bgcolor="#d2d8c7">
+									</td>
+									<td width="25%" valign="top" bgcolor="#999f8e">&nbsp;</td>
+								</tr>
+								<!-- ============ FOOTER SECTION ============== -->
+								<tr><td colspan="3" align="center" height="20" bgcolor="#777d6a">Copyright ©</td></tr>
+							</table>
+						</div>
+					</section>
+					<section>
+						<h4>Table-Layout - 2</h4>
+						<p>Erst wurden Webseiten über Tabellen aufgebaut, um somit verschiedene Reihen und Spalten zu ermöglichen</p>
+						<pre>
+							<code data-trim data-noescape data-line-numbers>
+&lt;table width=&quot;100%&quot; style=&quot;height: 100%;&quot; cellpadding=&quot;10&quot; cellspacing=&quot;0&quot; border=&quot;0&quot;&gt;
+	&lt;tr&gt;
+		&lt;!-- ============ HEADER SECTION ============== --&gt;
+		&lt;td colspan=&quot;3&quot; style=&quot;height: 100px;&quot; bgcolor=&quot;#777d6a&quot;&gt;&lt;h1&gt;Website Logo&lt;/h1&gt;&lt;/td&gt;&lt;/tr&gt;
+	&lt;tr&gt;
+		&lt;!-- ============ LEFT COLUMN (MENU) ============== --&gt;
+		&lt;td width=&quot;20%&quot; valign=&quot;top&quot; bgcolor=&quot;#999f8e&quot;&gt;
+			&lt;a href=&quot;#&quot;&gt;Menu link&lt;/a&gt;&lt;br&gt;
+			&lt;a href=&quot;#&quot;&gt;Menu link&lt;/a&gt;&lt;br&gt;
+			&lt;a href=&quot;#&quot;&gt;Menu link&lt;/a&gt;&lt;br&gt;
+			&lt;a href=&quot;#&quot;&gt;Menu link&lt;/a&gt;&lt;br&gt;
+			&lt;a href=&quot;#&quot;&gt;Menu link&lt;/a&gt;
+		&lt;/td&gt;
+		&lt;!-- ============ MIDDLE COLUMN (CONTENT) ============== --&gt;
+		&lt;td width=&quot;55%&quot; valign=&quot;top&quot; bgcolor=&quot;#d2d8c7&quot;&gt;
+		&lt;/td&gt;
+		&lt;td width=&quot;25%&quot; valign=&quot;top&quot; bgcolor=&quot;#999f8e&quot;&gt;&amp;nbsp;&lt;/td&gt;
+	&lt;/tr&gt;
+		&lt;!-- ============ FOOTER SECTION ============== --&gt;
+	&lt;tr&gt;&lt;td colspan=&quot;3&quot; align=&quot;center&quot; height=&quot;20&quot; bgcolor=&quot;#777d6a&quot;&gt;Copyright &copy;&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Einfache HTML Seite ohne Styling</h4>
+						<pre>
+							<code>
+&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;de&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;meta name=&quot;Beschreibung&quot; content=&quot;HTML5-Beispiel&quot;&gt;
+    &lt;meta name=&quot;keywords&quot; content=&quot;HTML5, CSS3, JS&quot;&gt;
+    &lt;title&gt;Dieser Text ist der Dokumenttitel &lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div id=&quot;#wrapper&quot;&gt;
+        &lt;div id=&quot;main_header&quot;&gt;
+            &lt;h1&gt;Dies ist der Haupttitel der Website&lt;/h1&gt;
+        &lt;/div&gt;
+        &lt;div id=&quot;main_menu&quot;&gt;
+            &lt;ul&gt;
+                &lt;li&gt;Start&lt;/li&gt;
+                &lt;li&gt;Fotos&lt;/li&gt;
+                &lt;li&gt;Videos&lt;/li&gt;
+                &lt;li&gt;Kontakt&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/div&gt;
+        &lt;div id=&quot;container&quot;&gt;
+            &lt;div id=&quot;main_section&quot;&gt;
+                &lt;div&gt;
+                    &lt;h1&gt;Titel von Beitrag eins&lt;/h1&gt;
+                    &lt;h2&gt;Untertitel von Beitrag eins&lt;/h2&gt;
+                    &lt;p&gt;erschienen am 10.12.2016&lt;/p&gt;
+                &lt;/div&gt;
+                Dies ist der Text meines ersten Beitrags
+                &lt;div&gt;
+                    &lt;p&gt;Kommentare (0)&lt;/p&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div&gt;
+                &lt;div&gt;
+                    &lt;div&gt;
+                        &lt;h1&gt;Titel von Beitrag eins&lt;/h1&gt;
+                        &lt;h2&gt;Untertitel von Beitrag eins&lt;/h2&gt;
+                        &lt;p&gt;erschienen am 10.12.2016&lt;/p&gt;
+                    &lt;/div&gt;
+                    Dies ist der Text meines ersten Beitrags
+                    &lt;div&gt;
+                        &lt;p&gt;Kommentare (0)&lt;/p&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div&gt;....&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div id=&quot;main_aside&quot;&gt;
+                &lt;blockquote&gt;Artikel Nummer eins&lt;/blockquote&gt;
+                &lt;blockquote&gt;Artikel Nummer zwei&lt;/blockquote&gt;
+            &lt;/div&gt;
+            &lt;div id=&quot;main_footer&quot;&gt;
+                Copyright &amp;copy; Sybex, J.D. Gauchat, 2012-2013
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+							</code>
+						</pre>
+						<a href="https://poetter-sebastian.github.io/MMWP-2024/images/vl2/PageWithOutCSS.html" target="_blank">Source</a>
+					</section>
+					<section>
+						<h4>Layout mit klassischen Boxen - 1</h4>
+						<ul>
+							<li>Darauf folgend wurden neue Möglichkeiten von Inhaltsplatzierung definiert (2009) <br>
+								<pre><code>display: box;</code></pre>
+							</li>
+							<li>
+								Das klassische Boxenmodell
+								berechnet den Platz für den
+								Inhalt einer div-Box nach width,
+								height
+							</li>
+							<li>
+								Die Maße für Padding, Border
+								und Margin kommen als realer
+								Platzbedarf im Bild dazu
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Layout mit klassischen Boxen - 2</h4>
+						<figure class="">
+							<img src="../images/vl2/boxmodel.png" alt="Box model">
+							<figcaption>
+								<a href="https://edu.gcfglobal.org/en/basic-css/the-css-box-model/1/" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Layout mit klassischen Boxen - 3</h4>
+						<ul>
+							<li>
+								Um dem Boxenmodell generell konsistente Maße für
+								margin und padding geben zu können, werden Reset-Rules in der CSS-Datei empfohlen: <br>
+								<pre><code>* { margin: 0px; padding: 0px; }</code></pre>
+							</li>
+							<li>
+								Weitere Reset-Rules rules können für gleichmäßigere Anzeige von Webseiten auf verschiedenen Browser benutzt werden (<a href="https://gist.github.com/devinschumacher/6cbd52c082040f0e4c414836aebdb36f" target="_blank">Quelle</a>)
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Layout mit klassischen Boxen - 4</h4>
+						<ul>
+							<li>
+								Manchmal ist es gewünscht, auf überbreiten
+								Bildschirmen (16x10) mit einer Maximalbreite
+								der Website zu arbeiten, und diese dann zu
+								zentrieren <br>
+								<pre><code>body {text-align: center }</code></pre>
+							</li>
+							<li>
+								Für die flächige Anordnung der div-Boxen ist es
+								mitunter erforderlich, Gruppen von Boxen mit
+								unsichtbaren Wrapper-div-Boxen zu kapseln
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Layout mit klassischen Boxen - 5</h4>
+						<ul>
+							<li>So wird alles in &lt;body&gt; mit &lt;div id=&quot;wrapper&quot;&gt; umgeben:</li>
+						</ul>
+						<pre><code class="css" data-trim data-noescape data-line-numbers>
+#wrapper { width: 960px;
+margin: 15px auto;
+text-align: left }
+						</code></pre>
+						<ul>
+							<li>
+								Der margin-Befehl wirkt auf Blockelemente und
+								bewirkt deren Zentrierung.
+								Der text-align-Befehl hebt den Befehl zu
+								"&lt;body&gt;" wieder auf, für alle inneren Folgeelemente
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Static Box-Layout - 1</h4>
+						<img src="../images/vl2/layout.png" alt="Dynamic Loading">
+					</section>
+					<section>
+						<h4>Static Box-Layout - 2</h4>
+						<pre>
+							<code data-trim data-noescape data-line-numbers>
+* {
+   margin: 0px;
+   padding: 0px;
+}
+
+h1 {
+   font: bold 20px verdana, sans-serif;
+}
+h2 {
+   font: bold 14px verdana, sans-serif;
+}
+
+header, section, footer, aside, nav, article, figure, figcaption, hgroup{
+   display: block;
+}
+
+body {
+   text-align: center;
+}
+
+#wrapper {
+   width: 960px;
+   margin: 15px auto;
+   text-align: left;
+}
+
+#main_header {
+   background: #FFFBB9;
+   border: 1px solid #999999;
+   padding: 20px;
+}
+
+#main_menu {
+   background: #CCCCCC;
+   padding: 5px 15px;
+}
+
+#main_menu li {
+   display: inline-block;
+   list-style: none;
+   padding: 5px;
+   font: bold 14px verdana, sans-serif;
+}
+
+#main_section {
+   float: left;
+   width: 660px;
+   margin: 20px;
+}
+#main_aside {
+   float: left;
+   width: 220px;
+   margin: 20px 0px;
+   padding: 20px;
+   background: #CCCCCC;
+}
+
+#main_footer {
+   clear: both;
+   text-align: center;
+   padding: 20px;
+   border-top: 2px solid #999999;
+}
+							</code>
+						</pre>
+						<a href="https://poetter-sebastian.github.io/MMWP-2024/images/vl2/PageWithCSS1.html" target="_blank">Source</a>
+					</section>
+					<section>
+						<h4>Probleme des klassischen Boxen-Modells - 1</h4>
+						<ul>
+							<li>Größe der Boxen lässt sich schlecht auf verschiedenen Bildgrößen berechnen</li>
+							<li>Abstände zu anderen Boxen können von Box zu Box verschieden sein und beeinträchtigen die Positionierung</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Probleme des klassischen Boxen-Modells - 2</h4>
+						<figure class="">
+							<img src="../images/vl2/boxmodel-problem.png" alt="Box-Problems">
+							<figcaption class="mmt-1">
+								<a href="https://wiki.selfhtml.org/wiki/CSS/Tutorials/Flexbox/Warum_Flexbox%3F" target="_blank">Source</a>
+							</figcaption>
+						</figure>
+					</section>
+				</section>
+				<section data-name="Modernes HTML5">
+					<section>
+						<h4>"Neue" Möglichkeiten von Webelementen in HTML5</h4>
+						<ul>
+							<li>Barrierefreiheit-Regeln wurden als Standard ausgearbeitet</li>
+							<li>Anpassbarer Inhalt an die Gerätegröße
+								<ul>
+									<li>Auflösung (1920x1080)</li>
+									<li>Pixeldichte (Pixel density)</li>
+									<li>Farbunterstützung (LCD, OLED, LED, HDRI)</li>
+								</ul>
+							</li>
+							<li>Mobile Geräte benötigen andere Layouts und Funktionen (z.B. Touch-Navigation)</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Die HTML5 Spezifikation</h4>
+						<ul class="r-fit-text">
+							<li>Grundsätzlich werden die Standards für den deklarativen Teil von HTML5 und für CSS3 von zwei Organisationen gesetzt:
+								<ul>
+									<li><b>World Wide Web Consortium (W3C) - <a href="https://www.w3.org">https://www.w3.org</a></b><br>
+										Ziel: fortsetzende Spezifikation von HTML5 und CSS3</li>
+									<li><b>Web Hypertext Application Technology Working Group
+										(WHATWG) – <a href="https://www.whatwg.org" target="_blank">https://www.whatwg.org</a></b><br>
+										Ziel: Eine fortwährende Standardisierung dessen propagieren, was sich
+										mittlerweile unter der Bezeichnung „HTML5“ etabliert hat (z.B. Browser-APIs)</li>
+								</ul>
+							</li>
+							<li>Es werden stetig neue Proposals veröffentlicht: <a href="https://html.spec.whatwg.org/" target="_blank">https://html.spec.whatwg.org/</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Kontextbezogene (Semantische) HTML5 Elemente</h4>
+						<pre>
+							<code class="html" data-trim data-noescape>
+&lt;article&gt; 	Definiert einen unabhängigen, in sich abgeschlossenen Inhalt.
+&lt;aside&gt; 		Definiert einen Abschnitt mit zusätzlichen Informationen zum Inhalt, der sich um das seitliche Element herum befindet.
+&lt;bdi&gt; 			Isoliert bidirektionalen Text (wenn eine Sprache mit Rechts-nach-Links-Direktionalität, wie Arabisch oder Hebräisch, in einer Reihe mit Links-nach-Rechts-Sprachen verwendet wird).
+&lt;details&gt; 	Enthält zusätzliche Details, die der Benutzer öffnen und anzeigen kann.
+&lt;dialog&gt; 		Gibt ein Dialogfeld oder Fenster an.
+&lt;figcaption&gt;Fügt eine Beschriftung oder Erklärung zum Inhalt des &lt;figure&gt; Tags hinzu.
+&lt;figure&gt; 		Legt einen in sich geschlossenen Inhalt fest.
+&lt;footer&gt; 		Definiert die Fußzeile einer Webseite oder eines Abschnitts.
+&lt;header&gt; 		Definiert eine Kopfzeile einer Seite oder eines Abschnitts.
+&lt;main&gt; 			Gibt den Hauptinhalt eines Dokuments an.
+&lt;mark&gt; 			Markiert einen Teil des Textes, der von Bedeutung ist.
+&lt;meter&gt; 		Definiert eine skalare Messung im bekannten Bereich oder die grafische Darstellung einer Bruchzahl.
+&lt;nav&gt; 			Definiert einen Block von Navigationslinks, entweder innerhalb des aktuellen Dokuments oder zu anderen Dokumenten.
+&lt;progress&gt; 	Zeigt den Fortschritt der Aufgabe an (Fortschrittsbalken).
+&lt;rp&gt; 				Definiert einen alternativen Text, der in den Browsern angezeigt wird, die den &lt;ruby&gt; Tag nicht unterstützen.
+&lt;rt&gt; 				Fügt Anmerkungen am oberen und unteren Rand des Textes ein, die in den &lt;ruby&gt; Tag eingefügt werden.
+&lt;ruby&gt; 			Definiert Furigana (auch Yomigana oder Ruby genannt), phonetische Hinweise in Japan und ostasiatischen Sprachen.
+&lt;section&gt;		Erzeugt eigenständige Abschnitte innerhalb einer Webseite, die logisch zusammenhängende Inhalte enthalten.
+&lt;summary&gt;		Definiert die sichtbare Überschrift für das Element &lt;details&gt;.
+&lt;time&gt;			Definiert eine für Menschen lesbare Zeit auf einer 24-Stunden-Uhr oder ein genaues Datum im Gregorianischen Kalender.
+&lt;wbr&gt; 			Weist den Browser an, wo im Text ein Zeilenumbruch eingefügt werden kann.
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Media Elemente</h4>
+						<pre>
+							<code class="html" data-trim data-noescape>
+&lt;audio&gt; 	Zeigt die Variationen der gleichen Audiodatei an.
+&lt;embed&gt; 	Wird als Container für externe Anwendungen, Multimedia und interaktive Inhalte verwendet, die der Browser nicht versteht.
+&lt;source&gt; 	Definiert mehrere Medienressourcen in verschiedenen Formaten: Video, Audio oder Bild.
+&lt;track&gt; 	Legt Textspuren für Medienelemente fest.
+&lt;video&gt; 	Bettet Video in ein HTML-Dokument ein.
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Weitere Elemente: </h4>
+						<h5>Formular:</h5>
+						<pre>
+							<code class="html" data-trim data-noescape>
+&lt;datalist&gt; 	Creates a list of input options, predefined by the &lt;input&gt; tag.
+&lt;output&gt; 	Defines a place for representing the result of a calculation performed by a script or user&rsquo;s interaction with a form element (&lt;form&gt; tag).
+							</code>
+						</pre>
+						<h5>Grafik:</h5>
+						<pre>
+							<code class="html" data-trim data-noescape>
+&lt;canvas&gt; 	Defines an area on the web page, where we can create different objects, images, animations, photo compositions via scripts.
+&lt;svg&gt; 	Draws scalable vector graphics.
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Barrierefreiheit von Webseiten - 1</h4>
+						<ul>
+							<li>Verbesserung der Zugänglichkeit von Webseiten, insbesondere von dynamischen Inhalten und Komponenten bei Webseiten</li>
+							<li>Ajax, HTML, JavaScript und verwandten Technologien werden hierfür verwendet</li>
+							<li>Seit März 2014 ist Accessible-Rich-Internet-Applications (ARIA) ein empfohlener Webstandard des World Wide Web Consortium (W3C)</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Barrierefreiheit von Webseiten - 2</h4>
+						<ul>
+							<li>
+								Webseitensteuerungen und Inhaltsaktualisierungen sind für Nutzende mit
+								Behinderungen oft nicht zugänglich, insbesondere für Nutzende mit Screen-Reader
+							</li>
+							<li>Zu kleine Schrift, oder fehlender Kontrast stellen auch Problem dar</li>
+							<li>Erweiterung: Accessible Rich Internet Applications suite of web standards (WIA-ARIA)</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Semantische Elemente im HTML5 - 1</h4>
+						<ul>
+							<li>Statt reinem div-Boxen-Design sollen semantisch orientierte Elemente von HTML5 für die Hauptboxen im Quellcode eingesetzt werden</li>
+							<li>Zusätzlich werden gleich „Landmark Roles“ nach WAI-ARIA mit eingebaut</li>
+							<li>Screenreadern können „Landmark Roles“ als Orientierung dienen</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Semantische Elemente im HTML5 - 2</h4>
+						<ul>
+							<li>Chromium und Gecko-Browser ermöglichen automatisierte Screenreader-Navigation</li>
+							<li>
+								Landmark Roles werden von den Screenreadern JAWS, NVDA,
+								ORCA, Chromevox, Window Eyes und VoiceOver verstanden, und
+								via FireFox addon durch Tastaturnutzer
+							</li>
+							<li>
+								<a href="http://www.w3.org/TR/aria-in-html/" target="_blank">Neuste Elemente für ARIA-Unterstützung</a>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Grundsätzliche Regeln von ARIA - 1</h4>
+						<ul>
+							<li>ARIA-Elemente sollten nicht verwenden werden, wenn die gewünschte Semantik durch die Verwendung eines nativen HTML-Elements oder -Attributs erreicht werden kann</li>
+							<li>Es ist nicht ratsam, die Semantik von nativem HTML zu verändern, es sei denn, es gibt einen zwingenden Grund, dies zu tun</li>
+							<li>Es ist zwingend erforderlich, dass alle interaktiven ARIA-Steuerelemente über die Tastatur bedient werden können</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Grundsätzliche Regeln von ARIA - 2</h4>
+						<ul>
+							<li>Es ist nicht ratsam, die Semantik zu entfernen oder fokussierbare Elemente zu verbergen</li>
+							<li>Es ist zwingend erforderlich, dass allen interaktiven Elementen ein zugänglicher Name zugewiesen wird, der die Accessibility API verwendet</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Semantik Elemente - 1</h4>
+						<pre><code data-trim data-noescape data-line-numbers>
+&lt;body&gt;
+	&lt;header role=&quot;banner&quot;&gt;
+		&lt;h1&gt;Dies ist der Haupttitel der Website&lt;/h1&gt;
+	&lt;/header&gt;
+	&lt;nav role=&quot;navigation&quot;&gt;
+		&lt;ul&gt;
+			&lt;li&gt;Start&lt;/li&gt;
+			&lt;li&gt;Fotos&lt;/li&gt;
+			&lt;li&gt;Videos&lt;/li&gt;
+			&lt;li&gt;Kontakt&lt;/li&gt;
+		&lt;/ul&gt;
+	&lt;/nav&gt;
+&lt;/body&gt;
+						</code></pre>
+					</section>
+					<section>
+						<h4>Semantik Elemente - 2</h4>
+						<pre><code data-trim data-noescape data-line-numbers>
+&lt;section role=&quot;main&quot;&gt;
+	&lt;article&gt;
+		&lt;header&gt;
+			&lt;h1&gt;Titel von Beitrag eins&lt;/h1&gt;
+			&lt;h2&gt;Untertitel von Beitrag eins&lt;/h2&gt;
+			&lt;p&gt;erschienen am 10.12.2016&lt;/p&gt;
+		&lt;/header&gt;
+		&lt;p&gt;Dies ist der Text meines ersten Beitrags&lt;/p&gt;
+		&lt;footer&gt;
+			&lt;p&gt;Kommentare (42)&lt;/p&gt;
+		&lt;/footer&gt;
+	&lt;/article&gt;
+&lt;/section&gt;
+						</code></pre>
+					</section>
+					<section>
+						<h4>Semantik Elemente - 3</h4>
+						<pre><code data-trim data-noescape data-line-numbers>
+&lt;aside role=&quot;complementary&quot;&gt;
+	&lt;blockquote&gt;Artikel Nummer eins&lt;/blockquote&gt;
+	&lt;blockquote&gt;Artikel Nummer zwei&lt;/blockquote&gt;
+&lt;/aside&gt;
+&lt;footer role=&quot;contentinfo&quot;&gt; Copyright &amp;copy; Sybex,
+J.D. Gauchat, 2023-2024&lt;/footer&gt;
+						</code></pre>
+					</section>
+					<section>
+						<h4>Resultat nach Einfügen der semantischen Elemente</h4>
+						<pre><code data-trim data-noescape data-line-numbers>
+&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;de&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot;&gt;
+    &lt;meta name=&quot;Beschreibung&quot; content=&quot;HTML5-Beispiel&quot;&gt;
+    &lt;meta name=&quot;keywords&quot; content=&quot;HTML5, CSS3, JS&quot;&gt;
+    &lt;title&gt;Dieser Text ist der Dokumenttitel &lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;header role=&quot;banner&quot;&gt;
+        &lt;h1&gt;Dies ist der Haupttitel der Website&lt;/h1&gt;
+    &lt;/header&gt;
+    &lt;nav role=&quot;navigation&quot;&gt;
+        &lt;ul&gt;
+            &lt;li&gt;Start&lt;/li&gt;
+            &lt;li&gt;Fotos&lt;/li&gt;
+            &lt;li&gt;Videos&lt;/li&gt;
+            &lt;li&gt;Kontakt&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/nav&gt;
+    &lt;section role=&quot;main&quot;&gt;
+        &lt;article&gt;
+            &lt;header&gt;
+                &lt;hgroup&gt;
+                    &lt;h1&gt;Titel von Beitrag eins&lt;/h1&gt;
+                    &lt;h2&gt;Untertitel von Beitrag eins&lt;/h2&gt;
+                &lt;/hgroup&gt;
+                &lt;time datetime=&quot;2012-12-10&quot; pubdate&gt;erschienen am 10.12.2012&lt;/time&gt;
+            &lt;/header&gt;
+            Dies ist der Text meines ersten Beitrags
+            &lt;footer&gt;
+                &lt;p&gt;Kommentare (0)&lt;/p&gt;
+            &lt;/footer&gt;
+        &lt;/article&gt;
+        &lt;article&gt;
+            &lt;header&gt;
+                &lt;hgroup&gt;
+                    &lt;h1&gt;Titel von Beitrag zwei&lt;/h1&gt;
+                    &lt;h2&gt;Untertitel von Beitrag zwei&lt;/h2&gt;
+                &lt;/hgroup&gt;
+                &lt;time datetime=&quot;2012-12-15&quot; pubdate&gt;erschienen am 15.12.2012&lt;/time&gt;
+            &lt;/header&gt;
+            Dies ist der Text meines zweiten Beitrags
+            &lt;footer&gt;
+                &lt;p&gt;Kommentare (0)&lt;/p&gt;
+            &lt;/footer&gt;
+        &lt;/article&gt;
+    &lt;/section&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+						</code></pre>
+					</section>
+					<section>
+						<h4>Flex-Box-Layout - 1</h4>
+						<ul>
+							<li>
+								Das flexible Boxenmodell aus CSS3 geht im
+								Gegensatz zum klassischen Boxenmodell davon
+								aus, dass width für eine Box immer
+								Inhaltsbreite+Padding+Border ist
+							</li>
+							<li>Die Margin bleibt als Platz zur nächsten Box ausgenommen</li>
+							<li><b>
+								Hier wird erstmalig deutlich, dass HTML5 und
+								CSS3 hinter einfachen Befehlen in der Syntax
+								komplexe Modelle verbirgt!</b></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Flex-Box-Layout - 2</h4>
+						<figure class="">
+							<img src="../images/vl2/flex.png" alt="Flex boxes">
+							<figcaption class="">
+								<a href="https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Flexbox" target="_blank">Source</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Flex-Box-Layout - 2</h4>
+						<figure class="">
+							<img src="../images/vl2/flex-order.png" alt="Flex boxes">
+							<figcaption class="">
+								<a href="https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Flexbox" target="_blank">Source</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Flex-Box-Layout - 3</h4>
+						<figure class="">
+							<img src="../images/vl2/flex-align.png" alt="Flex boxes">
+							<figcaption class="">
+								<a href="https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Flexbox" target="_blank">Source</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Nutzen von Flex-Boxen</h4>
+						<ul>
+							<li>
+								Damit sind Breitenangaben genauer, es muss nur noch auf die Werte für margin geachtet werden
+							</li>
+							<li>Die Angaben für <b>padding und border</b> beeinflussen nicht mehr globale Abstände</li>
+							<li>
+								Zusammen mit der Einstellung des Viewports
+								<pre><code><meta name="viewport" content="width=device-width, initial-scale=1"></code></pre>
+								Können Flexboxen besser genutzt werden: <a href="https://www.w3schools.com/css/css_rwd_viewport.asp" target="_blank">z.B.</a>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Anwendung von Flex-Boxen</h4>
+						<pre>
+							<code data-trim data-noescape data-line-numbers>
+&lt;div class=&quot;flex-container&quot;&gt;
+	&lt;div class=&quot;flex-item&quot;&gt;&lt;/div&gt;
+	&lt;div class=&quot;flex-item&quot;&gt;&lt;/div&gt;
+	&lt;div class=&quot;flex-item&quot;&gt;&lt;/div&gt;
+	&lt;div class=&quot;flex-item&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+							</code>
+						</pre>
+						<pre>
+							<code data-trim data-noescape data-line-numbers>
+.flex-container {
+	display: flex;
+	flex-direction: row; /* Standardwert */
+}
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Layout mit flexiblen Boxen</h4>
+						<a href="https://kulturbanause.de/blog/einfuhrung-in-das-flexbox-modell-von-css/" target="_blank">Einführung in das flexbox modell</a>
+					</section>
+					<section>
+						<h4>Browser support</h4>
+						<figure class="">
+							<img src="../images/vl2/flex-support.png" alt="Flex boxes support">
+							<figcaption class="">
+								<a href="https://caniuse.com/?search=flex" target="_blank">Source</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Flexboxen-Einsatz im Beispiel</h4>
+						<pre>
+							<code data-trim data-noescape data-line-numbers>
+body {
+   width: 100%;
+
+   display: -ms-flex;
+   display: -webkit-flex;
+   display: -moz-flex;
+   display: flex;
+
+   -ms-flex-direction: column;
+   -webkit-flex-direction: column;
+   -moz-flex-direction: column;
+   flex-direction: column;
+
+   -ms-justify-content: flex-start;
+   -webkit-justify-content: flex-start;
+   -moz-justify-content: flex-start;
+   justify-content: flex-start;
+
+   -ms-align-items: center;
+   -webkit-align-items: center;
+   -moz-align-items: center;
+   align-items: center;
+}
+
+#wrapper{
+   max-width: 960px;
+   margin: 15px 0;
+
+   display: -ms-flex;
+   display: -webkit-flex;
+   display: -moz-flex;
+   display: flex;
+
+   -ms-flex-direction: column;
+   -webkit-flex-direction: column;
+   -moz-flex-direction: column;
+   flex-direction: column;
+
+   -ms-justify-content: flex-start;
+   -webkit-justify-content: flex-start;
+   -moz-justify-content: flex-start;
+   justify-content: flex-start;
+
+   -ms-align-items: stretch;
+   -webkit-align-items: stretch;
+   -moz-align-items: stretch;
+   align-items: stretch;
+}
+
+#main_header {
+   background: #FFFBB9;
+   border: 1px solid #999999;
+   padding: 20px;
+
+   -ms-flex-grow: 0;
+   -webkit-flex-grow: 0;
+   -moz-flex-grow: 0;
+   flex-grow: 0;
+}
+#main_menu {
+   background: #CCCCCC;
+   padding: 5px 15px;
+
+   -ms-flex-grow: 0;
+   -webkit-flex-grow: 0;
+   -moz-flex-grow: 0;
+   flex-grow: 0;
+}
+#main_menu li {
+   display: inline-block;
+   list-style: none;
+   padding: 5px;
+   font: bold 14px verdana, sans-serif;
+}
+
+#container {
+   display: -ms-flex;
+   display: -webkit-flex;
+   display: -moz-flex;
+   display: flex;
+
+   -ms-flex-direction: row;
+   -webkit-flex-direction: row;
+   -moz-flex-direction: row;
+   flex-direction: row;
+
+   -ms-justify-content: flex-start;
+   -webkit-justify-content: flex-start;
+   -moz-justify-content: flex-start;
+   justify-content: flex-start;
+
+   -ms-align-items: stretch;
+   -webkit-align-items: stretch;
+   -moz-align-items: stretch;
+   align-items: stretch;
+}
+
+#main_section {
+   -ms-flex-grow: 1;
+   -webkit-flex-grow: 1;
+   -moz-flex-grow: 1;
+   flex-grow: 1;
+
+   min-width: 200px;
+   margin: 20px;
+}
+#main_aside {
+   width: 220px;
+   margin: 20px 0;
+   padding: 20px;
+   background: #CCCCCC;
+
+   -ms-flex-grow: 0;
+   -webkit-flex-grow: 0;
+   -moz-flex-grow: 0;
+   flex-grow: 0;
+}
+
+#main_footer {
+   text-align: center;
+   padding: 20px;
+   border-top: 2px solid #999999;
+
+   -ms-flex-grow: 0;
+   -webkit-flex-grow: 0;
+   -moz-flex-grow: 0;
+   flex-grow: 0;
+}
+article {
+   background: #FFFBCC;
+   border: 1px solid #999999;
+   padding: 20px;
+   margin-bottom: 15px;
+}
+time {
+   color: #999999;
+}
+article footer {
+   text-align: right;
+}
+figcaption {
+   font: italic 14px verdana, sans-serif;
+}
+							</code>
+						</pre>
+						<a href="https://poetter-sebastian.github.io/MMWP-2024/images/vl2/PageWithCSS2.html" target="_blank">Beispielseite mit FlexBoxen</a>
+					</section>
+					<section>
+						<h4>Flex-Boxen Einstellungen - 1</h4>
+						<ul>
+							<li>Entscheidend für das Verständnis ist, dass es
+								Eigenschaften für Eltern-Boxen und Eigenschaften
+								für Kind-Boxen gibt
+							</li>
+							<li>
+								Jede Box kann beide Rollen zugleich haben, die
+								Eigenschaften gelten aber immer für eine Eltern-Box mit ihren Kind-Boxen
+							</li>
+							<li>(Die Begriffe „Eltern“ und „Kind“ kommen aus der
+								SGML-/XML-Hierarchie im DOM-Modell)</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Flex-Boxen Einstellungen - 2</h4>
+						<ul>
+							<li>Das Flexbox-Modell hat kein unterlegtes Grid,
+								es werden nur Zeilen oder Spalten initial als
+								Orientierung festgelegt (main axis)
+							</li>
+							<li>
+								Um bei flexiblem Maß in der Breite (row-Stil) eine
+								Mindest-/Maximalbreite der Kindboxen zu
+								garantieren, sind die CSS-Eigenschaften min-width
+								bzw. max-width zu benutzen
+							</li>
+							<li>Es geht aber einfacher: ein Grid in der Richtung der cross-axis</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Grid-Layout</h4>
+						<pre>
+							<code>
+&lt;div class=&quot;container&quot;&gt;
+	&lt;div&gt;Element 1&lt;/div&gt;
+	&lt;div&gt;Element 2&lt;/div&gt;
+	&hellip;
+	&lt;div&gt;Element 11&lt;/div&gt;
+	&lt;div&gt;Element 12&lt;/div&gt;
+&lt;/div&gt;
+							</code>
+						</pre>
+						<pre>
+							<code>
+container {
+	display: grid;
+	grid-template-rows:200px 1fr 100px;
+	grid-template-columns:25% 25% 25% 25%;
+}
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Grid-Layout</h4>
+						<figure class="">
+							<img src="../images/vl2/grid.png" alt="Grid Design">
+							<figcaption class="">
+								<a href="https://kulturbanause.de/blog/css-grid-layout-module/" target="_blank">Source</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Browser support</h4>
+						<figure class="">
+							<img src="../images/vl2/grid-support.png" alt="Grid support">
+							<figcaption class="">
+								<a href="https://caniuse.com/?search=grid" target="_blank">Source</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Einbinden von Bildern in Flex/Grid-Boxen - 1</h4>
+						<ul>
+							<li><b>alt und role</b> sind für Screenreader und nicht mehr existierende Bilder nützlich</li>
+							<li><b>alt</b> sollte immer verwendet werden</li>
+							<li>Es können mehrere Bilder aufgezählt werden</li>
+							<li>Die Bildunterschrift passt sich der Gesamtbreite zentriert an</li>
+							<li>Weitere Elemente werden in späteren Veranstaltungen behandelt</li>
+						</ul>
+						<pre><code data-trim data-noescape data-line-numbers>
+&lt;figure&gt;
+	&lt;img src=&quot;shib.jpg&quot; alt=&quot;Much Shib, very Dog, Such Pumpkin&quot; role=&quot;img&quot;/&gt;
+	&lt;figcaption&gt;
+	Dies ist ein Bild des ersten Beitrags,
+		&lt;a href=&quot;https://happygoriley.tumblr.com/&quot; target=&quot;_blank&quot;&gt;Quelle&lt;/a&gt;
+	&lt;/figcaption&gt;
+&lt;/figure&gt;
+						</code></pre>
+					</section>
+					<section>
+						<h4>Einbinden von Bildern in Flex/Grid-Boxen - 2</h4>
+						<a href="https://poetter-sebastian.github.io/MMWP-2024/images/vl2/PageWithCSS2AndPicture.html" target="_blank">Grundseite mit Flexbox und Bild</a>
+					</section>
+					<section>
+						<h4>Einbinden von Videos in Flex/Grid-Boxen - 1</h4>
+						<ul>
+							<li>Es können mehrere Videoformate (sources) aufgezählt werden</li>
+							<li>Metadata, wie Untertitel können (asynchron) vorab geladen werden</li>
+							<li>Hinweistext, oder Video beschreibungen, wenn Videoformate nicht unterstützt werden</li>
+							<li>Weitere Elemente werden in späteren Veranstaltungen behandelt</li>
+						</ul>
+						<pre><code data-trim data-noescape data-line-numbers>
+&lt;video preload=&quot;metadata&quot; controls=&quot;&quot; poster=&quot;../images/vl2/shib.jpg&quot; data-video-type=&quot;video&quot;&gt;
+	&lt;source src=&quot;../images/vl2/sample.mp4&quot; type=&quot;video/mp4&quot;&gt;
+	&lt;source src=&quot;../images/vl2/sample.mkv&quot; type=&quot;video/mkv&quot;&gt;
+	&lt;source src=&quot;../images/vl2/sample.vid&quot; type=&quot;video/vid&quot;&gt;
+	&lt;div class="fallback"&gt; Your browser is not able to display this video.&lt;/div&gt;
+&lt;/video&gt;
+						</code></pre>
+					</section>
+					<section>
+						<h4>Einbinden von Videos in Flex/Grid-Boxen - 2</h4>
+						<a href="https://poetter-sebastian.github.io/MMWP-2024/images/vl2/PageWithCSS2AndPicture.html" target="_blank">Grundseite mit Flexbox und Video</a>
+					</section>
+					<section>
+						<h4>Flexboxen und Grid-Design</h4>
+						<ul>
+							<li>Viele Webseiten verwenden Flexboxen oder basieren auf Grids</li>
+							<li>Frameworks wie Bootstrap bauen auf diesen Designs auf</li>
+							<li>Zusammen mit Javascript ergibt sich eine responsive Webseite mit möglichen Interaktionen</li>
+						</ul>
+					</section>
+				</section>
+				<section data-name="Bootstrap 5">
+					<section>
+						<h4>Bootstrap 5 als Programmierhilfe für responsive Webseiten</h4>
+						<ul>
+							<li>Bootstrap ist eine leistungsstarke, funktionsreiche Bibliothek</li>
+							<li>Es basiert auf HTML5, CSS3 und JS</li>
+							<li>Bootstrap benutzt hauptsächlich Flexboxen als Layout</li>
+							<li>Einbindung der CSS-Datei sowie JS-Datei reicht aus, um alle Funktionen nutzen zu können</li>
+							<li><a href="https://getbootstrap.com/docs/5.3/getting-started/introduction/" target="_blank">Schritt-für-Schritt-Anleitung</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Bootstrap 5 Browserunterstützung</h4>
+						<ul>
+							<li>Bootstrap funktioniert auf allen modernen DesktopBrowsern</li>
+							<li>Auch Browser auf Mobilegeräten (Chrome, Firefox, Safari) werden unterstützt</li>
+							<li><a href="https://getbootstrap.com/docs/5.3/getting-started/browsers-devices/#supported-browsers" target="_blank">Quelle</a></li>
+							<li>CSS-"Hacks" und Javascript-Funktionen helfen bei der Unterstützung von alten Browsern (z.B. Internet Explorer)</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Bootstrap 5 Elemente</h4>
+						<ul>
+							<li>Layout: Flex- und Grid-Elemente</li>
+							<li>Content: Seiteninhalte z.B. Bilder und Texte</li>
+							<li>Forms: Elemente rund um Formulare</li>
+							<li>Components: Sammlung von nützlichen Elemente wie Pop-Ups, Gallery oder Buttons</li>
+							<li>Helpers: HTML-Element-, Klassen- und Javascript-Sammlung wie Farben, Icon-Buttons und</li>
+							<li>Utilities: Sammlung von CSS-Klassen und deren Erklärung</li>
+							<li>(Neu) Icons: Sammlung von SVG-Icons (Ähnlich wie bei <a href="https://fontawesome.com/" target="_blank">https://fontawesome.com/</a>)</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Bootstrap 5 Guides</h4>
+						<ul>
+							<li><a href="https://getbootstrap.com/docs/5.3/getting-started/introduction/">Bootstrap 5 Documentation</a></li>
+							<li><a href="https://getbootstrap.com/docs/5.3/examples/">Bootstrap 5 Beispiel-Seiten</a></li>
+							<li><a href="https://www.w3schools.com/bootstrap5/">W3schools Guide</a></li>
+						</ul>
+					</section>
+				</section>
+				<section>
+					<h4>Literatur</h4>
+					<ul class="r-fit-text">
+						<li>J. D. Gauchat, „HTML5, CSS3 & JavaScript“, Sybex, 2013</li>
+						<li><a href="https://www.paulirish.com/2012/box-sizing-border-box-ftw/" target="_blank">https://www.paulirish.com/2012/box-sizing-border-box-ftw/</a>, 01.02.2012</li>
+						<li>Ranjan, Alok, Abhilasha Sinha, and Ranjit Battewad. JavaScript for modern web development:
+							building a web application using HTML, CSS, and JavaScript. BPB Publications, 2020.</li>
+						<li>CSS-Framework KUBE, minimalistisch und effektiv,
+							<a href="https://getbootstrap.com/" target="_blank">https://getbootstrap.com/</a> – Bootstrap 5</li>
+						<li>CSS Flexible Box Layout Module Level 1, 25.09.2014, Working
+							Draft des W3C: <a href="http://www.w3.org/TR/css-flexbox-1/" target="_blank">http://www.w3.org/TR/css-flexbox-1/</a></li>
+						<li>A Complete Guide to Grid: <a href="https://css-tricks.com/snippets/css/complete-guide-grid/" target="_blank">https://css-tricks.com/snippets/css/complete-guide-grid/</a></li>
+					</ul>
+				</section>
+				<section>
+					<h4>Abspann</h4>
+					<p>
+						Zweites Level geschafft weitere Folgen!
+					</p>
+					<p>Fragen und Feedback?</p>
+				</section>
+			</div>
+		</div>
+		<footer class="slide-footer">
+			Sebastian Pötter - HTWK - MMWP2024 - VL02 - Einführung in HTML5, CSS3
+		</footer>
+		<script src="../dist/reveal.js"></script>
+		<script src="../plugin/notes/notes.js"></script>
+		<script src="../plugin/markdown/markdown.js"></script>
+		<script src="../plugin/highlight/highlight.js"></script>
+		<script src="../plugin/simplemenu/simplemenu.js"></script>
+		<script src="../plugin/copycode/copycode.js"></script>
+		<script src="../dist/present.js"></script>
+	</body>
+</html>
