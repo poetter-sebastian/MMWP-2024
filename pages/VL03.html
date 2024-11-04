@@ -1,0 +1,629 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>MMWP2024 - LV03</title>
+
+		<link rel="stylesheet" href="../dist/reset.css">
+		<link rel="stylesheet" href="../dist/reveal.css">
+		<link rel="stylesheet" href="../dist/theme/white.css">
+		<link rel="stylesheet" href="../dist/style.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="../plugin/highlight/monokai.css">
+		<link rel="stylesheet" href="../plugin/simplemenu/simplemenu.css">
+		<link rel="stylesheet" href="../plugin/copycode/copycode.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-transition="fade" data-state="hide-menubar hide-menu" data-background-image="../images/vl3/presentationstart.png" data-background-position="bottom" data-background-opacity="0.1">
+					<h1>Responsive Design 1</h1>
+					<h3>MMWP2024 - LV03</h3>
+				</section>
+				<section data-name="TOC" data-sm="false">
+					<h4>Inhaltsverzeichnis</h4>
+					<ul class="menu"></ul>
+				</section>
+				<section data-name="Organisation">
+					<section>
+						<h4>Änderung der Belegstruktur</h4>
+						<ul>
+							<li>4 Belege als Prüfungsvorleistung für die schriftliche Prüfung (120min)</li>
+							<li>4. Beleg kann aber auch als Prüfungsprojekt gewählt werden (wenn vorher alle 3 anderen Belege erfolgreich absolviert wurden)</li>
+							<li>Note für das Prüfungsprojekt vor Ende des Semesters</li>
+							<li>Falls Sie mit der Note nicht einstanden sind, können Sie auch an der schriftlichen Prüfung teilnehmen (<b>diese Note zählt dann!</b>)</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Inhaltsschwerpunkte</h4>
+						<ul>
+							<li>Gerätearten und Darstellung</li>
+							<li>Adaptive Web Design</li>
+							<li>Responsive Web Design</li>
+							<li>Layout-Muster</li>
+							<li>Seitennavigation</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Voraussetzung</h4>
+						<p>Der Ausgangspunkt dieser Vorlesungsreihe ist das Wissen über HTML-CSS-Layouting</p>
+						<ul>
+							<li>Fixed-Box layout</li>
+							<li>Flex-Box layout</li>
+							<li>Grid-Layout</li>
+							<li>Responsive CSS-Regeln</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Ziele</h4>
+						<ul>
+							<li>Dynamische Bildbreiten bei Webdesign</li>
+							<li>Vorstellung von Webdesigns auf Basis von responsive Layouting</li>
+							<li>Definition von Layoutmuster</li>
+							<li>Erklärung von Navigationsmustern und Navigationselemente</li>
+						</ul>
+					</section>
+				</section>
+				<section data-name="Adaptive/Responsive Web Design">
+					<section>
+						<h4>Aktuelle Bildschirmgrößen (2023-2024)</h4>
+						<figure class="">
+							<img src="../images/vl3/counter.png" alt="Screen Resolution Stats">
+							<figcaption>
+								<a href="https://gs.statcounter.com/screen-resolution-stats#monthly-202309-202409-bar" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Problem von Bildgrößen</h4>
+						<ul>
+							<li>Pixeldichte auf Geräten unterschiedlich (relative Größe ungleich absoluter Größe</li>
+							<li>Hohe Auflösungen auf kleinen Mobilgeräten</li>
+							<li>Absolute Einheiten wie cm, mm, px, in, pt = (1/72in)</li>
+							<li>Px ist relativ zum jeweiligen Gerät und Abhängig vom Gerät</li>
+							<li>Absolute Angaben wie Pixel können somit zu Fehlerhaften darstellungen führen</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Px = Pixel ?</h4>
+						<figure class="">
+							<img src="../images/vl3/pixelvspixel.jpg" alt="Device pixel ratio">
+							<figcaption>
+								<a href="https://joppuyo.github.io/images-guide-mirror/images/book-images/device-pixel-ratio-large.jpg" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Verschiedene Darstellung</h4>
+						<ul>
+							<li>Die Device-Pixel-Ratio gibt an, wie viele Hardware-Pixel das jeweilige Display verwendet</li>
+							<li>Pixelanzahl in Höhe und Breite häng von Hardware ab (Hardware-Pixel)</li>
+							<li>Ausmaße des physikalischen Bildschirms in einer Längeneinheit → daraus resultiert die Entfernung zum Auge und die notwendige Schriftgröße</li>
+							<li>Software-Pixel: je physikalischer Längen- und Höheneinheit</li>
+							<li>Software-Pixel ungleich Hardware-Pixel</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Nutzung von Viewport für relative Größen - 1</h4>
+						<ul>
+							<li>Viewport ist der für den Benutzer sichtbare Bereich einer Webseite</li>
+							<li>Der Viewport hängt vom jeweiligen Gerät ab und ist auf einem Mobiltelefon kleiner als auf einem Computerbildschirm</li>
+							<li>Möglichkeit der Verwendung von CSS-Media-Queries zur Anwendung unterschiedlicher Stile für kleine und große Bildschirme</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Nutzung von Viewport für relative Größen - 2</h4>
+						<pre>
+							<code>
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot;&gt;
+							</code>
+						</pre>
+						<ul>
+							<li>width=device-width legt die Breite der Seite so fest, dass sie der Bildschirmbreite des Geräts entspricht</li>
+							<li>Initial-scale=1.0 legt die anfängliche Zoomstufe fest, wenn die Seite zum ersten Mal vom Browser geladen wird</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Viewports ermöglichen Grid-Web-Design</h4>
+						<ul>
+							<li>Der Ansatz des Grid Designs ist es, die Webseite senkrecht in eine fixe Anzahl von „Streifen“ mit „Lücken“ zu teilen </li>
+							<li>Je nach horizontaler Raumaufteilung werden Zonen der Webseite zu verschiedenen div-Boxen nebeneinander zusammenzufassen</li>
+							<li>Viele Webseiten basieren auf dem Grid-Design</li>
+							<li>Bootstrap benutzt bis zu 12 Spalten für die Aufteilung von Elementen (1/12 von Container breite)</li>
+							<li><a href="https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Grids" target="_blank">Grid-View in der Browserconsole</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Grid-View</h4>
+						<figure class="">
+							<img src="../images/vl3/grid.png" alt="Grid view">
+							<figcaption>
+								<a href="https://www.w3schools.com/css/css_rwd_grid.asp" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Beispiel Grid-Designs</h4>
+						<ul>
+							<li><a href="https://960.gs/demo.html">960.gs</a></li>
+							<li><a href="https://freefrontend.com/css-grid-examples/">CSS-Grid-examples</a></li>
+							<li><a href="https://colorlib.com/wp/grid-website-templates/">Grid-Website-templates</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Fluid Grid Design</h4>
+						<ul>
+							<li>Grids sollten sich der Bildbreite anpassen</li>
+							<li>Notwendigkeit, diese Grids in relativen Größen (Prozenten) planen</li>
+							<li>Dabei wird die max –width festgelegt, da es immer höher auflösende, breitere Bildschirme gibt</li>
+							<li>Auch Textverläufe, Schriftgrößen, Bilder, Videos mit ihren (div-)Boxen müssen sich mit der Größe der Webseite proportional ändern, zumindest in gewissen Grenzen</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Fluid Grid Frameworks</h4>
+						<ul>
+							<li><a href="https://getbootstrap.com/docs/5.3/layout/breakpoints/" target="_blank">Bootstrap 5 Breakpoints</a></li>
+							<li><a href="https://www.w3schools.com/w3css/w3css_grid.asp" target="_blank">W3.CSS</a></li>
+							<li><a href="https://1stwebdesigner.com/fluid-grid-layout/" target="_blank">Vorgefertigte CSS-Klassen</a></li>
+							<li><a href="https://get.foundation/" target="_blank">Foundation Framework</a></li>
+							<li><a href="https://lessframework.com/" target="_blank">Less-Framework</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Adaptive Web Design</h4>
+						<ul>
+							<li>Der Begriff wurde von Aaron Gustafson in seinem <a href="https://easy-readers.net/books/adaptive-web-design/" target="_blank">Buch</a> 2011 geprägt</li>
+							<li>Grundidee ist die Auswahl eines festen Sets von Bildschirmgrößen, die dann zu Schranken für Designwechsel der Website werden</li>
+							<li>Fluid Grid Frameworks basieren auf diese Idee</li>
+							<li>Verschiedene Breakpoints zur festlegung von Grid-größen</li>
+							<li><a href="https://uiuxlab.medium.com/the-most-used-responsive-breakpoints-in-2017-of-mine-9588e9bd3a8a#e970" target="_blank">Most Used Responsive Breakpoints </a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Responsive Web Design</h4>
+						<ul>
+							<li>Der Begriff geht auf Ethan Marcotte und seinen <a href="https://alistapart.com/article/responsive-web-design">Artikel</a> vom 25.05.2010 zurück.</li>
+							<li>Um das Aussehen der Webseite dem Anzeigegerät anzupassen, werden CSS3, Media Queries, die @media-Regel und Fluid Grids unter Benutzung von Prozentmaßen benutzt</li>
+							<li>Ergänzend wird mit Maßen in em bzw. rem, flexiblen Bildern, flexiblen Videos und flexibler Schriftgröße gearbeitet</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Media Queries</h4>
+						<p>Media Queries ist eine Technik, die seit CSS3 eingeführt wurde, um mithilfe von @media –RegelnEigenschaften nur für den Fall, dass die Bedingung erfüllt ist, festzulegen</p>
+						<pre>
+							<code>
+@media only screen and (max-width: 600px) {
+	body {
+		background-color: lightblue;
+	}
+}
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Media Queries</h4>
+						<figure class="">
+							<img src="../images/vl3/responsive.png" alt="Responsive Web Design">
+							<figcaption>
+								<a href="https://digitalmedianinja.com/blog/what-is-responsive-web-design/" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Prinzipien von Responsive Web-Design - 1</h4>
+						<ul>
+							<li>Content First, Navigation Second</li>
+							<li>Eine Art des Herangehens an das Design von Websites,
+								die die Flächenaufteilung der Webseiten und die
+								inhaltlich-semantisch gesehenen Rollen (Landmark Roles)
+								der Teile der Webseiten in den Vordergrund stellt</li>
+							<li>
+								Eine Art des Designs, die alle adressierten Größen und
+								Auflösungen von Bildschirmen gleich mitdenkt (und nicht
+								erst ein Design fertigstellt, bevor der Adaptionsversuch
+								gemacht wird
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Prinzipien von Responsive Web-Design - 2</h4>
+						<ul>
+							<li>Mobile First und Progressive Enhancement</li>
+							<li>Die Entwicklung wird mit dem Design für kleine
+								Bildschirme begonnen</li>
+							<li>
+								Die Funktionalität einer Webseite wird schrittweise an
+								die Fähigkeiten größerer Bildschirme und der Browser
+								angepasst
+							</li>
+							<li>Es wird in der Reihenfolge der Schichten HTML (mit
+								strukturiertem Inhalt), CSS (Darstellungen) und
+								JavaScript (Verhalten bei Interaktion, in der Zeit)
+								vorgegangen</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Prinzipien von Responsive Web-Design - 3</h4>
+						<ul>
+							<li>Desktop First und Graceful Degradation</li>
+							<li>Zuerst wird das Design für den größten gedachten
+								Bildschirm konzipiert, danach wird stufenweise das
+								Design für kleinere Bildschirmgrößen und -auflösungen
+								durch „Abspecken“ der Inhalte und Umsortieren des
+								Designs geschaffen</li>
+							<li>
+								Alte Webseiten können so renoviert werden, viele
+								Webdesigner werden bei ihren traditionell erarbeiteten
+								Techniken abgeholt
+							</li>
+							<li>Tendenz Potenziale auszuschöpfen macht Reduktion schwer</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Prinzipien von Responsive Web-Design - 4</h4>
+						<ul>
+							<li>Für welche Bildschirm- und Browserauflösungen wird
+								gestaltet?</li>
+							<li>Alle Bildschirme ohne Format- und
+								Auflösungsbeschränkungen.-max -widthwird auf
+								960px (oder 920px / 1024px oder 1440px) gesetzt, die
+								minimale Größe sind ältere Smartphones hochkant</li>
+							<li>
+								min –width wird gesetzt, um nicht jedes alte
+								Gerät noch bedienen zu müssen
+							</li>
+							<li>Breakpoints nach Notwendigkeiten des Designs</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Viele Mögliche Breakpoints</h4>
+						<figure class="">
+							<img src="../images/vl3/breakpoints.png" alt="Mögliche Breakpoints">
+							<figcaption>
+								<a href="https://arie.ls/2012/responsive-workflow/" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Entwicklungsworkflow</h4>
+						<figure class="">
+							<img src="../images/vl3/responsive-workflow.png" alt="Workflow">
+							<figcaption>
+								<a href="https://arie.ls/2012/responsive-workflow/" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+				</section>
+				<section data-name="Layout-Muster">
+					<section>
+						<h4>Verschiedene Muster für Inhalte - 1</h4>
+						<ul>
+							<li>Das klassische Boxendesign wird mit dem semantischen Ansatz fortgeführt</li>
+							<li>Großen Layout-Flächen wie header, section, aside, footer etc. erhalten über CSS die Eigenschaft display:block bzw. flex</li>
+							<li><a href="https://www.lukew.com/ff/entry.asp?1514" target="_blank">Luke Wroblewski</a> machte 2012 fünf Layout-Muster aus, die als Designansätze grundsätzlich denkbar sind</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Verschiedene Muster für Inhalte - 2</h4>
+						<figure class="">
+							<img src="../images/vl3/layout-muster.png" alt="layout-muster">
+							<figcaption>
+								<a href="https://www.lukew.com/ff/entry.asp?1514" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Layout-Muster - Mostly Fluid</h4>
+						<figure class="">
+							<img src="../images/vl3/mostly-fluid.png" height="400" alt="mostly-fluid">
+							<figcaption class="r-fit-text">
+								Der Ansatz ist, die verschiedenen Breiten nach
+								Breakpoints zu betrachten und simultan die daraus
+								resultierenden Layouts für die eigene Inhalts- und
+								Designidee zu gestalten.
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Layout-Muster - Column Drop</h4>
+						<figure class="">
+							<img src="../images/vl3/column-drop.png" height="400" alt="Column Drop">
+							<figcaption class="r-fit-text">
+								Der Ansatz geht von Desktop First aus. Er löst
+								mehrspaltiges Design durch „Fallenlassen“ einzelner
+								Elemente unter den (teils noch mehrspaltigen) Hauptinhalt
+								schrittweise auf.
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Layout-Muster - Layout Shifter</h4>
+						<figure class="">
+							<img src="../images/vl3/layout-shifter.png" alt="Layout Shifter">
+							<figcaption class="r-fit-text">
+								Dieser Ansatz erweitert die Ideen zuvor um Neudesign
+								bestimmter Elemente bei Formatänderungen (horizontale
+								versus vertikale Navigation, Bildformate und Dateiformate
+								etc.).
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Layout-Muster - Tiny Tweeks</h4>
+						<figure class="">
+							<img src="../images/vl3/tiny-tweeks.png" alt="Tiny Tweeks">
+							<figcaption class="r-fit-text">
+								Der Schwerpunkt liegt hier auf einem einfachsten Layout
+								(meist einer Spalte) kombiniert mit zahlreichen
+								Maßnahmen der fluiden Anpassung von Schriftgrößen
+								und -layout, Bild- und Videodateien, farblicher Gestaltung.
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Layout-Muster - Off Canvas</h4>
+						<figure class="">
+							<img src="../images/vl3/off-canvas.png" alt="Off Canvas">
+							<figcaption class="r-fit-text">
+								Es wird versucht, die Fähigkeit von
+								Smartphones und Tablets zu nutzen,
+								Spalten links und rechts erst auf
+								Anforderung in den Bildschirm über-
+								deckend oder verdrängend einzufahren.
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Layout-Muster - Verweise</h4>
+						<ul>
+							<li>Ein anderer Beitrag diskutiert diese Ansätze im Detail und
+								verweist auf aktuellere Ideen dazu:
+								<a href="https://bradfrost.github.io/this-is-responsive/patterns.html" target="_blank">https://bradfrost.github.io/this-is-responsive/patterns.html</a>
+							</li>
+							<li>
+								<a href="https://www.lukew.com/ff/entry.asp?1517" target="_blank">Siehe auch</a>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Layout-Muster - Beispiele - 1</h4>
+						<figure class="">
+							<img src="../images/vl3/layout-examples.png" alt="Layout-Muster Beispiele">
+							<figcaption class="">
+								<a href="https://de.slideshare.net/slideshow/responsive-design-pov/12760714" target="_blank">Source</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Layout-Muster - Beispiele - 2</h4>
+						<figure class="">
+							<img src="../images/vl3/layout-examples2.png" alt="Layout-Muster Beispiele">
+							<figcaption class="">
+								<a href="https://de.slideshare.net/slideshow/responsive-design-pov/12760714" target="_blank">Source</a>
+							</figcaption>
+						</figure>
+					</section>
+				</section>
+				<section data-name="Navigations-Elemente">
+					<section>
+						<h4>Navigationsmuster</h4>
+						<ul>
+							<li>Navigation zwischen Informationsangeboten ist sehr wichtig</li>
+							<li>Dafür werden einfache und verschachtelte Menüs eingesetzt</li>
+							<li>Je kleiner der Bildschirm, um so mehr konkurrieren vorhandener Platz, Navigationsübersicht und Schriftgröße</li>
+							<li>Für Touchscreens ist sowieso auf größere Schaltflächen auszuweichen</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Navigationsmuster - Top Navigation</h4>
+						<figure class="">
+							<img src="../images/vl3/nav-1.png" alt="Top Navigation">
+						</figure>
+					</section>
+					<section>
+						<h4>Navigationsmuster - Top Navigation - Problem</h4>
+						<figure class="">
+							<img src="../images/vl3/nav-2.png" alt="Top Navigation">
+						</figure>
+					</section>
+					<section>
+						<h4>Navigationsmuster - Icon navigation</h4>
+						<figure class="">
+							<img src="../images/vl3/nav-3.png" alt="Top Navigation">
+						</figure>
+					</section>
+					<section>
+						<h4>Navigationsmuster - Footer (Anker) Navigation</h4>
+						<ul>
+							<li>Da größere Navigation im Kopf auf kleinen Bildschirmen stört, bringt man sie im Footer an</li>
+							<li>Per Verweis-Button im Kopf kann evtl. dorthin gesprungen (durchgescrollt) werden</li>
+							<li>Über die Navigation oder mit einem Rücksprung ist eine Navigation möglich</li>
+							<li>Diese Navigation ist gewöhnungsbedürftig, aber leicht erweiterbar, wenn die Website wächst</li>
+							<li><a href="https://contentsmagazine.com/index.html#first" target="_blank">Z.B.</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Navigationsmuster - Select Menu Navigation</h4>
+						<figure class="">
+							<img src="../images/vl3/nav-4.png" alt="Select Menu Navigation">
+						</figure>
+					</section>
+					<section>
+						<h4>Navigationsmuster - Select Menu Navigation - Problem</h4>
+						<ul>
+							<li>Navigation wird zu Drop-Down-Box (festes Design)</li>
+							<li>Nur Workarounds für Untermenüs</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Navigationsmuster - Select Menu Navigation</h4>
+						<figure class="">
+							<img src="../images/vl3/nav-4-2.png" alt="Select Menu Navigation">
+						</figure>
+					</section>
+					<section>
+						<h4>Toggle-Menu („Burger Menu“)</h4>
+						<ul>
+							<li>Das Menu wird bei kleineren Bildschirmen nur noch als Ikone im Kopf dargestellt und nur bei Nutzerinteraktion dynamisch ein- bzw. wieder ausgeblendet</li>
+							<li>Die Richtung der Überblendung ist wählbar</li>
+							<li>Bootstrap biete hierfür z.B. eine größere <a href="https://getbootstrap.com/docs/5.3/components/navbar/" target="_blank">Auswahl an Möglichkeiten</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Navigationsmuster - Select Menu Navigation</h4>
+						<figure class="">
+							<img src="../images/vl3/nav-5.png" alt="Select Menu Navigation">
+						</figure>
+					</section>
+					<section>
+						<h4>Off-Canvas Menu</h4>
+						<ul>
+							<li>Auch hierfür bietet Bootstrap biete eine <a href="https://getbootstrap.com/docs/5.3/components/offcanvas/" target="_blank">Auswahl an Elementen</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Navigationsmuster - Off-Canvas Menu</h4>
+						<figure class="">
+							<img src="../images/vl3/nav-6.png" alt="Off-Canvas Menu">
+						</figure>
+					</section>
+					<section>
+						<h4>Navigationsmuster - Full Screen Menus</h4>
+						<figure class="">
+							<img src="../images/vl3/nav-7.png" alt="Full Screen Menus">
+						</figure>
+					</section>
+					<section>
+						<h4>Navigationsmuster - Weitere Muster</h4>
+						<ul>
+							<li>Eine andere Variante des Off-Canvas Menüs ist so konstruiert, dass das Menü unter der betrachteten Webseite liegt</li>
+							<li>Die obere Webseite schnappt dann zurück, wenn nicht, navigiert wird</li>
+							<li><a href="https://www.uxpin.com/studio/blog/navigation-ui/" target="_blank">Weitere Beispiele</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Navigationsmuster - Weitere Ansätze</h4>
+						<ul>
+							<li>Neuester Trend ist es, nur noch mit der Touch-Geste Swipe oder mit der Maus-Geste Klicken-und-Ziehen zu arbeiten</li>
+							<li>Die Angebote müssen dafür einfach strukturiert (Tiny Tweeks, Off-Canvas) und nicht zu umfangreich sein</li>
+							<li>Die Navigation erfolgt dann über Verlinkung zum nächsten Angebot / Seitenzustand</li>
+						</ul>
+					</section>
+				</section>
+				<section data-name="Aktuelle Trends">
+					<section>
+						<h4>Aktuelle Layout Trends</h4>
+						<ul>
+							<li>
+								Der Trend geht dahin, Boxendesign zu vermeiden und die
+								semantischen Rahmenelemente mehr in einer (!) Spalte
+								zu verwalten
+							</li>
+							<li>
+								Unterschiedliche Designs sollten dann durch eine Art
+								„Choreografie“ (Tanz der Rahmenelemente) zu flexiblen
+								neuen Arrangements entstehen
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Aktuelle Layout Trends</h4>
+						<ul>
+							<li>
+								Alles untereinander zu schieben, wäre dann die
+								schwächste Lösung – Einrücken zwischen andere
+								Elemente, seitliches Nebeneinanderstellen, verschieben
+								aus einem Rahmenelement in ein anderes deutlich stärker
+							</li>
+							<li>Single Page applications Frameworks wie Angular, Next.js oder React basieren auf Responsiven Elementen und Designs</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Aktuelle Layout Trends</h4>
+						<ul class="r-fit-text">
+							<li><a href="https://www.w3schools.com/html/html_responsive.asp" target="_blank">Beispiele für neue Ansätze</a></li>
+							<li><a href="https://css-tricks.com/content-folding/" target="_blank">Content Folding</a></li>
+							<li><a href="https://web.dev/articles/responsive-web-design-basics?hl=de" target="_blank">Google Dev Guide für Responsive Design</a></li>
+							<li><a href="https://www.smashingmagazine.com/2011/01/guidelines-for-responsive-web-design/" target="_blank">What is Responsive Design</a></li>
+						</ul>
+					</section>
+				</section>
+				<section>
+					<h4>Literatur</h4>
+					<ul class="r-fit-text">
+						<li>Andreas Hecht, Responsive Navigation: Design-Trends 2015, Febr. 2015,
+							<a href="https://www.drweb.de/magazin/responsive-navigation-design-trends-2015-53019/" target="_blank">Quelle</a> - bebilderte schöne Lösungen mit Links zu den technologischen Lösungen</li>
+						<li>Patrick McNeil, 3 Essential Navigation Trends for 2015,
+							<a href="https://www.webdesignerdepot.com/2015/01/3-essential-navigation-trends-for-2015/" target="_blank">Navigationstrends</a></li>
+						<li><a href="https://www.amyma.lu/off-canvas-responsive-web-design.html" target="_blank">Off-Canvas Vorstellung</a></li>
+						<li><a href="https://www.elmastudio.de/off-canvas-layouts-in-responsive-webdesigns/" target="_blank">Off-Canvas Navigation</a></li>
+						<li><a href="https://getbootstrap.com/docs/5.3" target="_blank">Bootstrap 5</a></li>
+					</ul>
+				</section>
+				<section>
+					<h4>Quellen - 1</h4>
+					<ul class="r-fit-text">
+						<li>Responsive und Adaptive Web Design:<a href="https://www.pinterest.de/pin/27021666484337159/" target="_blank">Quelle</a></li>
+						<li>Ryan Boudreaux, Unterschied zwischen Adaptive und Responsive Web Design:<a href="https://www.techrepublic.com/blog/web-designer/what-is-the-difference-between-responsive-vs-adaptive-web-design/" target="_blank">Quelle</a></li>
+						<li>Nathan Smith, <a href="https://speakerdeck.com/nathansmith/960-grid-system" target="_blank">Quelle</a></li>
+						<li><a href="https://www.appmatics.de/blog/device-fragmentation-android-stellt-entwickler-vor-probleme/" target="_blank">Mobile Responsive</a></li>
+						<li><a href="https://thenewcode.com/586/CSS-Fluid-Image-Techniques-for-Responsive-Site-Design" target="_blank">Responisve Design</a></li>
+						<li><a href="https://coding.smashingmagazine.com/2009/06/02/fixed-vs-fluid-vs-elastic-layout-whats-the-right-one-for-you/" target="_blank">Fluid Design</a></li>
+						<li><a href="https://webdesignerwall.com/trends/inspiration-fluid-responsive-design" target="_blank">Fluid and responsive Design</a></li>
+					</ul>
+				</section>
+				<section>
+					<h4>Quellen - 2</h4>
+					<ul class="r-fit-text">
+						<li>Ethan Marcotte, Fluid Grids, <a href="https://alistapart.com/article/fluidgrids/" target="_blank">Quelle</a></li>
+						<li>Fluid Grid Layout Tutorial For Responsive Web Design - <a href="https://1stwebdesigner.com/fluid-grid-layout/" target="_blank">Quelle</a></li>
+						<li>F55+ Great and Useful Tools for Responsive Webdesign, <a href="https://onextrapixel.com/55-great-and-useful-tools-for-responsive-web-design/" target="_blank">Quelle</a></li>
+						<li>2012, Vorschläge für Grenzen bei {3,4,6}-Media-Query-Grenzen, <a href="https://www.metaltoad.com/blog/simple-device-diagram-responsive-design-planning" target="_blank">Quelle</a></li>
+						<li>Aug. 2020, 20 CSS Frameworks and Boilerplates</li>
+						<li><a href="https://mashable.com/2013/04/26/css-boilerplates-frameworks/?europe=true" target="_blank">Quelle</a></li>
+						<li>Buch: Andrea Ertel, Kai Laborenz, „Responsive Webdesign:
+							Anpassungsfähige Websites programmieren und gestalten“, Galileo
+							Computing, 12.12.2013 / 12.12.2014 – future books</li>
+					</ul>
+				</section>
+				<section>
+					<h4>Abspann</h4>
+					<p>
+						Drittes Level geschafft weitere Folgen!
+					</p>
+					<p>Fragen und Feedback?</p>
+				</section>
+			</div>
+		</div>
+		<footer class="slide-footer">
+			Sebastian Pötter - HTWK - MMWP2024 - VL03 - Responsive Design 1
+		</footer>
+		<script src="../dist/reveal.js"></script>
+		<script src="../plugin/notes/notes.js"></script>
+		<script src="../plugin/markdown/markdown.js"></script>
+		<script src="../plugin/highlight/highlight.js"></script>
+		<script src="../plugin/simplemenu/simplemenu.js"></script>
+		<script src="../plugin/copycode/copycode.js"></script>
+		<script>
+			Reveal.initialize({
+				maxScale: 1.0,
+				margin: 0.2,
+				controls: true,
+				progress: true,
+				center: true,
+				hash: true,
+				slideNumber: 'c/t',
+				plugins: [RevealMarkdown, RevealHighlight, RevealNotes, CopyCode, Simplemenu],
+				simplemenu: {
+					barhtml: {
+						header: "<div class='menubar' style='font-size: 1.5rem'><ul class='menu'></ul></div>",
+						footer: ""
+					}
+				},
+			});
+		</script>
+	</body>
+</html>
