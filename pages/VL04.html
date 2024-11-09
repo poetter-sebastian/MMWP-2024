@@ -1,0 +1,777 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>MMWP2024 - LV04</title>
+
+		<link rel="stylesheet" href="../dist/reset.css">
+		<link rel="stylesheet" href="../dist/reveal.css">
+		<link rel="stylesheet" href="../dist/theme/white.css">
+		<link rel="stylesheet" href="../dist/style.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="../plugin/highlight/monokai.css">
+		<link rel="stylesheet" href="../plugin/simplemenu/simplemenu.css">
+		<link rel="stylesheet" href="../plugin/copycode/copycode.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-transition="fade" data-state="hide-menubar hide-menu" data-background-image="../images/vl4/presentationstart.png" data-background-position="bottom" data-background-opacity="0.1">
+					<h1>Responsive Design 2</h1>
+					<h3>MMWP2024 - LV04</h3>
+				</section>
+				<section data-name="TOC" data-sm="false">
+					<h4>Inhaltsverzeichnis</h4>
+					<ul class="menu"></ul>
+				</section>
+				<section data-name="Organisation">
+					<section>
+						<h4>Inhaltsschwerpunkte</h4>
+						<ul>
+							<li>Gerätearten und Darstellung</li>
+							<li>Adaptive Web Design</li>
+							<li>Responsive Web Design</li>
+							<li>Layout-Muster</li>
+							<li>Seitennavigation</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Voraussetzung</h4>
+						<p>Der Ausgangspunkt dieser Vorlesungsreihe ist das Wissen über HTML-CSS-Layouting</p>
+						<ul>
+							<li>Fixed-Box layout</li>
+							<li>Flex-Box layout</li>
+							<li>Grid-Layout</li>
+							<li>Responsive CSS-Regeln</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Ziele</h4>
+						<ul>
+							<li>Vorstellung aktueller Media-Rules</li>
+							<li>Erklärung von fluiden Medien</li>
+							<li>Nennung von Text-, Bilder- und Video-Design Möglichkeiten in HTML5 und CSS3</li>
+						</ul>
+					</section>
+				</section>
+				<section data-name="Media Rules">
+					<section>
+						<h4>Media Queries</h4>
+						<ul>
+							<li>Media Types und Queries sind Elemente von CSS2, die in CSS3 ausgebaut und verändert worden sind</li>
+							<li>Für Responsive Design ist die Größe des Zielbildschirms der aktuellen Anzeige entscheidend, die nach ihrer Breite in CSS-px abgefragt wird</li>
+							<li>Anhand der Tabellen der verbreitetsten Bildschirmgrößen und anhand des eigenen Designentwurfs werden Änderungspunkte im Design festgelegt</li>
+							<li>Danach erfolgen die unterschiedlichen CSS-Angaben</li>
+							<li>Neuste Funktionen kamen im Mai 2024, <a href="https://www.w3.org/TR/mediaqueries-3/" target="_blank">siehe W3C</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Media Queries - Definition</h4>
+						<ul class="r-fit-text">
+							<li>@media Regeln werden in Media Queries verwendet, um verschiedene Styles für verschiedene Medien anzubieten</li>
+							<li>Mit Media Queries können verschiedene
+								Eigenschaften von Medien abgefragt und geprüft werden
+								<ul>
+									<li>Breite und Höhe des Bildschirms (Viewport)</li>
+									<li>Breite und Höhe des Geräts (Device)</li>
+									<li>Orientierung des Bildschirms (Landscape oder Portrait)</li>
+									<li>Die Auflösung des Bildschirms</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Logik von Media Queries</h4>
+						<figure class="">
+							<img src="../images/vl4/mediaquery-structe.png" alt="Logik von Media Queries">
+							<figcaption>
+								<a href="https://www.w3.org/TR/mediaqueries-4/" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>CSS-Syntax von Media Queries</h4>
+						<figure class="">
+							<img src="../images/vl4/mediaquery-syntax.png" alt="CSS-Syntax">
+							<figcaption>
+								<a href="https://www.w3.org/TR/mediaqueries-4/" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+						<ul class="r-fit-text">
+							<li>not – ist eine logische Verneinung (das Gegenteil gilt!)</li>
+							<li>only – ist ein Schlüsselwort als Hinweis für ältere Browser das Query anzuwenden</li>
+							<li>and - kombiniert die Medieneigenschaften (mediafeatures) mit dem konkreten Typ Medium oder miteinander</li>
+							<li>or - ist ein logisches oder </li>
+						</ul>
+					</section>
+					<section>
+						<h4>Verwendung von Media Queries</h4>
+						<figure class="">
+							<img src="../images/vl4/mediaquery-usage.png" alt="CSS-Syntax">
+							<figcaption>
+								<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@import" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Mögliche Werte für Media Queries</h4>
+						<ul>
+							<li>width, device-width</li>
+							<li>height, device-height</li>
+							<li>orientation, aspect-ratio, device-aspect-ratio, resolution</li>
+							<li>(seltener) color, color-index, monochrome</li>
+							<li>scan (TV), Grid</li>
+							<li><a href="https://www.w3.org/TR/mediaqueries-3/#media1" target="_blank">Erklärung und Beispiele</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Medien Typen</h4>
+						<figure class="">
+							<img src="../images/vl4/mediaquery-types.png" alt="Medien Typen">
+							<figcaption>
+								<a href="https://www.w3schools.com/cssref/css3_pr_mediaquery.php" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Browser support - Allgemein</h4>
+						<figure class="">
+							<img src="../images/vl4/mediaquery-support.png" alt="Medien Typen">
+							<figcaption>
+								<a href="https://caniuse.com/?search=css%20media%20queries" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Browser support - Features wie Auflösung</h4>
+						<figure class="">
+							<img src="../images/vl4/mediaquery-support-2.png" alt="Medien Typen">
+							<figcaption>
+								<a href="https://caniuse.com/?search=css%20media%20queries" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>"Neues" Media Queries Level 4</h4>
+						<ul>
+							<li>Originale Spezifikation: <a href="https://www.w3.org/TR/mediaqueries-4/" target="_blank">Quelle</a></li>
+							<li>Grundlegende Referenz: <a href="https://developer.mozilla.org/de/docs/Web/CSS/Media_Queries/Using_media_queries" target="_blank">Quelle</a></li>
+							<li>Hilfreiche Erläuterungen von Jordan Moore zu: script, hover, pointer - <a href="https://jordanm.co.uk/2013/11/11/potential-use-cases-for-script-hover-and-pointer.html" target="_blank">Quelle</a></li>
+							<li>Detailliertere Erläuterungen zu Varianten von pointer, hover: <a href="https://dev.opera.com/articles/media-features/" target="_blank">Quelle</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Media Queries Level 4</h4>
+						<p>Um für Smartphones, Tablet-PCs und Desktop-PCs spezifisch CSS zu definieren, werden nach dem allgemeinen Teil der CSS-Datei weitere CSS-Abschnitte definiert:</p>
+						<pre>
+							<code>
+@media only screen and (max-width: 480 px) { ...}
+@media only screen and (min-width: 480 px) and (max-
+width: 960 px) { ... }
+@media onlyscreen and (min-width: 960 px) { ... }
+							</code>
+						</pre>
+						<p class="r-fit-text">Das Design für übergroße Bildschirme muss ggf. im letzten Eintrag abgefangen werden, z.B. durch Zentrieren der Webseite im Bild</p>
+					</section>
+					<section>
+						<h4>Das Schlüsselwort only</h4>
+						<ul>
+							<li>Das Wort “only” sorgt also dafür, dass ältere Webbrowser, die den Media Type screen nicht kennen, die Anweisung ignorieren werden</li>
+							<li>Standard: <a href="https://www.w3.org/TR/css3-mediaqueries/#media0" target="_blank">Quelle</a></li>
+							<li>Siehe z.B. auch <a href="https://stephen.io/mediaqueries/" target="_blank">Stephen.io</a> für iPads & iPhones</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Geplante Media Queries Features - Media Queries Level 5</h4>
+						<ul>
+							<li>Seit 2021 ist ein neues Level 5 von Media queries in planung und wird seit dem vom W3C erarbeitet</li>
+							<li>Neuerungen sind z.B.
+								<ul>
+									<li>Combining Media Queries</li>
+									<li>tty, tv, projection, handheld, braille, embossed, aural, speech</li>
+									<li>Ranges, prefers-reduced-data, prefers-light, prefers-dark</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Media Queries Level 5 - Features</h4>
+						<figure class="">
+							<img src="../images/vl4/mediaquery-level5.png" alt="Media Queries Level 5">
+							<figcaption>
+								<a href="https://www.w3.org/TR/mediaqueries-5/#media-types" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Media Queries Level 5 - Features and Ranges</h4>
+						<figure class="">
+							<img src="../images/vl4/mediaquery-level5-2.png" alt="Media Queries Level 5">
+							<figcaption>
+								<a href="https://www.w3.org/TR/mediaqueries-5/#media-types" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Hilfreiche Links zu Media Queries</h4>
+						<ul>
+							<li>Media queries: <a href="https://css-tricks.com/snippets/css/media-queries-for-standard-devices/" target="_blank">Quelle</a></li>
+							<li>Ein Diskussionsbeitrag, warum device-orientierte Media Queries fehlerbehaftet sein können: <a href="https://responsivedesign.is/articles/why-you-dont-need-device-specific-breakpoints/" target="_blank">Quelle</a> (Justin Avery, 2014)</li>
+							<li>Wie man die richtigen Breakpoints wählt: <a href="https://responsivedesign.is/news/2016/12/the-100-correct-way-to-do-css-breakpoints/" target="_blank">Quelle</a> (Justin Avery, 2016</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Media Queries - Geeignete Breakpoints</h4>
+						<figure class="">
+							<img src="../images/vl4/mediaquery-breakpoints.png" alt="Geeignete Breakpoints">
+							<figcaption>
+								<a href="https://responsivedesign.is/news/2016/12/the-100-correct-way-to-do-css-breakpoints/" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Zusätzlich: Zoom-Wert bei Smartphones - 1</h4>
+						<ul>
+							<li>Viewport Einstellungen kennen wir bereits</li>
+							<li>Ohne die Anweisung width=device-width wird die Webseite für Smartphones erst gerendert und dann auf die Breite (Android: 800px, iOS: 980px) des Viewports herunterskaliert</li>
+							<li>Im Ergebnis werden Umbruchspunkte (break points) zur Steuerung durch die Media Queries gar nicht erst angesprochen und bleiben unwirksam</li>
+							<li>Nur bei initial-scale=1 wird die Webseite in beiden Modi des Smartphones gleich angezeigt</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Zusätzlich: Zoom-Wert bei Smartphones - 2</h4>
+						<ul>
+							<li>Wenn man maximum-scale nicht verwendet und Zoomen verhindern will, hilft folgendes: user-scalable</li>
+							<li>Mit diesem Attribut kann man definieren, ob der Nutzer auf der Seite zoomen kann (=yes) (default) oder nicht (=no)</li>
+							<li>Manche Autoren fangen Smartphones beim Wechsel der Ansichten portrait und landscape mit Media Queries ab</li>
+							<li>Z.B. <a href="https://wiki.selfhtml.org/wiki/CSS/Media_Queries" target="_blank">Quelle</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>shrink-to-fit=no</h4>
+						<ul class="r-fit-text">
+							<li>shrink-to-fit=no ist eine sinnvolle Ergänzung bei der viewport-Angabe, gilt aber nur für Safari, und zwar für iOS ab V. 9 bei Safari im Split oder Side-View-Modus</li>
+							<li>Dieser Modus erlaubt es, mehrere Apps gleichzeitig nutzen zu können oder eben zwei Fenster gleichzeitig zu öffnen </li>
+							<li>Ohne die Angabe wird alles (vgl. Elemente fixer Breite) so verkleinert, dass es auf den geringeren verfügbaren Platz passt</li>
+							<li>Wenn wir beispielsweise ein 900px breites Element haben, so wird die Webseite gesamt zu verkleinert, dass dieses Element ganz zu sehen ist</li>
+							<li>Mit shrink-to-fit=no findet diese Verkleinerung hingegen nicht statt, der Benutzer muss bei einem 900px breiten Element beispielsweise horizontal scrollen</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Flexible Breiten - 1</h4>
+						<ul>
+							<li>Um in Browserbreiten zwischen den Punkten des radikalen Designwechsels flexible Boxenbreiten realisieren zu können, sind Prozentangaben zu den Breiten und zu den Margins (bei flexbox-Einsatz) das Mittel der Wahl</li>
+							<li>Ein einfaches dreispaltiges Layout für Desktops könnte man z.B. wie folgt anlegen, wobei die Summe der Breiten je Design nachzurechnen wäre (max. 100%, besser 99%)</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Flexible Breiten - 2</h4>
+						<pre>
+							<code data-trim data-noescape data-line-numbers>
+.flexible-main-parent-container {
+	width: 100%, ... }
+.left-sidebar { width: 17%; max-width: 17%;
+	min-width: 17%; margin-left: 1.5%; ... }
+.right-sidebar {width: 18%; max-width: 18%;
+	min-width: 18%; margin-right: 1.5%; ... }
+
+@media screen and (min-width: 1280){
+	....flexible-main-parent-container {
+	min-width: 56%; margin: 0 2% 0 2%; ... }
+... }
+							</code>
+						</pre>
+					</section>
+				</section>
+				<section data-name="Fluide Medien">
+					<section>
+						<h4>Fluid Design Medien</h4>
+						<ul>
+							<li>Beachtung von Bildschirmgröße, Bildschirmauflösung und Betrachtungsabstand bei Texten, Bildern und Videos</li>
+							<li>Diese Maßnahmen entstanden unabhängig von den Überlegungen zum Grunddesign von Webseiten</li>
+							<li>Ein Stichwort dazu ist Fluid Design</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Fluid Design TEXT - 1</h4>
+						<ul>
+							<li>Es sollen Schriften der Größe relativ angepasst werden</li>
+							<li>Browser haben meist 16px Standard-schriftgröße, die man fast immer so belässt</li>
+						</ul>
+						<pre>
+							<code>
+body { font: normal 100%sans-serif; }
+body { font-size: 100%; }
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Fluid Design TEXT - 2</h4>
+						<ul>
+							<li>Eine gute Website zur Adaption von Fonts ist: <a href="https://www.webdesignerdepot.com/2012/10/a-simple-guide-to-responsive-typography/" target="_blank">WebDesignerDepot.com</a></li>
+							<li>Css-Tricks bietet auch eine gute Anleitung für fluide Typography: <a href="https://css-tricks.com/snippets/css/fluid-typography/" target="_blank">Quelle</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Fluid Design TEXT - Beispiele</h4>
+						<ul>
+							<li>Will man die Standardschriftgröße z.B. auf 15px bringen, muss man erst rechnen, dann zuweisen</li>
+							<li>(Zielgröße/Kontextgröße) .100 =(15/16) .100 = 93,75 % <pre><code>body { font-size: 93.75%; }</code></pre></li>
+							<li>Weitere Elemente errechnen ihre Schriftgröße analog, wobei immer die Standardschriftgröße des unmittelbaren Elterncontainers zählt: <pre><code>h1 { font-size: 1.466666667 em;}</code></pre></li>
+							<li>bei 22px Ziel- und 15px Kontextgröße</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Fluid Design TEXT - Probleme</h4>
+						<ul class="r-fit-text">
+							<li>Das Verfahren ist mühevoll, da man in der Hierarchie der Elemente in HTML5 immer erst einmal die Größe des Textes in px festlegen </li>
+							<li>Relativ zur Textgröße muss dann in Prozent im Elternelement ermittelt werden</li>
+							<li>Hilfe bieten Frameworks wie Bootstrap, oder auf die Textgröße im Element &lt;html&gt; oder &lt;body&gt; direkt bezug nehmen</li>
+							<li>CSS-Clamp ist auch eine Möglichkeit für fluiden Text: <a href="https://piccalil.li/blog/fluid-typography-with-css-clamp/" target="_blank">Quelle</a></li>
+							<li>Es gibt auch Bibliotheken, welche Javascript zur Berechnung nehmen: <a href="https://letteringjs.com/" target="_blank">Quelle</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Fluid Design TEXT - Pixel und EM</h4>
+						<figure class="">
+							<img src="../images/vl4/fluidtext-table.png" alt="Geeignete Breakpoints">
+							<figcaption>
+								<a href="https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Values_and_units" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Fluid Design TEXT - EM</h4>
+						<ul>
+							<li>Schriftgrößen können in emmit Bezug zur Schriftgröße 1em im direkten Elternelement oder in remmit Bezug zur Schriftgröße im &lt;html&gt;- oder &lt;body&gt;-Element angeben werden</li>
+							<li>Dazu belässt man die Zuweisung <pre><code>font-size: 100%; /* 16px */</code></pre></li>
+							<li>im entsprechenden Bezugselement zu Beginn. Evtl. ist eine explizite Fontangabe zuvor erforderlich, damit der CSS-Interpreter das realisiert</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Fluid Design TEXT - REM und EM Bedeutung</h4>
+						<figure class="">
+							<img src="../images/vl4/fluidtext-calc.png" alt="REM und EM Bedeutung">
+							<figcaption>
+								<a href="https://die-netzialisten.de/wordpress/em-und-rem-was-ist-der-unterschied/" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Fluid Design TEXT - EM Browsersupport</h4>
+						<figure class="">
+							<img src="../images/vl4/fluidtext-support.png" alt="EM Browsersupport">
+							<figcaption>
+								<a href="https://caniuse.com/?search=em" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Fluid Design TEXT - REM Browsersupport</h4>
+						<figure class="">
+							<img src="../images/vl4/fluidtext-support-2.png" alt="REM Browsersupport">
+							<figcaption>
+								<a href="https://caniuse.com/?search=rem" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Fluid Design TEXT - Support für alle Geräte</h4>
+						<ul class="r-fit-text">
+							<li>Um alle Browser zu bedienen, kann man vor der Angabe in rem eine feste Schriftgröße zusätzlich angeben</li>
+							<li>Der Abstand vom Bildschirm macht unterschiedliche Schriftgrößen empfehlenswert, was unter dem Stichwort „Typografische Tonleiter“ nachgesehen werden kann</li>
+							<li>Für das Webdesign ist es nun ausreichend, die empfohlenen Schriftgrößen je Augenabstand vom Gerät zu beachten</li>
+							<li>Daraus ergeben sich dann Umrechnungsfaktoren je nach Bereich der Media-Query-Angaben</li>
+							<li>Hier zum Nachlesen: <a href="https://www.uxmatters.com/mt/archives/2013/03/common-misconceptions-about-touch.php" target="_blank">Quelle</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Fluid Design TEXT - Common Misconceptions About Touch</h4>
+						<figure class="">
+							<img src="../images/vl4/fluidtext-viewport.png" alt="Common Misconceptions About Touch">
+							<figcaption>
+								<a href="https://www.uxmatters.com/mt/archives/2013/03/common-misconceptions-about-touch.php" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Fluid Design TEXT - Berechnung</h4>
+						<figure class="">
+							<img src="../images/vl4/fluidtext-berechnung.png" alt="Common Misconceptions About Touch">
+							<figcaption>
+								<a href="https://websemantics.uk/tools/responsive-font-calculator/" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Fluid Design TEXT - Support für alle Geräte</h4>
+						<ul class="r-fit-text">
+							<li>HTML5 mit CSS3 bietet erstmalig die Möglichkeit, Fonts über Typekit ID oder aus Google Web Fonts im Kontext des Aufrufs der Webseite mit auszuliefern</li>
+							<li>Eigene Schriftarten können mit Tools - z.B. <a href="https://www.drweb.de/10-kostenlose-tools-fuers-schriftdesign-56484/" target="_blank">Quelle</a> erzeugt werden</li>
+							<li>Es wird empfohlen, Fontsdateien immer lokal zu lagern, da sich URLs ändern können</li>
+							<li>Google-Fonts und ähnliche Dienste sollten <b>IMMER</b> lokal benutzt werden, da der automaitische Einsatz (online) meist gegen die DSGVO verstößt</li>
+							<li>Zum Nachlesen von aktuellen Gesetzen und Rechtsprechungen zu diesem Thema: <a href="https://www.datenschutz.org/google-fonts-dsgvo/" target="_blank">Quelle</a></li>
+							<li>Außerdem müssen oft mehrere Fontsdateiformate angeboten werden, um alle Browser zu bedienen</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Fluid Design TEXT - Fonts</h4>
+						<ul class="r-fit-text">
+							<li>Es gibt weitere zahlreiche Schriftformate: EOT, WOFF, TTF und SVG</li>
+							<li>Nicht nur Schrift können über Fonts dargestellt werden sondern auch Bilder</li>
+							<li>Um weniger Bilder einzeln nachladen zu müssen, verpacken Webdesigner mitunter Icons von Schaltleisten oder auch Bedienelementen in speziell erzeugten Fonts</li>
+							<li>Z.B. <a href="https://fontawesome.com/" target="_blank">Quelle</a> bietet eine große Sammlung an Icons an, welche sich als Font einbinden lassen</li>
+							<li>Die Icons werden dann wie Text aufgerufen und einzeln mit Boxen platziert</li>
+						</ul>
+					</section>
+				</section>
+				<section data-name="Bilder- und Video-Design">
+					<section>
+						<h4>Responsive Bilder und Videos</h4>
+						<figure class="">
+							<img src="../images/vl4/fluidpicture-into.png" width="550" alt="Responsive Bilder und Videos">
+							<figcaption>
+								<a href="https://www.invisionapp.com/inside-design/examples-responsive-web-design/" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Responsive Images - Guides für Anwendungen mit Beispielen</h4>
+						<ul>
+							<li>&lt;picture&gt; (z.T. in &lt;figure&gt;): srcset und sizes</li>
+							<li><a href="https://web.dev/learn/design/responsive-images?hl=de" target="_blank">Google Guide</a></li>
+							<li><a href="https://www.w3schools.com/howto/howto_css_image_responsive.asp" target="_blank">W3Schools</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>HTML5 - Picture element - Source</h4>
+						<figure class="">
+							<img src="../images/vl4/fluidpicture-sources.png" alt="Source">
+							<figcaption>
+								<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/source" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>HTML5 - Picture element - SrcSet</h4>
+						<figure class="">
+							<img src="../images/vl4/fluidpicture-sources-2.png" alt="SrcSet">
+							<figcaption>
+								<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/source" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Responsive Images - Beispiel - 1</h4>
+						<p>Bis 600px Breite – erstes Bild, danach zweites Bild. Gleichzeitig fallback: &lt;img&gt; für ältere Browser</p>
+						<pre>
+							<code data-trim data-noescape data-line-numbers>
+&lt;figure&gt;
+	&lt;picture&gt;
+		&lt;source srcset=&quot;a-square.png&quot; media=&quot;(max-width: 600px)&quot;&gt;
+		&lt;img src=&quot;a-rectangle.png&quot; alt=&quot;BarneyFrank wears a suit and glasses.&quot;&gt;
+	&lt;/picture&gt;
+	&lt;figcaption&gt;Barney Frank, 2011&lt;/figcaption&gt;
+&lt;/figure&gt;
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Responsive Images - Beispiel - 2</h4>
+						<p>Durch die CSS-Angaben zu den Bildmaßen wird erreicht, dass gleich beim ersten Rendern der Webseite exakt Platz eingerichtet wird, auch wenn das Bild noch im Ladeprozess und damit nicht messbar sein sollte</p>
+						<pre>
+							<code data-trim data-noescape data-line-numbers>
+&lt;figure&gt;
+	&lt;style scoped&gt;
+		#a { width: 300px; height: 150px; }
+		@media (max-width: 600px) { #a { width: 100px;
+			height: 100px; } }
+	&lt;/style&gt;
+	&lt;picture&gt;
+		&lt;source srcset=&quot;a-square.png&quot; media=&quot;(max-width:600px)&quot;&gt;
+		&lt;img src=&quot;a-rectangle.png&quot; alt=&quot;Barney Frank wears a suit and glasses.&quot; id=&quot;a&quot;&gt;
+	&lt;/picture&gt;
+	&lt;figcaption&gt;Barney Frank, 2024&lt;/figcaption&gt;
+&lt;/figure&gt;
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Responsive Images - Beispiel - 3</h4>
+						<p>Alternative mit Angabe von height und width</p>
+						<pre>
+							<code data-trim data-noescape data-line-numbers>
+&lt;figure&gt;
+	&lt;style scoped media=&quot;(max-width: 600px)&quot;&gt;
+		#a { width: 100px; height: 100px; }
+	&lt;/style&gt;
+	&lt;picture&gt;
+		&lt;source srcset=&quot;a-square.png&quot; media=&quot;(max-width:
+		600px)&quot;&gt;
+		&lt;img src=&quot;a-rectangle.png&quot; width=&quot;300&quot;
+			 height=&quot;150&quot;
+			 alt=&quot;Barney Frank wears a suit and glasses.&quot;
+			 id=&quot;a&quot;&gt;
+	&lt;/picture&gt;
+	&lt;figcaption&gt;Barney Frank, 2011&lt;/figcaption&gt;
+&lt;/figure&gt;
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Responsive Images - Beispiel - 4</h4>
+						<p>Mehrere Bilder stehen zur Auswahl</p>
+						<pre>
+							<code data-trim data-noescape data-line-numbers>
+&lt;figure&gt;
+	&lt;picture&gt;
+		&lt;source media=&quot;(min-width: 45em)&quot; srcset=&quot;lrg.jpg&quot;&gt;
+		&lt;source media=&quot;(min-width: 32em)&quot; srcset=&quot;med.jpg&quot;&gt;
+		&lt;img src=&quot;small.jpg&quot; alt=&quot;The president giving an
+		award.&quot;&gt;
+	&lt;/picture&gt;
+	&lt;picture&gt;
+		&lt;source srcset=&quot;/uploads/100-marie-lloyd.webp&quot;
+				type=&quot;image/webp&quot;&gt;
+		&lt;source srcset=&quot;/uploads/100-marie-lloyd.jxr&quot;
+				type=&quot;image/vnd.ms-photo&quot;&gt;
+		&lt;img src=&quot;/uploads/100-marie-lloyd.jpg&quot; alt=&quot;&quot;
+			 width=&quot;100&quot; height=&quot;150&quot;&gt;
+	&lt;/picture&gt;
+&lt;/figure&gt;
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>HTML5 - Picture element - Browserunterstützung</h4>
+						<figure class="">
+							<img src="../images/vl4/fluidpicture-support.png" alt="Picture element - Browserunterstützung">
+							<figcaption>
+								<a href="https://caniuse.com/?search=picture" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Fluid Design Bild</h4>
+						<p>Um Bilder und Videos dynamisch in der Größe anzupassen und zugleich immer komplett zu zeigen, bindet man sie normal ein und legt dann in CSS folgendes fest</p>
+						<pre>
+							<code class="html">&lt;img src=&quot;myimage.jpg&quot; style=&quot;max-width:100%; height:auto;margin: 1rem 1rem 1rem 1rem;-ms-interpolation-mode: bicubic;&quot;/&gt;</code>
+						</pre>
+						<p>Das Bild passt sich damit an seinen Container an und wird proportional transformiert. Die letzte Zeile ist ein "Hack" für den IE bis IE9</p>
+					</section>
+					<section>
+						<h4>Fluid Design Bild - Abwägung von Bildergrößen</h4>
+						<ul>
+							<li>Man muss unterscheiden, besonders bei kleinen Bildern</li>
+							<li>Die Anweisung max-width: 100%; weist das Bild an, nie größer als die Breite seines Containers zu werden und selbst 100% seiner Breite nicht zu überschreiten</li>
+							<li>Die Anweisung width: 100%; hingegen erzwingt vom Bild, immer so groß wie sein Container zu sein. Kleine Bilder werden also sinnlos groß gestreckt</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Fluid Design Bild - Fluid Figure - 1</h4>
+						<p>Wenn man die Umgebung &lt;figure&gt; nutzt, dann bindet man die effektive Bildbreite an das äußere Element</p>
+						<pre>
+							<code data-trim data-noescape data-line-numbers>
+&lt;figure style=&quot;max-width:50%; margin: 1rem 1rem 1rem 1rem;&rdquo;&gt;
+	&lt;img src=&quot;myimage.jpg&quot; style=&quot;max-
+	width:100%;
+	height:auto; -ms-interpolation-mode:
+	bicubic;&quot;/&gt;
+	&lt;figcaption&gt;Ein flexibles Bild&lt;/figcaption&gt;
+&lt;/figure&gt;
+							</code>
+						</pre>
+						<p>Als &auml;u&szlig;ere Container k&ouml;nnen &lt;article&gt;, &lt;section&gt;oder &lt;aside&gt; dienen, oder auch andere</p>
+					</section>
+					<section>
+						<h4>Fluid Design Bild - Fluid Figure - 2</h4>
+						<p>float:left oder float:right im Element &lt;img&gt; – evtl., um glatte Ränder zu bekommen bzw. clear:both für die Bildunterschrift, sonst kann ein kurzes erstes Wort zwischen die Bilder rutschen</p>
+						<pre>
+							<code data-trim data-noescape data-line-numbers>
+&lt;figure style=&quot;max-width:50%; margin: 1rem 1rem 1rem
+	1rem;&quot;&gt;
+	&lt;img src=&quot;myimage.jpg&quot; style=&quot;max-width:47%;
+	height:auto; -ms-interpolation-mode: bicubic;
+	margin: 0.1rem;&quot;/&gt;
+	&lt;img src=&quot;myimage.jpg&quot; style=&quot;max-width:47%;
+	height:auto; -ms-interpolation-mode: bicubic;
+	margin: 0.1rem;&quot;/&gt;
+	&lt;figcaption&gt;Zwei flexible Bilder&lt;/figcaption&gt;
+&lt;/figure&gt;
+							</code>
+						</pre>
+						<p>Als &auml;u&szlig;ere Container k&ouml;nnen &lt;article&gt;, &lt;section&gt;oder &lt;aside&gt; dienen, oder auch andere</p>
+					</section>
+					<section>
+						<h4>Fluid Design Bild - Fluid Figure - 3</h4>
+						<p>Alternativ können Bilder bei Verkleinerung ihres Containers einfach beschnitten oder beschnitten und zugleich mit Scrollbalken versehen werden</p>
+						<pre>
+							<code data-trim data-noescape data-line-numbers>
+&lt;div style=&quot;max-width:50%; height:297px;
+	margin: 1rem 1rem 1rem 1rem; border: 1px solid #000;
+	overflow:scroll&quot;&gt;
+	&lt;img src=&quot;myimage.jpg&quot; width=&quot;365&quot; height=&quot;274&quot;/&gt;
+&lt;/div&gt;
+							</code>
+						</pre>
+						<p>Der Wert für overflow: kann auch auto oder hidden sein. Eine Anweisung float:right für &lt;img&gt; sorgt für eine feste rechte Seite</p>
+					</section>
+					<section>
+						<h4>Fluid Design Bild - Fluid Figure - 4</h4>
+						<p>Fließende Übergänge für ihre Größe verändernde Bilder kann man z.B. wie folgt in CSS anweisen</p>
+						<pre>
+							<code data-trim data-noescape data-line-numbers>
+-webkit-transition: max-width .5s ease-out;
+/* Saf3.2+, Chrome */
+-moz-transition: max-width .5s ease-out;
+/* FF4+ */
+-ms-transition: max-width .5s ease-out;
+/* IE10? */
+-o-transition: max-width .5s ease-out;
+/* Opera 10.5+ */
+transition: max-width .5s ease-out;
+							</code>
+						</pre>
+						<p>Der Wert für overflow: kann auch auto oder hidden sein. Eine Anweisung float:right für &lt;img&gt; sorgt für eine feste rechte Seite</p>
+					</section>
+					<section>
+						<h4>Beispiel und Guides für Fluide Bilder mit verschiedenen Styles und Sources</h4>
+						<ul>
+							<li><a href="https://www.lefx.de/kontakt/" target="_blank">Live-Beispiel von responsiven Bildern</a></li>
+							<li><a href="https://www.hongkiat.com/blog/serving-responsive-images/" target="_blank">Guide für responsive Bildern</a></li>
+							<li><a href="https://css-tricks.com/a-guide-to-the-responsive-images-syntax-in-html/" target="_blank">Syntaxhinweise in HTML5</a></li>
+							<li><a href="https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images" target="_blank">Tutorial von Mozilla</a></li>
+							<li><a href="https://www.w3schools.com/tags/tryit.asp?filename=tryhtml5_picture" target="_blank">W3Schools Anleitung</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Fluid Design Bild - Ladezeitenoptimierung</h4>
+						<ul class="r-fit-text">
+							<li>Nicht immer soll das Bild in Originalauflösung übertragen werden, z.B. im mobilen Bereich</li>
+							<li>Deshalb wäre es denkbar, mehrere Auflösungen eines Bildes anzubieten oder das Bild vorher entsprechend der Übertragungskapazität umzurechnen</li>
+							<li>Die sofortige Angabe des Viewports des Bildes vermeidet einen zweiten Rendervorgang der Webseite nach dem Laden (je-)des Bildes</li>
+							<li>Das spart Strom und bietet sofort konsistentes Design</li>
+							<li>Im moment gibt es hierfür noch keinen Standard aber JS-Bilbiotheken wie Jquery, die dies Ermöglichen</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Fluid Design Video</h4>
+						<ul>
+							<li>Bei Videos ist wegen der Bilddynamik alles noch etwas komplizierter</li>
+							<li>Umrechnen ohne Streaming erfordert sowieso zu viel Zeit</li>
+							<li>Aber oft werden Videos von Youtube oder Vimeo eingebunden, was in iframes erfolgt</li>
+							<li>Damit funktioniert (aktuell) die Methode max-width noch nicht</li>
+							<li><a href="https://css-tricks.com/fluid-width-video/" target="_blank">Quelle</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Fluid Design Video</h4>
+						<pre>
+							<code>
+&lt;video controls&gt;
+   &lt;source src=&quot;video-small.mp4&quot; type=&quot;video/mp4&quot; media=&quot;all and (max-width: 480px)&quot;&gt;
+   &lt;source src=&quot;video-small.webm&quot; type=&quot;video/webm&quot; media=&quot;all and (max-width: 480px)&quot;&gt;
+   &lt;source src=&quot;video.mp4&quot; type=&quot;video/mp4&quot;&gt;
+   &lt;source src=&quot;video.webm&quot; type=&quot;video/webm&quot;&gt;
+&lt;/video&gt;
+							</code>
+						</pre>
+						<a href="https://css-tricks.com/video-source-by-screen-size/" target="_blank">Anpassbare Videogrößen</a>
+					</section>
+				</section>
+				<section>
+					<h4>Literatur</h4>
+					<ul class="">
+						<li><a href="https://css-tricks.com/the-difference-between-responsive-and-adaptive-design/" target="_blank">CSS Tricks Anleitung</a></li>
+						<li><a href="https://support.google.com/webdesigner/answer/7002913?hl=en" target="_blank">Google Guide zum responsiven Layouting</a></li>
+						<li><a href="https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Responsive_Design" target="_blank">Mozilla Guide und Beispiele</a></li>
+					</ul>
+				</section>
+				<section>
+					<h4>Quellen - 1</h4>
+					<ul class="r-fit-text">
+						<li>Michael Jendryschik, „Allen recht“, (zu Media Queries), <a href="https://www.heise.de/ix/artikel/Allen-recht-1058764.html" target="_blank">Quelle</a> , iX 09/2010</li>
+						<li>Mozilla Developer Network, „CSS Media Queries“, <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Media_queries" target="_blank">Quelle</a> , 26.08.2013</li>
+						<li>Responsible Webdesign, <a href="https://m.onblog.at/responsives-webdesign-1" target="_blank">Quelle</a> und 4 weitere Teile</li>
+						<li>Apple, „Supported Meta Tags“, <a href="https://developer.apple.com/library/safari/documentation/AppleApplications/Reference/SafariHTMLRef/Articles/MetaTags.html#//apple_ref/doc/uid/TP40008193-SW1" target="_blank">Quelle</a></li>
+						<li>Christoph Zillgens, „Responsive Webdesign: Worauf es beim Einsatz reaktionsfähiger Typografie ankommt“, <a href="https://t3n.de/magazin/responsive-webdesign-reaktionsfahige-typografie-230315/" target="_blank">Quelle</a>, (und drei weitere Beiträge verlinkt)</li>
+					</ul>
+				</section>
+				<section>
+					<h4>Quellen - 2</h4>
+					<ul class="r-fit-text">
+						<li>Tom Brown, „More Meaningful Typography“, <a href="https://alistapart.com/article/more-meaningful-typography" target="_blank">Quelle</a> , 03.05.2011 – modular scales for typography</li>
+						<li>Conor MacNeill = @thefella, „Responsive Type References“, <a href="https://github.com/thefella/Responsive-type-references" target="_blank">Quelle</a> , 2011, mit Testwebseiten und weiteren Verweisen</li>
+						<li><a href="https://code.tutsplus.com/tutorials/better-responsive-images-with-thepicture-element--net-36583" target="_blank">Quelle</a></li>
+						<li>Picturefill Home: <a href="https://github.com/scottjehl/picturefill" target="_blank">Quelle</a> , Demo: <a href="https://scottjehl.github.com/picturefill/" target="_blank">Quelle</a></li>
+						<li>Adaptive Images Home und Demo: <a href="https://adaptive-images.com" target="_blank">Quelle</a></li>
+						<li>HiSRC Home: <a href="https://github.com/teleject/hisrc" target="_blank">Quelle</a></li>
+						<li><a href="https://entwickler.de/online/webmagazin/responsive-images-case-study-liefert-wichtige-hinweise-zum-thema-performance-3400.html" target="_blank">Quelle</a></li>
+					</ul>
+				</section>
+				<section>
+					<h4>Quellen - 3</h4>
+					<ul class="r-fit-text">
+						<li>Responsive Images Home: <a href="https://github.com/filamentgroup/Responsive-Images" target="_blank">Quelle</a> , Demo: <a href="https://filamentgroup.com/examples/responsive-imagesnew/demos/A-Default/demo.html" target="_blank">Beispielseite</a></li>
+						<li>Responsive Images Alt Desc: <a href="https://github.com/allmarkedup/responsive-images-alt" target="_blank">Quelle</a> , Demo: <a href="https://responsive-images.allmarkedup.com/demo.html" target="_blank">Quelle</a></li>
+						<li>Foresight.js Home: <a href="https://github.com/adamdbradley/foresight.js" target="_blank">Quelle</a>, Demo: <a href="https://www.cdnconnect.com/docs/foresightjs/demos" target="_blank">Quelle</a></li>
+						<li><a href="https://docs.sencha.com/extjs/6.5.3/modern/Ext.Img.html" target="_blank">Library für responsive Inhalte</a></li>
+						<li>Riloadr Home: <a href="https://github.com/tubalmartin/riloadr" target="_blank">Quelle</a>, Examples: <a href="https://github.com/tubalmartin/riloadr/tree/master/demos" target="_blank">Quelle</a></li>
+						<li>Responsive Enhance: <a href="https://github.com/joshje/Responsive-Enhance" target="_blank">Quelle</a></li>
+						<li>rwdImages Home: <a href="https://github.com/stowball/jQuery-rwdImages" target="_blank">JQuery res Images</a></li>
+						<li>Content Aware Resizing Home: <a href="https://github.com/craig552uk/getImage" target="_blank">GetImag Library</a></li>
+					</ul>
+				</section>
+				<section>
+					<h4>Quellen - 3</h4>
+					<ul class="r-fit-text">
+						<li>Doubletake Home und Demo: <a href="https://www.grahambird.co.uk/lab/doubletake/" target="_blank">Quelle</a></li>
+						<li>Responsive Images Redux Home: <a href="https://mattstow.com/responsive-and- retina-content-images-redux.html" target="_blank">Quelle</a></li>
+						<li>Responsive Images mit PHP Home: <a href="https://php-homepage.com/css/adaptive-images.php" target="_blank">Quelle</a></li>
+						<li>Responsive Images mit Cookies Home: <a href="https://keithclark.co.uk/articles/responsive-images-using-cookies/" target="_blank">Quelle</a></li>
+						<li>Responsive IMGs: <a href="https://cloudfour.com/thinks/responsive-imgs/" target="_blank">Quelle</a> und <a href="https://cloudfour.com/thinks/responsive-imgs-part-2/" target="_blank">Quelle</a></li>
+						<li>Responsive Images Right Now Home: <a href="https://csswizardry.com/2011/07/responsive-images-right-now/" target="_blank">Quelle</a></li>
+						<li>WURFL Server Side Responsive Images Home: <a href="https://github.com/carsonmcdonald/ServerSideResponsiveImageExample#readme" target="_blank">Quelle</a></li>
+					</ul>
+				</section>
+				<section>
+					<h4>Abspann</h4>
+					<p>
+						Viertes Level geschafft weitere Folgen!
+					</p>
+					<p>Fragen und Feedback?</p>
+				</section>
+			</div>
+		</div>
+		<footer class="slide-footer">
+			Sebastian Pötter - HTWK - MMWP2024 - VL04 - Responsive Design 2
+		</footer>
+		<script src="../dist/reveal.js"></script>
+		<script src="../plugin/notes/notes.js"></script>
+		<script src="../plugin/markdown/markdown.js"></script>
+		<script src="../plugin/highlight/highlight.js"></script>
+		<script src="../plugin/simplemenu/simplemenu.js"></script>
+		<script src="../plugin/copycode/copycode.js"></script>
+		<script>
+			Reveal.initialize({
+				maxScale: 1.0,
+				margin: 0.2,
+				controls: true,
+				progress: true,
+				center: true,
+				hash: true,
+				slideNumber: 'c/t',
+				plugins: [RevealMarkdown, RevealHighlight, RevealNotes, CopyCode, Simplemenu],
+				simplemenu: {
+					barhtml: {
+						header: "<div class='menubar' style='font-size: 1.5rem'><ul class='menu'></ul></div>",
+						footer: ""
+					}
+				},
+			});
+		</script>
+	</body>
+</html>
