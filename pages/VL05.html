@@ -1,0 +1,655 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>MMWP2024 - LV05</title>
+
+		<link rel="stylesheet" href="../dist/reset.css">
+		<link rel="stylesheet" href="../dist/reveal.css">
+		<link rel="stylesheet" href="../dist/theme/white.css">
+		<link rel="stylesheet" href="../dist/style.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="../plugin/highlight/monokai.css">
+		<link rel="stylesheet" href="../plugin/simplemenu/simplemenu.css">
+		<link rel="stylesheet" href="../plugin/copycode/copycode.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-transition="fade" data-state="hide-menubar hide-menu" data-background-image="../images/vl5/presentationstart.png" data-background-position="bottom" data-background-opacity="0.1">
+					<h1>BrowserAPIs 1</h1>
+					<h3>MMWP2024 - LV05</h3>
+				</section>
+				<section data-name="TOC" data-sm="false">
+					<h4>Inhaltsverzeichnis</h4>
+					<ul class="menu"></ul>
+				</section>
+				<section data-name="Organisation">
+					<section>
+						<h4>Inhaltsschwerpunkte</h4>
+						<ul>
+							<li>Einführung in Javascript und TypeScript</li>
+							<li>Schnittstelle von Webseite und Browser/Computer</li>
+							<li>Erklärung von Browser APIs</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Voraussetzung</h4>
+						<p>Der Ausgangspunkt dieser Vorlesungsreihe ist das Wissen über Javascript und wie dieses vom Browser ausgeführt wird</p>
+						<ul>
+							<li>Javascript Interpreter</li>
+							<li>Einsatzzweck von Javascript</li>
+							<li>Grundlegendes Verständnis von Javascript</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Ziele</h4>
+						<ul>
+							<li>Kurze Erklärung von Javascript und Typescript</li>
+							<li>Definition des DOM-Modells und Verwendungszwecke</li>
+							<li>Erklärung von Eventmanagement in Javascript</li>
+							<li>Vorstellung einiger Browser-APIs mit Javascript</li>
+						</ul>
+					</section>
+				</section>
+				<section data-name="Javascript und DOM">
+					<section>
+						<h4>Kurze Anmerkung zum Einsatz von Javascript in HTML5</h4>
+						<ul>
+							<li>JavaScript ist eine Skript-Programmiersprache und die dritte bedeutende
+								Technologie neben HTML5 und CSS3, die weit von Browsern unterstützt und
+								angewendet wird</li>
+							<li>Für die Kommunikation zwischen HTML, JavaScript und CSS stehen APIs zur
+								Verfügung (z.B. für die Übergabe von Instanzen und ihren Werten)</li>
+							<li><a href="https://developer.mozilla.org/en-US/docs/Web/API" target="_blank">Liste aller aktuellen BrowserAPI</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Weitere Verwendung von Javascript außerhalb von des Webkontextes</h4>
+						<ul>
+							<li>Node.js: serverseitige Plattform zum Betrieb von Netzwerkanwendungen (z.B. Webserver)</li>
+							<li>JSON (JavaScript Object Notation): Datenformat in Textform zum Datenaustausch zwischen Anwendungen</li>
+							<li><a href="https://www.espruino.com/" target="_blank">Espruino</a>: Mikrocontroller mit JavaScript</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Javascript Variablen</h4>
+						<ul>
+							<li>Explizite Deklaration von Variablen vor ihrem Gebrauch durch strict mode (“use strict“;) erzwingen, um Fehler leichter zu finden</li>
+							<li>Lokal definierte Variablen mit gleichem Namen wie globale Variablen haben im lokalen Kontext höhere Priorität (statische/lexikalische Bindung)</li>
+						</ul>
+						<figure class="">
+							<img src="../images/vl5/variables.png" alt="Globale und locale Variablen">
+							<figcaption>
+								<a href="https://www.reddit.com/r/ProgrammerHumor/comments/88gniv/old_meme_format_timeless_javascript_quirks/" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Javascript Variablen - Probleme - 1</h4>
+						<ul>
+							<li>JavaScript hat schwach getypte Variable, d.h. der Variablentyp kann sich zur Laufzeit verändern und ist ungenau bei Vergleich von Werten</li>
+							<li>Die Typprüfung wird in JavaScript nicht schon bei der Kompilierung durchgeführt, sondern erst zur Laufzeit des Programms (dynamische Typisierung)</li>
+						</ul>
+						<pre>
+							<code>
+let x;
+x = 1;
+x = "1";
+x = false;
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Javascript Variablen - Probleme - 2</h4>
+						<figure class="">
+							<img src="../images/vl5/crinch-1.png" height="600" alt="Tragödie erster Teil">
+							<figcaption>
+								<a href="https://www.reddit.com/r/ProgrammerHumor/comments/88gniv/old_meme_format_timeless_javascript_quirks/" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Javascript Variablen - Probleme - 3</h4>
+						<figure class="">
+							<img src="../images/vl5/crinch-2.png" height="600" alt="Tragödie erster Teil">
+							<figcaption>
+								<a href="https://www.reddit.com/r/ProgrammerHumor/comments/88gniv/old_meme_format_timeless_javascript_quirks/" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Javascript Variablen</h4>
+						<p>Um Verlgleichprobleme zu vermeiden, sollte immer === benutzt werden, bei größer, kleiner gibt es weiterhin problematische Vergleiche:</p>
+						<pre>
+							<code>
+0 > null -> false
+0 >= null -> true
+0 < null -> false
+0 <= null -> true
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Typescript zu Javascript</h4>
+						<p>In Typescript, einer JavaScript dominierenden Skriptsprache mit strenger Typisierung, wird die Zuordnung anders gemacht:</p>
+						<pre>
+							<code>
+let myVar: string;
+
+myVar = 'Hello'; 	// Ok
+myVar = 'World!'; 	// Also Ok
+myVar = 42; 		// Not Ok: Type 'number' is not assignable to type 'string'.
+myVar = false; 		// Not Ok: Type 'number' is not assignable to type 'bool'.
+myVar = null; 		// Ok
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Funktionen in JavaScript</h4>
+						<pre>
+							<code>
+function find(n) //Functionskopf mit Schlüsselwort 'function', Funktionsname und Parameter
+{ //Funktionskörper (Closure) in geschweiften Klammern
+	let entry = "";
+	return entry; //Wertrückgabe über return
+}
+							</code>
+						</pre>
+						<ul>
+							<li>Aufruf mit geringerer Argumentenanzahl möglich</li>
+							<li>Wertübergabe bei einfachen Datentypen (Variablen, Strings) durch call by value</li>
+							<li>Bei Objekten (Funktionen, Felder) erfolgt Wertübergabe mittels call by reference</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Weitere Verwendung von Javascript außerhalb von des WebContextes</h4>
+						<ul>
+							<li>Jscript.NET: leicht modifizierte Skriptsprache für Windows von Microsoft</li>
+							<li>ActionScript: erweiterte Skriptsprache in Flash</li>
+							<li>Standardprogrammiersprache von GNOME Shell</li>
+							<li>NativeScript: Framework zur Entwicklung von iOS und Android Apps</li>
+						</ul>
+					</section>
+				</section>
+				<section data-name="Ereignismanagement">
+					<section>
+						<h4>DOM-Modell - 1</h4>
+						<ul>
+							<li>Das Document Object Modell einer HTML5-Datei ist ein Baumgraph-Modell der HTML-Datei im aktuellen Zustand zur Laufzeit</li>
+							<li>Das DOM ist eine Darstellung des HTML-Dokuments als strukturierte Gruppe von Elementen und Objekten mit Eigenschaften und Methoden</li>
+							<li>HTML-Elementen sind Events (Ereignisse) zugeordnet. Deren Event-Handler wird durch Nutzerinteraktion (z.B. Mausklick) oder automatisch (z.B. laden von Elementen) ausgelöst</li>
+							<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model#HTML_element_interfaces" target="_blank">Element Interfaces</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>DOM-Modell - 2</h4>
+						<figure class="">
+							<img src="../images/vl5/dom-1.png" alt="DOM-Tree">
+							<figcaption>
+								<a href="https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>DOM-Modell - 3</h4>
+						<figure class="">
+							<img src="../images/vl5/dom-2.png" alt="DOM-Tree">
+							<figcaption>
+								<a href="https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Einfluss von Javascript auf den DOM</h4>
+						<ul>
+							<li>Vom DOM der aktuellen Seite wird eine entsprechend geänderte Instanz erstellt</li>
+							<li>Es wird versucht, das HTML-Dokument (im Sinne von Elementen, Attributen, Event-Handlern, Texten etc., auch CSS) zu ändern</li>
+							<li>Im Erfolgsfall wird das DOM durch die vorab geänderte Instanz ersetzt</li>
+							<li>Im Misserfolgsfall wird die geänderte Instanz verworfen</li>
+						</ul>
+					</section>
+					<section>
+						<h4>JavaScript einbinden</h4>
+						<ul class="r-fit-text">
+							<li>Guter Stil zur Einbindung von JavaScript in Webseiten ist unter HTML5 das Einbinden mit Hilfe von Verweisen auf einzubindende, externe JavaScript- Bibliotheken</li>
+							<li>Man beginnt im Element &lt;head&gt; die Liste mit &lt;script&gt;-Elementen mit den Standardbibliotheken und schreitet dann zu den Submodulen und zu den eigenen Spezialdateien (für Webseiten kritische Bibliotheken)</li>
+							<li>Einbindung von weniger wichtigen Javascript Bibliotheken am Ende des HTML5 Documents (weniger Render-Blockierung beim ersten Laden der Seite)</li>
+						</ul>
+					</section>
+					<section>
+						<h4>JavaScript abarbeiten - 1</h4>
+						<ul>
+							<li>Es sei angemerkt, dass eine zu Beginn geladene JavaScript-Funktion oft nicht sofort nach ihrem Laden ausgeführt werden kann</li>
+							<li>Wenn HTML-Elemente weiter unten im Quelltext angesprochen werden, müssen diese erst gerendert worden sein, bevor sie angesprochen werden können – und sei es, um ihnen das Ereignis onclick oder ähnliche formal zuordnen zu können</li>
+						</ul>
+					</section>
+					<section>
+						<h4>JavaScript abarbeiten - 2</h4>
+						<p>Eine gute Idee ist, den ersten Aufruf der Funktion über Ereignisse zu regeln:</p>
+						<ul>
+							<li>Idee 1: window.onload = caller()</li>
+							<li>Das onload-Ereignis tritt erst ein, wenn das gesamte Dokument mitsamt aller externen Ressourcen vom Webserver heruntergeladen wurde (Das kann sehr lange dauern)</li>
+							<li>Idee 2: Ereignis DOMContentLoaded nutzen</li>
+							<li>Ereignis wird ausgelöst, wenn das HTML-Dokument vollständig geparst wurde</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Ereignismanagement</h4>
+						<p>Möglichkeiten der Zuordnung von Event-Handlern durch Zuweisung von Attributwerten:</p>
+						<pre>
+							<code data-trim data-noescape data-line-numbers>
+&lt;element id=&#39;IDname&#39; onereignistyp=&#39;meineFunktion()&#39; &hellip; /&gt;
+
+getElementByID(#IDname).onereignistyp= meineFunktion;
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Ereignismanagement in HTML5 - 1</h4>
+						<ul class="r-fit-text">
+							<li>HTML5 hat einen Paradigmenwechsel in der Ereignis-zu-Element-Zuordnung vollzogen</li>
+							<li>Wurden bisher Paare (Ereignistyp, Handler) beim Element in Form von Ereignisattributen mit Handlerfunktionen registriert, so werden jetzt Paare (Element, Handler) beim Ereignistyp in einem neuen Eventmanager registriert</li>
+							<li>Mittlerweile auf allen Browsern Unterstützt</li>
+							<li>JavaScript funktioniert ereignisgesteuert. Die in HTML5 verfügbaren Ereignistypen registrieren HTML-Elemente unter Zuweisung von Handlern </li>
+						</ul>
+					</section>
+					<section>
+						<h4>Ereignismanagement in HTML5 - 2</h4>
+						<ul>
+							<li>Dabei kann man ein Paar (Ereignis, Handler) mehreren Elementen zugleich zuordnen, und ein Element kann mehrfach bei Ereignissen gleichen Typs mit verschiedenen Handlern registriert werden</li>
+							<li>Zur Wahl der Elemente gibt es neue Selektoren in JavaScript, die teils Arrays zurückgeben</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Ereignismanagement in HTML5 - 3</h4>
+						<pre>
+							<code data-trim data-noescape data-line-numbers>
+//Angenommen &lt;body&gt; enth&auml;lt mehrere &lt;p&gt; - Elemente:
+function showmessage() {
+	alert(&#39;Element angeklickt&#39;);
+}
+function clickelement() {
+	document.getElementsByTagName(&#39;p&#39;)[0].onclick=showmessage;
+}
+window.onload=clickelement;
+//Alternative einfache Selektoren:
+getElementByID(#IDname);
+getElementsByClassName(.classname);
+getElementsByName(&#39;name&#39;);
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Ereignismanagement in HTML5 - 4</h4>
+						<pre>
+							<code data-trim data-noescape data-line-numbers>
+//Es gibt neue Selektoren in JavaScript:
+function clickelement2() {
+	document.querySelector('#main p').onclick= showmessage;
+}
+	//Dieser Selektor gibt immer nur das erste gefundene Element zurück. Der
+	//nächste gibt ein Array an:
+function clickelement3() {
+	var list=document.querySelectorAll('#main p');
+	list[0].onclick=showmessage;
+	for(var f=0; f&lt;list.length; f++) {
+		list[f].onclick=showmessage;
+	}
+}
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Ereignismanagement in HTML5 - 5</h4>
+						<pre>
+							<code data-trim data-noescape data-line-numbers>
+//In HTML5 wird nun eine neue Funktion eingeführt:
+function clickelement4() {
+	var p1=document.getElementsByTagName('p')[0];
+	p1.addEventListener('click', showmessage, false);
+}
+window.addEventListener('load', clickelement4, false);
+//Die Anzahl der Event Listener pro Element kann größer als Eins sein, auch mit gleichen
+//Events als Auslöser.
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Ereignismanagement in HTML5 - 6</h4>
+						<ul>
+							<li><pre><code>addEventListener('load', clickelement4, false)</code></pre> true hat extra Zweck - <a href="http://www.w3.org/TR/DOM-Level-3-Events/#event-flow" target="_blank">Event bubbleing</a></li>
+							<li>3. Parameter betrifft 'useCapture' (Event Capturing und Event-Bubbleling)</li>
+							<li><a href="https://jsfiddle.net/cwtuan/je1g3f29/16" target="_blank">Beispiel</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Event Bubbeling</h4>
+						<figure class="">
+							<img src="../images/vl5/bubbeling.png" alt="Event Bubbeling">
+							<figcaption>
+								<a href="https://stackoverflow.com/questions/4616694/what-is-event-bubbling-and-capturing" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Eventfunktionen entfernen - 1</h4>
+						<p>Ereignisse können ähnlich auch wieder deregistriert werden, wobei aber Registrierung und Deregistrierung sensibel voneinander abhängen (<a href="https://stackoverflow.com/questions/5825493/removeeventlistener-is-not-working" target="_blank">siehe hier</a></p>
+						<pre>
+							<code data-trim data-noescape data-line-numbers>
+document.getElementsByTagName('p')[0].addEventListener('mousemove', function() {alert("NO!")}, false);
+document.getElementsByTagName('p')[0].removeEventListener('mousemove', function() {alert("NO!")}, false);
+//removes the listener that exactly matches the function that was added (Store a reference to the actual function and you'll be good)
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Eventfunktionen entfernen - 2</h4>
+						<p>Ereignisse können ähnlich auch wieder deregistriert werden, wobei aber Registrierung und Deregistrierung sensibel voneinander abhängen (<a href="https://stackoverflow.com/questions/5825493/removeeventlistener-is-not-working" target="_blank">siehe hier</a></p>
+						<pre>
+							<code data-trim data-noescape data-line-numbers>
+var mevent = function() {alert("NO!")};
+document.getElementsByTagName('p')[0].addEventListener('mousemove', mevent, false);
+document.getElementsByTagName('p')[0].removeEventListener('mousemove', mevent, false);
+//removes the listener that exactly matches the function that was added (Store a reference to the actual function and you'll be good)
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Ereignismanager - Reihenfolgen</h4>
+						<p>In welcher Reihenfolge wird dies abgearbeitet?</p>
+						<pre>
+							<code data-trim data-noescape data-line-numbers>
+function start () {
+	var pElement = document.getElementById("interaktiv");
+	pElement.addEventListener("click", meldung1, false);
+	pElement.addEventListener("click", meldung2, false);
+}
+function meldung1 () {
+	window.alert("Erste Handler-Funktion ausgeführt!");
+}
+function meldung2 () {
+	window.alert("Zweite Handler-Funktion ausgeführt!");
+}
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>JavaScript einbinden</h4>
+						<pre>
+							<code data-trim data-noescape data-line-numbers>
+function dokumentGeladen (e) {
+alert("Das Ereignis " + e.type + " ist passiert.")
+}
+document.addEventListener("load", dokumentGeladen, false);
+document.addEventListener("DOMContentLoaded",dokumentGeladen, false);
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Weitere Events in HTML5 und nützliche Links</h4>
+						<ul>
+							<li>In HTML5 sind im Vergleich zu HTML 4 viele Events hinzugekommen, nicht nur für die Maus, auch für Fenster, Formulare, Tastatur und Medien</li>
+							<li>Neuste Events: <a href="https://www.w3schools.com/tags/ref_eventattributes.asp" target="_blank">Quelle</a></li>
+							<li>EventHandling: <a href="https://molily.de/js/event-handling-onload.html" target="_blank">Quelle</a></li>
+							<li>Aktueller Stand: <a href="https://dom.spec.whatwg.org/" target="_blank">Quelle</a></li>
+						</ul>
+					</section>
+				</section>
+				<section data-name="Vorstellung einzelner APIs">
+					<section>
+						<h4>Grund der Entwicklung von BrowserAPIs</h4>
+						<ul class="r-fit-text">
+							<li>Browser-APIs sind in Webbrowsern integriert und können Daten aus dem Browser und der umgebenden Computerumgebung offenlegen</li>
+							<li>Im Hintergrund verwendet der Browser einen komplexen Code auf niedrigerer Ebene (z. B. C++ oder Rust), welche vom Javascript angesprochen werden (aber unterschiedliches Verhalten und Geschwindigkeit)</li>
+							<li>Entwickelt um Webseiten einfache interaktive Funktionalitäten realisieren zu können</li>
+							<li>Für die Kommunikation zwischen HTML, JavaScript und CSS stehen APIs zur Verfügung (z.B. für die Übergabe von Instanzen und ihren Werten)</li>
+							<li><a href="https://developer.mozilla.org/en-US/docs/Web/API" target="_blank">Liste aller aktuellen BrowserAPI</a></li>
+							<li><a href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Client-side_web_APIs/Introduction" target="_blank">Mehr Informationen zu APIs</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Support von BrowserAPIs</h4>
+						<ul>
+							<li>Auf praktisch allen Webbrowsern verfügbar</li>
+							<li>Kann jedoch deaktiviert werden (generell oder dynamisch, z.B. durch <a href="https://noscript.net/" target="_blank">Noscript</a> oder Browsereinstellungen)</li>
+							<li><b>Die Hauptfunktion einer Webseite sollte daher nicht von JavaScript abhängen</b></li>
+						</ul>
+					</section>
+					<section>
+						<h4>APIs FÜR Javascript IN HTML5</h4>
+						<ul>
+							<li>In HTML5 gibt zahlreiche APIs mit klarer Zweckbestimmung, um mit einfacher JavaScript-Syntax komplexe Vorgänge steuern zu können</li>
+							<li>Im Folgenden werden einige APIs umrissen und ihre derzeitige Unterstützung durch Webbrowser aufgezeigt</li>
+							<li>Jede API braucht ein tieferes Verständnis für dessen Funktionsweise, um genutzt werden zu können (Nutzen Sie hierfür die Selbststudienzeit)</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Canvas-API - 1</h4>
+						<ul>
+							<li>Die Canvas-API liefert Zeichenwerkzeuge in einer mächtigen Zeichenoberfläche &lt;canvas&gt;</li>
+							<li>Fähigkeiten sind unter anderem die dynamische Erstellung von Grafiken, die Animation von Texten und Bildern, die Verarbeitung von Texten und Bildern. Videos werden frameweise als Bilder behandelt</li>
+							<li>Das Bild auf der Canvas ist eine Bitmap, die durch API-eigene Funktionen erstellt und laufend verändert werden kann</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Canvas-API - 2</h4>
+						<ul>
+							<li>Ein gravierender Nachteil der Canvas-API ist, dass es genau eine Zeichenfläche ohne Layer gibt. Sich partiell verdeckende Bildelemente zu verändern ist schwierig</li>
+							<li>Änderung von Bildelementen geht nur mit einem dem Bildelement entsprechenden Objekt in der JavaScript-Schicht der Canvas</li>
+							<li>Es muss neu gezeichnet werden, wobei mitunter vorher erst sein sichtbarer Anteil im Bild gelöscht werden mussn</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Canvas-API - 3</h4>
+						<ul>
+							<li>Viele Aktionen auf der Canvas sind den Konzepten der Scalable Vector Graphics (SVG) nachempfunden, aber in JavaScript implementiert</li>
+							<li>Es besteht die Möglichkeit, Screenshots von Teilbereichen abzuspeichern, solange keine fremden Bilder oder Videos in die Canvas geladen worden sind. (Bild- /Videoquelle = gleiche Domäne)</li>
+							<li>Das folgende Beispiel zeigt, wie ein eigenes Bild oder Video live in Farbe und zugleich in Schwarz-Weiß gezeigt werden kann</li>
+							<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Manipulating_video_using_canvas" target="_blank">Video filter</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Canvas-API - <a href="https://www.w3schools.com/html/html5_canvas.asp" target="_blank">Beispiele</a></h4>
+						<pre>
+							<code data-trim data-noescape data-line-numbers>
+&lt;canvas id=&quot;myCanvas&quot; width=&quot;200&quot; height=&quot;100&quot; style=&quot;border:1px solid #d3d3d3;&quot;&gt;
+Your browser does not support the HTML canvas tag.&lt;/canvas&gt;
+
+&lt;script&gt;
+	var c = document.getElementById(&quot;myCanvas&quot;);
+	var ctx = c.getContext(&quot;2d&quot;);
+	ctx.beginPath();
+	ctx.arc(95,50,40,0,2*Math.PI);
+	ctx.stroke();
+&lt;/script&gt;
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Anwendungen basierend auf Canvas</h4>
+						<ul>
+							<li><a href="https://www.openstreetmap.org/" target="_blank">Openstreetmap</a></li>
+							<li><a href="https://excalidraw.com/" target="_blank">Excalidraw</a></li>
+							<li><a href="https://webdesign.tutsplus.com/21-ridiculously-impressive-html5-canvas-experiments--net-14210a" target="_blank">Canvas-Effects</a></li>
+							<li><a href="https://web.dev/articles/canvas-integrating?hl=de" target="_blank">Canvas-Guide</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>WebXR,VR,3D-Technologie (auf Basis von Canvas und WebGPU)</h4>
+						<ul>
+							<li><a href="https://threejs.org/" target="_blank">https://threejs.org/</a></li>
+							<li><a href="https://aframe.io/" target="_blank">https://aframe.io/</a></li>
+							<li><a href="https://needle.tools/" target="_blank">https://needle.tools/</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>ThreeJS - Funktionsweise</h4>
+						<figure>
+							<img src="../images/vl5/threejs.jpg" alt="ThreeJS Funktionsweise">
+							<figcaption>
+								<a href="https://intexsoft.com/blog/introduction-to-3d-three-js-basics/" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Canvas - Weiteres</h4>
+						<ul>
+							<li>Spezifikation des W3C, <a href="https://www.w3.org/TR/html5/semantics-scripting.html#the-canvas-element" target="_blank">Quelle</a></li>
+							<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial" target="_blank">Canvas tutorial</a></li>
+							<li>48 Potential Flash-Killing Demos, <a href="https://www.hongkiat.com/blog/48-excellent-html5-demos/" target="_blank">Quelle</a></li>
+							<li>Bibliothek Explorercanvas (excanvas.js), <a href="https://github.com/arv/explorercanvas" target="_blank">Quelle</a></li>
+							<li>3D-Experimente mit Shadern: <a href="https://www.kevs3d.co.uk/dev/shaders/" target="_blank">Quelle</a></li>
+							<li>Blockzerlegung von HTML5 Videos: <a href="https://craftymind.com/factory/html5video/CanvasVideo.html" target="_blank">Quelle</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Canvas Support</h4>
+						<figure class="">
+							<img src="../images/vl5/canvassupport.png" alt="Canvas Support">
+							<figcaption>
+								<a href="https://caniuse.com/?search=canvas" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Drag und Drop-API</h4>
+						<ul>
+							<li>Das Ziel dieser API ist es, durchaus komplexe Elemente von Webseiten nach dem Konzept von Drag&Drop mit der Maus in andere Elemente der Webseite zu ziehen</li>
+							<li>Das DOM und die HTML-Datei ändern sich dadurch</li>
+							<li>Die Elemente können Text, Grafiken, Links und anderes enthalten. Aber auch Dateien können vom Desktop in die Webseite im Browser gezogen werden, allerdings nicht als Ikone</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Drag und Drop - Support</h4>
+						<figure>
+							<img src="../images/vl5/dragdrop-support.png" alt="Drag und Drop - Browsersupport">
+							<figcaption>
+								<a href="https://caniuse.com/?search=drag%20drop" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Drag und Drop - Beispiel 1</h4>
+						<pre>
+							<code data-trim data-noescape data-line-numbers>
+&lt;script&gt;
+function allowDrop(ev) {
+	ev.preventDefault();
+}
+
+function drag(ev) {
+	ev.dataTransfer.setData(&quot;text&quot;, ev.target.id);
+}
+
+function drop(ev) {
+	ev.preventDefault();
+	var data = ev.dataTransfer.getData(&quot;text&quot;);
+	ev.target.appendChild(document.getElementById(data));
+}
+&lt;/script&gt;
+
+&lt;div id=&quot;div1&quot; ondrop=&quot;drop(event)&quot; ondragover=&quot;allowDrop(event)&quot;&gt;&lt;/div&gt;
+
+&lt;img id=&quot;drag1&quot; src=&quot;img_logo.gif&quot; draggable=&quot;true&quot; ondragstart=&quot;drag(event)&quot; width=&quot;336&quot; height=&quot;69&quot;&gt;
+							</code>
+						</pre>
+						<a href="https://www.w3schools.com/HTML/html5_draganddrop.asp" target="_blank">Beispiel</a>
+					</section>
+					<section>
+						<h4>Drag und Drop-API - Weiteres</h4>
+						<ul>
+							<li>Spezifikation des W3C, <a href="https://www.w3.org/TR/html5/editing.html#drag-and-drop" target="_blank">Quelle</a></li>
+							<li><a href="https://www.w3schools.com/HTML/html5_draganddrop.asp" target="_blank">W3C Drag und Drop</a></li>
+							<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_APIe" target="_blank">API</a></li>
+							<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API/Drag_operations" target="_blank">API Operationen</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Geolocation-API</h4>
+						<ul>
+							<li>Mit der Geolocation-API kann der Standort des Clients festgestellt werden, der die Webseite lädt</li>
+							<li>Genutzt werden Netzwerktriangulation (z.B. IP- Adressen) oder GPS-Signale. Die Rückgabe besteht aus geografischer Länge und Breite</li>
+							<li>Die Genauigkeit ist erstaunlich hoch, in Leipzig ohne GPS bis auf unter 50 Meter genau (mit GPS auf 3-5m genau)</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Geolocation-API - Vorgehensweise</h4>
+						<ul>
+							<li>Mit aufsteigender Genauigkeit werden je nach Anfrageclient IP-Adresse, Wlan-Netzwerk oder Funksignale (Mobilfunk) genutzt</li>
+							<li>GPS-Sender nur bei ‚enableHighAccuracy‘ (z.B. Einstellbar bei Android)</li>
+							<li>Die Genauigkeit ist erstaunlich hoch, in Leipzig ohne GPS bis auf unter 50 Meter genau (mit GPS auf 3-5m genau)</li>
+							<li>Beispielweise: <a href="https://jsfiddle.net/dannymarkov/ubrvm4ao/" target="_blank">Quelle</a></li>
+							<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API/Using_the_Geolocation_API#examples" target="_blank">Beispiele</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Geolocation-API - Support</h4>
+						<figure>
+							<img src="../images/vl5/geolocation-support.png" alt="Geolocation-API - Support">
+							<figcaption>
+								<a href="https://caniuse.com/?search=Geolo" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Geolocation-API - Weiteres</h4>
+						<ul>
+							<li>Spezifikation des W3C, http://www.w3.org/TR/geolocation-API/</li>
+							<li>Demo im Web, <a href="https://bestvpn.org/html5demos/geo/" target="_blank">Quelle</a></li>
+							<li>Tutorial, <a href="https://viralpatel.net/blogs/html5-geolocation-api-tutorial-example/" target="_blank">Quelle</a></li>
+						</ul>
+					</section>
+				</section>
+				<section>
+					<h4>Quellen</h4>
+					<ul class="r-fit-text">
+						<li>JavaScript-Tutorial online, <a href="https://www.w3schools.com/js/default.asp" target="_blank">Quelle</a></li>
+						<li>Web application APIs, <a href="https://www.w3.org/TR/html5/webappapis.html" target="_blank">Quelle</a></li>
+						<li>GeoLocation Testing for Smartphones: <a href="https://support.smartbear.com/testcomplete/docs/app-testing/mobile/common-tasks/sensors/geolocation.html" target="_blank">Quelle</a></li>
+						<li>Eine eCommerce-Anwendung: <a href="https://www.maxmind.com/de/home" target="_blank">Quelle</a></li>
+						<li>Reverse-Geocoding: <a href="https://www.quora.com/Geolocation-Reverse-geocoding-APIs" target="_blank">Quelle</a></li>
+						<li><a href="https://www.openstreetmap.org/" target="_blank">OpenStratmap</a></li>
+					</ul>
+				</section>
+				<section>
+					<h4>Abspann</h4>
+					<p>
+						Fünftes Level geschafft weitere Folgen!
+					</p>
+					<p>Fragen und Feedback?</p>
+				</section>
+			</div>
+		</div>
+		<footer class="slide-footer">
+			Sebastian Pötter - HTWK - MMWP2024 - VL05 - Browser APIs 1
+		</footer>
+		<script src="../dist/reveal.js"></script>
+		<script src="../plugin/notes/notes.js"></script>
+		<script src="../plugin/markdown/markdown.js"></script>
+		<script src="../plugin/highlight/highlight.js"></script>
+		<script src="../plugin/simplemenu/simplemenu.js"></script>
+		<script src="../plugin/copycode/copycode.js"></script>
+		<script>
+			Reveal.initialize({
+				maxScale: 1.0,
+				margin: 0.2,
+				controls: true,
+				progress: true,
+				center: true,
+				hash: true,
+				slideNumber: 'c/t',
+				plugins: [RevealMarkdown, RevealHighlight, RevealNotes, CopyCode, Simplemenu],
+				simplemenu: {
+					barhtml: {
+						header: "<div class='menubar' style='font-size: 1.5rem'><ul class='menu'></ul></div>",
+						footer: ""
+					}
+				},
+			});
+		</script>
+	</body>
+</html>
