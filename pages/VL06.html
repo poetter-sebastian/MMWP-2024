@@ -1,0 +1,718 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>MMWP2024 - LV06</title>
+
+		<link rel="stylesheet" href="../dist/reset.css">
+		<link rel="stylesheet" href="../dist/reveal.css">
+		<link rel="stylesheet" href="../dist/theme/white.css">
+		<link rel="stylesheet" href="../dist/style.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="../plugin/highlight/monokai.css">
+		<link rel="stylesheet" href="../plugin/simplemenu/simplemenu.css">
+		<link rel="stylesheet" href="../plugin/copycode/copycode.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-transition="fade" data-state="hide-menubar hide-menu" data-background-image="../images/vl6/presentationstart.png" data-background-position="center" data-background-opacity="0.1">
+					<h1>BrowserAPIs 2</h1>
+					<h3>MMWP2024 - LV06</h3>
+				</section>
+				<section data-name="TOC" data-sm="false">
+					<h4>Inhaltsverzeichnis</h4>
+					<ul class="menu"></ul>
+				</section>
+				<section data-name="Organisation">
+					<section>
+						<h4>Inhaltsschwerpunkte</h4>
+						<ul>
+							<li>Vorstellung weiterer Browser-APIs</li>
+							<li>Beispielhafte Benutzung bestimmter Browser-APIs</li>
+							<li>Neuste Browser-APIs</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Voraussetzung</h4>
+						<p>Der Ausgangspunkt dieser Vorlesungsreihe ist das Wissen über funktionsweise von BrowserAPIs</p>
+						<ul>
+							<li>Möglichkeit über Javascript Browser APIs anzusprechen</li>
+							<li>Eventhandling in Javascript sowie Ausführungsreihenfolge von Events</li>
+							<li>HTML5 Elemente wie Forms und Eingabefelder</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Ziele</h4>
+						<p>Vorstellung von:</p>
+						<ul>
+							<li>Storage-APIs</li>
+							<li>IndexedDB API</li>
+							<li>File API</li>
+							<li>Web Workers API</li>
+							<li>Web Audio API</li>
+							<li>WebGPU API</li>
+							<li>WebXR Device API</li>
+						</ul>
+					</section>
+				</section>
+				<section data-name="Storage- und IndexedDB-API">
+					<section>
+						<h4>Storage-APIs</h4>
+						<p>Es gibt zwei APIs in HTML5, die clientseitige Speicherung von Webseitendaten befördern</p>
+						<ul>
+							<li>Web-Storage-API: gute Unterstützung durch Webbrowser</li>
+							<li>Indexed-Database-API (ersetzt die obsolete Web-SQL-Database-API): benötigt zudem möglichst Framework-Unterstützung</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Storage-APIs - Support - 1</h4>
+						<figure class="">
+							<img src="../images/vl6/webstorage-sql.png" alt="Storage-APIs - BrowserSQL">
+							<figcaption>
+								<a href="https://caniuse.com/?search=sql" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Storage-APIs - Support - 2</h4>
+						<figure class="">
+							<img src="../images/vl6/webstorage-indexdb.png" alt="Storage-APIs - Indexdb">
+							<figcaption>
+								<a href="https://caniuse.com/?search=indexdb" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Storage-APIs - Support - 3</h4>
+						<figure class="">
+							<img src="../images/vl6/webstorage-support.png" alt="Storage-APIs - WebStorage">
+							<figcaption>
+								<a href="https://caniuse.com/?search=webstorage" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Web Storage API</h4>
+						<p>Diese API hat zwei wichtige Attribute:</p>
+						<ul class="r-fit-text">
+							<li>sessionStorage
+								<ul>
+									<li>Es werden temporäre Daten während einer in einem Fenster laufenden Session sicher clientseitig verwahrt</li>
+									<li>Sie erlöschen, sobald Webseiten anderer Herkunft aufgerufen werden oder Reiter bzw. Fenster geschlossen werden</li>
+									<li>Die Speicherbereiche sind strikt getrennt</li>
+								</ul>
+							</li>
+							<li>localStorage
+								<ul>
+									<li>Es werden große Dateien clientseitig persistent gespeichert</li>
+									<li>Kann nur über Cache löschen vom Benutzer gelöscht werden</li>
+									<li>Die Daten stehen der Anwendung, welche sie angelegt hat, dauerhaft zur Verfügung</li>
+									<li>Die Web Storage API funktioniert im Allgemeinen nur, wenn sie dem Browser über einen Webserver geliefert wird</li>
+								</ul>
+							</li>
+							<li>Cookies sind an Browser gekoppelt</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Web Storage API - Nutzungsweise</h4>
+						<ul>
+							<li>Die von beiden Attributen genutzten Funktionen in JavaScript sind weitgehend die gleichen</li>
+							<li>Pro Applikation/Domain im Webbrowserfenster oder -reiter stehen aktuell etwa 50 MB zur Verfügung, im IE/Edge 100 MB</li>
+							<li>Da Löschen möglich ist, muss über Speichermanagement nachgedacht werden</li>
+							<li>Browser fragen manchmal um Erweiterung des Speicherplatzes an</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Web Storage API - Speicherbereiche</h4>
+						<p>Jede Seite ergeben unterschiedliche Speicherbereiche, auch wenn die gleiche Seite geladen wird:</p>
+						<ul>
+							<li>https://dogs.com/</li>
+							<li>http://dogs.com/</li>
+							<li>https://dogs.com:80</li>
+							<li>https://www.dogs.com</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Web Storage API - Weitere Informationen</h4>
+						<ul class="r-fit-text">
+							<li>Beide Speicherarten sind weiterhin browserspezifisch, d.h. Browser unterschiedlicher Hersteller haben für denselben Ursprung getrennte Speicherbereiche</li>
+							<li>Web Storage heißt heute DOM-Storage (was aber mit dem DOM wenig zu tun hat)</li>
+							<li>Im Gegensatz zu Cookies, auf die sowohl Server als auch Client zugreifen können, wird Web Storage vollständig vom Client gesteuert</li>
+							<li>Über die Eingabe von (in Firefox) „about:config“ in der Adresszeile kann der Wert von dom.storage.enabled von true zu false geändert und Web-Storage-Objekte können somit abgeschaltet werden</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Web Storage API - Verwalten und Löschen von Daten</h4>
+						<ul>
+							<li>Firefox: <a href="https://support.mozilla.org/de/kb/verwaltung-am-computer-gespeicherten-website-daten?redirectslug=webseitendaten-einige-websites-mochten-dateien-auf&redirectlocale=de" target="_blank">Quelle</a></li>
+							<li>Chromium: <a href="https://support.google.com/chrome/answer/2392709?hl=en&co=GENIE.Platform=Desktop" target="_blank">Quelle</a></li>
+							<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria" target="_blank">Firefox Umsetzung</a></li>
+							<li>Datenschutz sollte bei Nutzung der API bedacht werden!</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Web Storage API - Beispiel - 1</h4>
+						<pre>
+							<code data-trim data-noescape data-line-numbers>
+&lt;div id=&quot;result&quot;&gt;&lt;/div&gt;
+&lt;script&gt;
+// Store
+localStorage.setItem(&quot;lastname&quot;, &quot;Meyer&quot;);
+// Retrieve
+document.getElementById(&quot;result&quot;).innerHTML = localStorage.getItem(&quot;lastname&quot;);
+&lt;/script&gt;
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Web Storage API - Beispiel - 2</h4>
+						<pre>
+							<code data-trim data-noescape data-line-numbers>
+&lt;p&gt;&lt;button onclick=&quot;clickCounter()&quot; type=&quot;button&quot;&gt;Click me!&lt;/button&gt;&lt;/p&gt;
+&lt;div id=&quot;result&quot;&gt;&lt;/div&gt;
+&lt;script&gt;
+function clickCounter() {
+	if (localStorage.clickcount) {
+		localStorage.clickcount = Number(localStorage.clickcount) + 1;
+	} else {
+		localStorage.clickcount = 1;
+	}
+	document.getElementById(&quot;result&quot;).innerHTML = &quot;You have clicked the button &quot; + localStorage.clickcount + &quot; time(s).&quot;;
+}
+&lt;/script&gt;
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Json Struktur</h4>
+						<ul>
+							<li>Objekt - beginnt mit { und endet mit }
+								<ul>
+									<li>Es enthält eine durch Kommata geteilte, ungeordnete Liste von Eigenschaften</li>
+									<li>Objekte ohne Eigenschaften („leere Objekte“) sind zulässig</li>
+								</ul>
+							</li>
+							<li>Array - beginnt mit [ und endet mit ]
+								<ul>
+									<li>Es enthält eine durch Kommata geteilte, geordnete Liste von Werten gleichen oder verschiedenen Typs</li>
+									<li>Leere Arrays sind zulässig</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Json Struktur</h4>
+						<pre>
+							<code data-trim data-noescape data-line-numbers>
+{
+  "Herausgeber": "Xema",
+  "Nummer": "1234-5678-9012-3456",
+  "Deckung": 2e+6,
+  "Waehrung": "EURO",
+  "Inhaber":
+  {
+    "Name": "Muster",
+    "Vorname": "Z",
+    "Teilnahme am Bonusprogramm": true,
+    "Hobbys": ["Reiten", "Golfen", "Lesen"],
+    "Alter": 42,
+    "Kinder": [],
+    "Partner": null
+  }
+}
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Web Storage API - Speichern</h4>
+						<pre>
+							<code data-trim data-noescape data-line-numbers>
+localStorage.setItem('students', JSON.stringify({
+	name: 'participant',
+	list: ['Justus Bley','Peter Miller','Bob Black']
+}));
+var participants = JSON.parse(localStorage.getItem('students'));
+console.log(participants.name, participants.list);
+document.getElementById("result").innerHTML = participants.name +": " + participants.list;
+
+localStorage.setItem('key', JSON.stringify({firstname:'Peter', lastname: 'Meier'}));
+alert(JSON.parse(localStorage.getItem('key')).firstname);
+// Peter
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Web Storage API - Löschen</h4>
+						<pre>
+							<code data-trim data-noescape data-line-numbers>
+localStorage.removeItem("key1");
+sessionStorage.removeItem("key2");
+localStorage.clear();
+sessionStorage.clear();
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Web Storage API - Weiteres</h4>
+						<ul>
+							<li>Spezifikation des W3C: http://www.w3.org/TR/webstorage/#storage</li>
+							<li>Work-around für ältere Browser und Tutorial: <a href="https://code.google.com/archive/p/sessionstorage/" target="_blank">Quelle</a></li>
+							<li>Beispiele: <a href="https://developer.mozilla.org/de/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API" target="_blank">Quelle</a></li>
+							<li>Demo (gemeinsam aufrufen):
+								<ul>
+									<li>Auswahl tätigen, neu laden: Auswahl ist beständig: <a href="https://mdn.github.io/dom-examples/web-storage/" target="_blank">Quelle</a></li>
+									<li>sehen was passierte: <a href="https://mdn.github.io/dom-examples/web-storage/event.html" target="_blank">Quelle</a></li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h4>IndexedDB API (2.0) - 1</h4>
+						<ul>
+							<li>Es ist ein Datenbanksystem, das indizierte Informationen clientseitig speichert</li>
+							<li>Anders als bei SQL werden Informationen als Objekte (Datensätze oder Records) in sogenannten Objektspeichern (Tabellen) gespeichert</li>
+							<li>Jede Datenbank ist durch Computer und Website oder Anwendung eindeutig bestimmt durch Aufruf mit „(Name, Version)“</li>
+							<li>Es ist eine API der untersten Ebene</li>
+						</ul>
+					</section>
+					<section>
+						<h4>IndexedDB API (2.0) - 2</h4>
+						<ul>
+							<li>Der Entwickler muss viel selbst programmieren und dabei die Bedingungen jedes Prozesses in jeder Operation prüfen</li>
+							<li>Deshalb wird der Einsatz der IndexedDB API meist jQuery und ähnliche Frameworks bzw. Bibliotheken verwendet</li>
+							<li>Diese nehmen viel Programmierarbeit ab</li>
+						</ul>
+					</section>
+					<section>
+						<h4>IndexedDB API (2.0) - 3</h4>
+						<ul>
+							<li>Im Firefox sind die IndexedDB-Datenbanken beispielsweise in einer ganz normalen SQLite-Datenbank gespeichert</li>
+							<li>Chromium hingegen setzt auf LevelDB</li>
+						</ul>
+					</section>
+					<section>
+						<h4>IndexedDB API (2.0) - Beispiele</h4>
+						<ul>
+							<li>Tutorial: <a href="https://developer.mozilla.org/de/docs/Web/API/IndexedDB_API/Using_IndexedDB" target="_blank">Quelle</a></li>
+							<li><a href="https://mdn.github.io/dom-examples/to-do-notifications/" target="_blank">Beispiel</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>IndexedDB API (2.0) - Weiteres</h4>
+						<ul>
+							<li>W3C-Spezifikation: <a href="https://www.w3.org/TR/IndexedDB/" target="_blank">Quelle</a></li>
+							<li>Kurzreferenz: <a href="https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API" target="_blank">Quelle</a></li>
+							<li>Dexie.js (ein Wrapper für die Arbeit mit IndexedDB): <a href="https://dexie.org" target="_blank">Quelle</a></li>
+						</ul>
+					</section>
+				</section>
+				<section data-name="File- und Webworker API">
+					<section>
+						<h4>File API</h4>
+						<ul>
+							<li>Aktuell wird die File-API in der Web Workers API</li>
+							<li>Früher waren File API (Grundvariante), File API: Directories & System, bzw. File API: Writer noch im Einsatz</li>
+							<li>Ziele sind es, Dateien auf dem Computer des Benutzers über Webseiten zu lesen, zu verarbeiten und zu erstellen</li>
+							<li>Das Hoch- und Herunterladen von Dateien funktionierte schon sehr viel früher</li>
+						</ul>
+					</section>
+					<section>
+						<h4>File API - Idee</h4>
+						<ul>
+							<li>Die Grundidee ist isolierte lokale Speicherung in einer clientseitigen kleinen objektorientierten Datenbank bzw. in einem kleinen Dateisystem</li>
+							<li>Beides würde anwendungsspezifisch funktionieren</li>
+							<li>Es soll nur zwei „Lademöglichkeiten“ in den Verarbeitungsbereich geben (zu ladende Dateien müssen bereits existieren):das &lt;input&gt;-Element und Drag&Drop-Operation</li>
+						</ul>
+					</section>
+					<section>
+						<h4>File API - Beispiele</h4>
+						<ul>
+							<li><a href="https://css-tricks.com/getting-started-with-the-file-system-access-api/" target="_blank">CSS Tricks Beispiele</a></li>
+							<li><a href="https://rubaxa.github.io/jquery.fileapi/" target="_blank">JQuery Beispiel</a></li>
+							<li><a href="https://dev.to/olodocoder/javascript-web-apis-series-file-and-storage-apis-584o" target="_blank">Google File API guide</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Storage-APIs - Support</h4>
+						<figure class="">
+							<img src="../images/vl6/file-support.png" alt="Storage-APIs - Support">
+							<figcaption>
+								<a href="https://caniuse.com/?search=file%20api" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Storage-APIs - Weiteres</h4>
+						<ul>
+							<li>W3C-Spezifikation: <a href="https://www.w3.org/TR/FileAPI/" target="_blank">Quelle</a></li>
+							<li>Datei-Upload (nur Dateiname, Dateigröße und MIME-Type sind ausgebbar): <a href="https://jsfiddle.net/Tb5Tj/" target="_blank">Quelle</a></li>
+							<li>Beschreibung dazu: <a href="https://msdn.microsoft.com/de-de/magazine/jj835793%28en-us%29.aspx" target="_blank">Quelle</a></li>
+						</ul>
+					</section>
+				</section>
+				<section data-name="Neuere APIs">
+					<section>
+						<h4>Asynchrone Anfragen - XMLHttpRequest advanced features</h4>
+						<ul class="r-fit-text">
+							<li>XMLHttpRequest advanced features (vorher: XMLHttpRequest-API Level2)</li>
+							<li>Es ist eine API für AJAX-Anwendungen geschaffen worden, die vollständig und browserübergreifend funktioniert</li>
+							<li>Neue Events, unter anderem solche, die den Ladefortschritt nachvollziehen oder einen Abbruch des Ladens ermöglichen; die eine Datei hochladen</li>
+							<li>Cross-Origin Requests sind möglich, d.h. der Webserver muss per Serversprache des aufgerufenen Scripts oder per Konfiguration des Webservers selbst AJAX- Anfragen anderer Domains erlauben (spezifisch oder aller)</li>
+							<li><a href="https://www.w3schools.com/xml/xml_http.asp" target="_blank">W3C Beispiel</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>XMLHttpRequest advanced features - Support</h4>
+						<figure class="">
+							<img src="../images/vl6/xmlhttprequest-support.png" alt="Storage-APIs - Support">
+							<figcaption>
+								<a href="https://caniuse.com/?search=XMLHttpRequest" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Web Messaging API</h4>
+						<ul>
+							<li>Cross Document Messaging API (kurz: Web Messaging API)</li>
+							<li>Diese API soll Kommunikationsbarrieren zwischen verschiedenen Frames und Fenstern überwinden</li>
+							<li>Auch Anwendungen mit verschiedenen Domänen als Ursprung können miteinander kommunizieren</li>
+							<li>Als Kennungen dienen Hostname und Port der Domänen. Für Tests sind zwei Domänen und Webserver erforderlich</li>
+							<li>Die Nachrichtenübermittlung ist asynchron</li>
+							<li><a href="https://mdn.github.io/dom-examples/channel-messaging-multimessage/" target="_blank">Mozilla Beispiel</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Web Messaging API - Support</h4>
+						<figure class="">
+							<img src="../images/vl6/crossdocument-support.png" alt="Web Messaging API - Support">
+							<figcaption>
+								<a href="https://caniuse.com/?search=cross%20document" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Web Sockets (API) / WebTransport API</h4>
+						<ul>
+							<li>Ziel ist es, in der Kommunikation von Client und Webserver Echtzeitanwendungen zu ermöglichen</li>
+							<li>Web Sockets ist bereits in HTTP/2 integriert, WebTransport API arbeitet mit HTTP/3</li>
+							<li>Die Verbindung wird über ein persistentes TCP-Socket ohne HTTP-Header hergestellt</li>
+							<li>Es wird ein Websockets-Server-Script benötigt (z.B. in Rust, AspNet, PHP, Python, Nodejs)</li>
+						</ul>
+					</section>
+					<section>
+						<h4>WebSocket - Support</h4>
+						<figure class="">
+							<img src="../images/vl6/webstorage-support.png" alt="WebSocket - Support">
+							<figcaption>
+								<a href="https://caniuse.com/?search=cross%20document" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>WebTransport API - Support</h4>
+						<figure class="">
+							<img src="../images/vl6/http3-support.png" alt="WebTransport API - Support">
+							<figcaption>
+								<a href="https://caniuse.com/?search=HTTP%2F3" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Web Sockets - Funktionsweise - 1</h4>
+						<figure class="">
+							<img src="../images/vl6/websocket.png" alt="Web Sockets - Funktionsweise">
+							<figcaption>
+								<a href="https://caniuse.com/?search=Web%20Sockets" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Web Sockets - Funktionsweise - 2</h4>
+						<ul>
+							<li>Web Sockets sind Transfer Control Protocol (TCP) basierte Netzwerkprotokolle zur bidirektionalen Kommunikation zwischen Web-Anwendungen und einem Web-Socket-Server</li>
+							<li>Notify-Systeme (Push-Service) und Multiplexing wird von WebSockets unterstützt</li>
+							<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_client_applications" target="_blank">Mozilla Websocket Beispiel</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Web Sockets - Beispiel</h4>
+						<pre>
+							<code data-trim data-noescape data-line-numbers>
+var socket = new WebSocket(urlToWebsocketServer);
+
+// callback-Funktion wird gerufen, wenn die Verbindung erfolgreich aufgebaut werden konnte
+socket.onopen = function () {
+    console.log("Verbindung wurde erfolgreich aufgebaut");
+};
+
+// callback-Funktion wird gerufen, wenn eine neue Websocket-Nachricht eintrifft
+socket.onmessage = function (messageEvent) {
+    console.log(messageEvent.data);
+};
+
+// callback-Funktion wird gerufen, wenn ein Fehler auftritt
+socket.onerror = function (errorEvent) {
+    console.log("Error! Die Verbindung wurde unerwartet geschlossen");
+};
+
+socket.onclose = function (closeEvent) {
+    console.log('Die Verbindung wurde geschlossen --- Code: ' + closeEvent.code + ' --- Grund: ' + closeEvent.reason);
+};
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>WebTransport API und QUIC</h4>
+						<ul>
+							<li>HTTP3 / QUIC <a href="https://developer.mozilla.org/en-US/docs/Glossary/HTTP_3" target="_blank">Quelle</a></li>
+								<li>Ein wichtiger Unterschied bei HTTP/3 ist, dass es auf QUIC, über UDP läuft</li>
+								<li>QUIC ist so konzipiert, dass es schnell ist und einen schnellen Wechsel zwischen den Netzen ermöglicht</li>
+								<li>QUIC eignet sich besser für die mobile Internetnutzung</li>
+								<li>Faster connection establishment: QUIC kombiniert die kryptographischen und Transport-Handshakes</li>
+							<li>Zum Nachlesen: <a href="https://www.cloudflare.com/learning/performance/what-is-http3/" target="_blank">Quelle</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>TCP VS UDP</h4>
+						<figure class="">
+							<img src="../images/vl6/tcpvsudp.png" alt="TCP VS UDP">
+							<figcaption>
+								<a href="https://www.debugbear.com/blog/http3-quic-protocol-guide" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>HTTP1/2 vs HTTP3</h4>
+						<figure class="">
+							<img src="../images/vl6/http123.png" alt="HTTP1/2 vs HTTP3">
+							<figcaption>
+								<a href="https://www.debugbear.com/blog/http3-quic-protocol-guide" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>HTTP2 vs HTTP3</h4>
+						<figure class="">
+							<img src="../images/vl6/quicsending.png" alt="HTTP2 vs HTTP3">
+							<figcaption>
+								<a href="https://www.debugbear.com/blog/http3-quic-protocol-guide" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Websockets, WebTransport, XMLHTTPRequest - Weiteres - 1</h4>
+						<ul>
+							<li>W3C-Spezifikation XMLHttpRequest: <a href="https://www.w3.org/TR/XMLHttpRequest/" target="_blank">Quelle</a></li>
+							<li>W3C-Spezifikation WebMessaging: <a href="https://html.spec.whatwg.org/multipage/web-messaging.html#crossDocumentMessages<" target="_blank">Quelle</a></li>
+							<li>W3C-Spezifikation WebTransport: <a href="https://www.w3.org/TR/webtransport/" target="_blank">Quelle</a></li>
+							<li>W3C-Spezifikation WebSockets: <a href="https://www.w3.org/TR/websockets/" target="_blank">Quelle</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Websockets, WebTransport, XMLHTTPRequest - Weiteres - 2</h4>
+						<ul>
+							<li>Tutorial für postMessage: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage" target="_blank">Quelle</a></li>
+							<li>Tutorial und Screencast-Demo: <a href="https://www.codeproject.com/Articles/248264/HTML5-WebMessaging-Experimen" target="_blank">Quelle</a></li>
+							<li>Tutorial für HTTP3 <a href="https://thenewstack.io/how-to-get-started-with-http3/" target="_blank">Quelle</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Wenn Pakete länger benötigen zum Laden</h4>
+						<ul>
+							<li>JavaScript ist keine Multithread-Sprache, alles muss nacheinander abgearbeitet werden</li>
+							<li>Bei hohen Latenzen, oder großen Dateien wird der Renderthread z.B. blockiert</li>
+							<li>Die Web Workers API bietet die Möglichkeit, Code im Hintergrund in separaten Threads zu verarbeiten</li>
+							<li>Damit laufen Funktionen Multitaskingfähig</li>
+							<li>Die aktive Webseite bleibt davon unbeeinflusst</li>
+							<li>Das Grundmodell sind separate JavaScript-Dateien, die mit der Hauptdatei Nachrichten austauschen</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Web Workers API - Funktionsweise - 1</h4>
+						<figure class="">
+							<img src="../images/vl6/webworker-function.png" alt="Web Workers API - Funktionsweise">
+							<figcaption>
+								<a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Promise" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Web Workers API - Funktionsweise - 2</h4>
+						<ul>
+							<li>Nachrichten bestehen aus Strings oder aus JSON/XML-Objekten</li>
+							<li>Andere Datenlasten sind derzeit nicht vorgesehen</li>
+							<li>Elemente des Hauptdokuments wie HTML-Elemente, JavaScript-Code oder - Variable sind den
+								Workers nicht zugänglich</li>
+							<li>Fehlermeldungsroutinen für die Worker müssen programmiert werden</li>
+							<li>Worker können vom Hauptprogramm oder in sich selbst abgeschaltet werden</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Web Workers API - Synchrone und asynchrone APIs</h4>
+						<ul>
+							<li>Die HTML5-APIs liegen mitunter in einer asynchronen und in einer synchronen Version vor</li>
+							<li>Bisher wurde mit der asynchronen Version gearbeitet, das heißt die APIs liefen in einem
+								separaten Thread</li>
+							<li>Die File API und die IndexedDB API gibt es aber z.B. auch als synchrone Versionen</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Web Workers API - Funktionsweise</h4>
+						<figure class="">
+							<img src="../images/vl6/webworker.png" alt="Web Workers API - Funktionsweise">
+							<figcaption>
+								<a href="https://caniuse.com/?search=Web%20Workers%20API" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Web Workers API - Dedicated und Shared Worker</h4>
+						<ul>
+							<li>Ein Dedicated Worker arbeitet nur mit der Hauptdatei zusammen, von der er angesprochen (und mit der er zusammen erstellt) wurde</li>
+							<li>Ein Shared Worker kann mit mehreren Verbindungen zugleich arbeiten</li>
+							<li>Zum Test eines Dedicated Worker werden mindestens drei Dateien gebraucht, für den eines Shared Worker mindestens fünf Dateien</li>
+							<li><a href="https://javascript-workers.onrender.com/" target="_blank">Laufzeiten vergleich</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Web Workers API - Support</h4>
+						<figure class="">
+							<img src="../images/vl6/webworkers-support.png" alt="Web Workers API - Support">
+							<figcaption>
+								<a href="https://caniuse.com/?search=Web%20Workers%20API" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Shared Web Workers API - Support</h4>
+						<figure class="">
+							<img src="../images/vl6/sharedwebworker-support.png" alt="Shared Web Workers API - Support">
+							<figcaption>
+								<a href="https://caniuse.com/?search=Web%20Workers%20API" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Dedicated Web Workers API - Support</h4>
+						<figure class="">
+							<img src="../images/vl6/dedicatedwebworker-support.png" alt="Dedicated Web Workers API - Support">
+							<figcaption>
+								<a href="https://caniuse.com/?search=Dedicated" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Web Workers API - Weiteres</h4>
+						<ul>
+							<li>W3C-Spezifikation: <a href="https://www.w3.org/TR/workers/" target="_blank">Quelle</a></li>
+							<li><a href="https://foldingathome.org/2014/02/24/adding-a-completely-new-way-to-fold-directly-in-the-browser/" target="_blank">Quelle</a></li>
+							<li><a href="https://copy.sh/v86/?profile=windows98" target="_blank">Windows 98</a></li>
+							<li><a href="https://jsfiddle.net/lowrey/ts7ksexn/">Webworker Live-PI Berechnung</a></li>
+							<li><a href="https://www.w3schools.com/html/html5_webworkers.asp" target="_blank">W3C Webworker Guide</a></li>
+							<li><a href="https://v17.angular.io/guide/web-worker" target="_blank">Angular Webworker</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>WebGPU API</h4>
+						<ul>
+							<li>Die WebGPU-API ermöglicht es Webentwicklern, den Grafikprozessor (GPU) des zugrunde liegenden Systems zu nutzen, um Hochleistungsberechnungen durchzuführen und komplexe Bilder zu zeichnen, die im Browser gerendert werden können</li>
+							<li>WebGPU ist der Nachfolger von WebGL und bietet bessere Kompatibilität mit modernen GPUs, Unterstützung für allgemeine GPU-Berechnungen, schnellere Operationen und Zugang zu erweiterten GPU-Funktionen.</li>
+						</ul>
+					</section>
+					<section>
+						<h4>WebGPU API - Beispiele</h4>
+						<ul>
+							<li>Firefox unterstützt WebGPU noch nicht, einzelne Funktionen sind in nightly nutzbar (2024)</li>
+							<li><a href="https://webllm.mlc.ai/" target="_blank">KI-Netze und LLMs über WebGPU</a></li>
+							<li><a href="https://mdn.github.io/dom-examples/webgpu-compute-demo/" target="_blank">Webgpu compute</a></li>
+							<li><a href="https://mdn.github.io/dom-examples/webgpu-render-demo/" target="_blank">Webgpu renderer</a></li>
+							<li><a href="https://webgpu.github.io/webgpu-samples/" target="_blank">WebGPU Samples</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>WebXR Device API</h4>
+						<ul class="r-fit-text">
+							<li>WebXR ist eine Gruppe von Standards, die zusammen verwendet werden, um das Rendern von 3D-Szenen auf Hardware zu unterstützen</li>
+							<li>Darstellung von virtueller Welten (Virtual Reality oder VR) oder für das Hinzufügen von grafischen Bildern zur realen Welt (Augmented Reality oder AR)</li>
+							<li>Die WebXR-Geräte-API implementiert den Kern des WebXR-Standards</li>
+							<li>Auswahl von Ausgabegeräten, Rendering auf dem ausgewählten Gerät mit der entsprechenden
+								Bildrate und Bewegungsvektorenverwaltung</li>
+							<li>Ein typisches XR-Gerät hat entweder 3 oder 6 Freiheitsgrade und kann mit oder ohne externen Positionssensor ausgestattet sein</li>
+							<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebXR_Device_API/Fundamentals" target="_blank">Theorie zu WebXR</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>WebXR Device API - Beispiele</h4>
+						<ul>
+							<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebXR_Device_API/Movement_and_motion" target="_blank">Movements</a></li>
+							<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebXR_Device_API/Inputs" target="_blank">Inputs</a></li>
+							<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebXR_Device_API/Targeting" target="_blank">Targeting</a></li>
+							<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebXR_Device_API/Performance" target="_blank">Performance</a></li>
+							<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebXR_Device_API/Permissions_and_security" target="_blank">Permissions</a></li>
+						</ul>
+					</section>
+				</section>
+				<section>
+					<h4>Andere Browser APIs</h4>
+					<ul>
+						<li>History API: <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/history" target="_blank">Quelle</a></li>
+						<li>MediaStream API (oder Stream API, siehe WebRTC API): <a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaStream_API" target="_blank">Quelle</a></li>
+						<li>Pointer Lock API: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Pointer_Lock_API" target="_blank">Quelle</a></li>
+						<li>Page Visibility API: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Page_Visibility_API" target="_blank">Quelle</a></li>
+						<li>WebRTC API: <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API" target="_blank">Quelle</a></li>
+						<li>Web Messaging API: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Push_API" target="_blank">Quelle</a></li>
+						<li>Web Audio API: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API" target="_blank">Quelle</a></li>
+					</ul>
+				</section>
+				<section>
+					<h4>Weitere Quellen</h4>
+					<ul class="">
+						<li><a href="https://www.w3schools.com/js/js_api_intro.asp" target="_blank">W3Schools</a></li>
+						<li><a href="https://developer.mozilla.org/en-US/docs/Web/API" target="_blank">Mozilla WebAPIs</a></li>
+						<li><a href="https://www.w3.org/standards/" target="_blank">W3 standards</a></li>
+						<li><a href="https://www.w3.org/api/" target="_blank">W3 API standards</a></li>
+						<li><a href="https://www.openapis.org/" target="_blank">OpenAPI</a></li>
+					</ul>
+				</section>
+				<section>
+					<h4>Abspann</h4>
+					<p>
+						Sechstes Level geschafft weitere Folgen!
+					</p>
+					<p>Fragen und Feedback?</p>
+				</section>
+			</div>
+		</div>
+		<footer class="slide-footer">
+			Sebastian Pötter - HTWK - MMWP2024 - VL06 - Browser APIs 2
+		</footer>
+		<script src="../dist/reveal.js"></script>
+		<script src="../plugin/notes/notes.js"></script>
+		<script src="../plugin/markdown/markdown.js"></script>
+		<script src="../plugin/highlight/highlight.js"></script>
+		<script src="../plugin/simplemenu/simplemenu.js"></script>
+		<script src="../plugin/copycode/copycode.js"></script>
+		<script>
+			Reveal.initialize({
+				maxScale: 1.0,
+				margin: 0.2,
+				controls: true,
+				progress: true,
+				center: true,
+				hash: true,
+				slideNumber: 'c/t',
+				plugins: [RevealMarkdown, RevealHighlight, RevealNotes, CopyCode, Simplemenu],
+				simplemenu: {
+					barhtml: {
+						header: "<div class='menubar' style='font-size: 1.5rem'><ul class='menu'></ul></div>",
+						footer: ""
+					}
+				},
+			});
+		</script>
+	</body>
+</html>
