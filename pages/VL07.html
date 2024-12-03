@@ -1,0 +1,763 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>MMWP2024 - LV07</title>
+
+		<link rel="stylesheet" href="../dist/reset.css">
+		<link rel="stylesheet" href="../dist/reveal.css">
+		<link rel="stylesheet" href="../dist/theme/white.css">
+		<link rel="stylesheet" href="../dist/style.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="../plugin/highlight/monokai.css">
+		<link rel="stylesheet" href="../plugin/simplemenu/simplemenu.css">
+		<link rel="stylesheet" href="../plugin/copycode/copycode.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-transition="fade" data-state="hide-menubar hide-menu" data-background-image="../images/vl7/presentationstart.png" data-background-position="bottom" data-background-opacity="0.1">
+					<h1>Bilder in HTML5</h1>
+					<h3>MMWP2024 - LV07</h3>
+				</section>
+				<section data-name="TOC" data-sm="false">
+					<h4>Inhaltsverzeichnis</h4>
+					<ul class="menu"></ul>
+				</section>
+				<section data-name="Organisation">
+					<section>
+						<h4>Inhaltsschwerpunkte</h4>
+						<ul>
+							<li>Erklärung der Bedeutung von Bildern für Webseiten</li>
+							<li>Vorstellung von modernen Bildformaten</li>
+							<li>Asynchrones Laden von Inhalten</li>
+							<li>Responsive Bilder</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Voraussetzung</h4>
+						<p>Der Ausgangspunkt dieser Vorlesungsreihe ist das Wissen über funktionsweise von BrowserAPIs</p>
+						<ul>
+							<li>Verständnis von Inhaltsplatzierung in HTML</li>
+							<li>Responsive Webdesign</li>
+							<li>Asynchrones Javascript zum Laden von Inhalten</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Ziele</h4>
+						<p>Vorstellung von:</p>
+						<ul>
+							<li>Modernen Bilderformaten (APNG, AVIF, WebP)</li>
+							<li>Beispiele von Inhaltsdarstellung</li>
+							<li>Asynchrones Verhalten von Inhalten</li>
+							<li>High Density Displays</li>
+							<li>Bilder und Media Queries</li>
+						</ul>
+					</section>
+				</section>
+				<section data-name="Content von Webseiten">
+					<section>
+						<h4>Speichergrößen von Webseiten</h4>
+						<figure class="">
+							<img src="../images/vl7/sizeofwebsites.png" width="700" alt="Content von Webseiten">
+							<figcaption>
+								<a href="https://httparchive.org/reports/state-of-images?start=earliest&end=latest&view=list" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Speichergrößen von Bildern auf Webseiten</h4>
+						<figure class="">
+							<img src="../images/vl7/sizeofimages.png" width="700" alt="Speichergrößen von Bildern auf Webseiten">
+							<figcaption>
+								<a href="https://httparchive.org/reports/state-of-images?start=earliest&end=latest&view=list" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Anteil von asynchron geladenen Bildern</h4>
+						<figure class="">
+							<img src="../images/vl7/lazyloadedimages.png" width="700" alt="Anteil von asynchron geladenen Bildern">
+							<figcaption>
+								<a href="https://httparchive.org/reports/state-of-images?start=earliest&end=latest&view=list" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Bilder in Webseiten - 1</h4>
+						<ul>
+							<li>Bilder im Kontext von Webseiten wurden bisher so betrachtet, dass die Pixelanzahl proportional zu den Abmaßen des Bildes bei der Darstellung auf einem gegebenen Bildschirm im Browserfenster ist</li>
+							<li>Das Verhältnis zwischen Pixelanzahl und Abmaßen von Bildschirmen stimmt aber nicht mehr</li>
+							<li>Es gibt zunehmend kleine Bildschirme hoher Auflösung (Siehe vorherige Vorlesungen)</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Bilder in Webseiten - 2</h4>
+						<ul>
+							<li>Standpunkt der Pixeldichte / Auflösung her die richtigen Bildversionen gleichen Datentyps den richtigen Bildschirmen zuzuordnen?</li>
+							<li>Die Abmaße eines Bildes in Pixeln entspricht genau seinen Abmaßen in der Verarbeitung in CSS-Pixeln (dank viewport einstellung)</li>
+							<li>Auch der Ansatz One-Size-Fits-All ist nicht korrekt (50MB 4K Bilder auf kleinen mobil Geräten bei 3G)</li>
+						</ul>
+					</section>
+					<section>
+						<h4>"Historische" Bildformate - 1</h4>
+						<ul class="r-fit-text">
+							<li>JPEG
+								<ul>
+									<li>Familie von Standards verlustbehafteter Bildkompressionsalgorithmen</li>
+									<li>Umfangreiche Metadaten in EXIF-Header möglich</li>
+									<li>Unterstützt keine Transparenzen oder Animationen</li>
+								</ul>
+							</li>
+							<li>GIF
+								<ul>
+									<li>Verlustfreie Kompression</li>
+									<li>geringe Farbtiefe (8/16/32 Bit), Speicherung von Farbpaletten möglich (Kompression)</li>
+									<li>Transparenzen und Animationen möglich</li>
+									<li>Speicherung interlaced möglich</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h4>"Historische" Bildformate - 2</h4>
+						<ul class="">
+							<li>PNG
+								<ul>
+									<li>Verlustfreie Kompression</li>
+									<li>blockbasierte Kodierung (gut zum asynchronen Laden)</li>
+									<li>Farbpaletten möglich</li>
+									<li>RGB-Kanäle und zusätzlicher Alpha-Kanal für Transparenzen</li>
+									<li>Animationen nicht möglich</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Weitere Bildformate</h4>
+						<ul class="r-fit-text">
+							<li>SVG
+								<ul>
+									<li>Vektorgrafikformat</li>
+									<li>Breite Browserunterstützung</li>
+									<li>Komprimiert oder im Quelltext (lesbares Format)</li>
+									<li>Einschluss von Bitmap-Grafiken z.B. JPEG, GIF, PNG möglich</li>
+									<li>Animationen nicht möglich</li>
+								</ul>
+							</li>
+							<li>WEBP
+								<ul>
+									<li>Breite Browserunterstützung erst seit kurzem</li>
+									<li>Verlustbehaftete und verlustfreie Kompression</li>
+									<li>Blockbasierte Kodierung</li>
+									<li>Entropiekodierung</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h4>WEBP - Entropiecodierung</h4>
+						<ul class="r-fit-text">
+							<li>David A. Huffman hat 1952 einen Algorithmus zur Konstruktion von optimalen präfixfreien Codes angegeben</li>
+							<li>Die häufigsten Elemente werden möglichst kurz codiert</li>
+							<li>WebP setzt auf diese Technik, um kleinere Dateigrößen zu ermöglichen</li>
+							<li>Statisch und nicht mehr einfach änderbar</li>
+							<li><a href="https://www.lntwww.de/Informationstheorie/Entropiecodierung_nach_Huffman" target="_blank">Mehr zu Entropiecodierung</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>"Neue" Bildformate</h4>
+						<ul class="r-fit-text">
+							<li>APNG
+								<ul>
+									<li>APNG ist eine Erweiterung des PNG-Formats mit Unterstützung für animierte Bilder</li>
+									<li>Es ist als Ersatz für einfache animierte Bilder gedacht (Gif)</li>
+									<li>Unterstützt gleichzeitig 24-Bit-Bilder und 8-Bit-Transparenz</li>
+									<li>APNG ist rückwärtskompatibel mit PNG</li>
+									<li>Jeder PNG-Decoder kann die APNG-spezifischen Chunks ignorieren und ein einzelnes Bild anzeigen</li>
+									<li>Siehe <a href="https://wiki.mozilla.org/APNG_Specification" target="_blank">Spezifikation</a></li>
+								</ul>
+							</li>
+							<li>AVIF (AV1 Image File Format)
+								<ul>
+									<li>Das AV1 Image File Format (AVIF) ist eine Codierung, die auf dem Open-Source-AV1-Videocodec basiert</li>
+									<li>Seit 2020 in Chromium unterstützt aber seit 2022 von Safari (Webkit) nicht mehr unterstützt</li>
+									<li>firefoxbasierte Browser haben im moment nur Teilsupport bis keinen (letzte Änderungen 2023)</li>
+									<li>Zeigt im Vergleich zu JPEG oder WebP deutliche Reduzierung der Dateigrößen (ohne Qualitätverluste oder Kompressionen)</li>
+									<li>Siehe <a href="https://jakearchibald.com/2020/avif-has-landed/" target="_blank">AVIF BLog</a></li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h4>APNG Support</h4>
+						<figure class="">
+							<img src="../images/vl7/apng-support.png" alt="APNG Support">
+							<figcaption>
+								<a href="https://caniuse.com/?search=APNG" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>AVIF Support</h4>
+						<figure class="">
+							<img src="../images/vl7/avif-support.png" alt="AVIF Support">
+							<figcaption>
+								<a href="https://caniuse.com/?search=AVIF" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Anteile der Bildformate auf Webseiten (2024)</h4>
+						<figure class="">
+							<img src="../images/vl7/usagesofpicturetypes.png" alt="Anteile der Bildformate auf Webseiten">
+							<figcaption>
+								<a href="https://w3techs.com/technologies/overview/image_format" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Vergleich der älteren Bildformate</h4>
+						<figure class="">
+							<img src="../images/vl7/imagedifferences.png" alt="Vergleich der Bildformate">
+							<figcaption>
+								<a href="https://w3techs.com/technologies/overview/image_format" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Das Bildelement &lt;img&gt; - 1</h4>
+						<figure class="">
+							<img src="../images/vl7/imageattributes.png" alt="Einstellungsmöglichkeiten von Bildern">
+							<figcaption>
+								<a href="https://wiki.selfhtml.org/wiki/HTML/Tutorials/Bilder_im_Internet/Formate_und_Gr%C3%B6%C3%9Fen" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Das Bildelement &lt;img&gt; - 2</h4>
+						<figure class="">
+							<img src="../images/vl7/imageattributes-2.png" alt="Einstellungsmöglichkeiten von Bildern">
+							<figcaption>
+								<a href="https://wiki.selfhtml.org/wiki/HTML/Tutorials/Bilder_im_Internet/Formate_und_Gr%C3%B6%C3%9Fen" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Bilder in HTML und CSS</h4>
+						<pre>
+							<code data-trim data-noescape data-line-numbers>
+&lt;img scr=&prime;&prime;cat.jpg&prime;&prime; alt=&prime;&prime;Katze&prime;&prime;&gt; &lt;!-- als Bildelement im HTML--&gt;
+&lt;body background=&bdquo;hintergrund.jpg&ldquo;&gt; &lt;!-- als Hintergrund im HTML --&gt;
+.main {background-image: url(&prime;&prime;pattern.jpg&prime;&prime;);} // als Hintergrund im CSS
+.main:after {content: url(&prime;&prime;pattern.jpg&prime;&prime;);} // als Inhalt im CSS
+.main:before {content: url(&prime;&prime;pattern.jpg&prime;&prime;);} // als Inhalt im CSS
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Before and After im CSS</h4>
+						<pre>
+							<code data-trim data-noescape data-line-numbers>
+/* CSS2 Syntax */ element:after { Stileigenschaften }
+/* CSS3 Syntax */ element::after { Stileigenschaften }
+
+Die ::after Notation (mit zwei Doppelpunkten) wurde in CSS 3
+eingeführt, um eine Unterscheidung zwischen Pseudoklassen
+und Pseudoelementen einzuführen. Browser unterstützen auch
+die :after Notation, wie sie in CSS 2 eingeführt wurde
+
+selector : pseudo-class { property: value; }
+selector :: pseudo-element { property: value; }
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Bilder mit Javascript laden</h4>
+						<pre>
+							<code data-trim data-noescape data-line-numbers>
+function lazyload () {
+	if(lazyloadThrottleTimeout) {
+	clearTimeout(lazyloadThrottleTimeout);
+}
+
+lazyloadThrottleTimeout = setTimeout(function() {
+	var scrollTop = window.pageYOffset;
+	lazyloadImages.forEach(function(img) {
+		if(img.offsetTop < (window.innerHeight + scrollTop)) {
+		img.src = img.dataset.src;
+		img.classList.remove('lazy');
+	}
+});
+
+if(lazyloadImages.length == 0) {
+	document.removeEventListener("scroll", lazyload);
+	window.removeEventListener("resize", lazyload);
+	window.removeEventListener("orientationChange", lazyload);
+}
+							</code>
+						</pre>
+						<p>Siehe <a href="https://css-tricks.com/the-complete-guide-to-lazy-loading-images/" target="_blank">CSS-Tricks</a></p>
+					</section>
+					<section>
+						<h4>Bilder asynchron laden - Idee</h4>
+						<figure class="">
+							<img src="../images/vl7/imageasynchloading.png" width="600" alt="Einstellungsmöglichkeiten von Bildern">
+							<figcaption>
+								<a href="https://wiki.selfhtml.org/wiki/HTML/Tutorials/Bilder_im_Internet/Formate_und_Gr%C3%B6%C3%9Fen" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>AJAX (Asynchronous JavaScript And XML)</h4>
+						<pre>
+							<code data-trim data-noescape data-line-numbers>
+var xmlHttp = false; //globale Instanz von XMLHttpRequest
+//XMLHttpRequest-Instanz erstellen
+try {
+	xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
+} catch(e) { try {
+	xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+} catch(e) { xmlHttp = false; } } //... für Internet Explorer
+//... für Mozilla, Opera, Safari usw.
+if (!xmlHttp && typeof XMLHttpRequest != 'undefined') {
+	xmlHttp = new XMLHttpRequest(); }
+
+function loadData(url,id) {
+	if (xmlHttp) {
+		xmlHttp.open('GET', 'loadimage.php?id=' + id + '&url=' + url, true);
+		xmlHttp.onreadystatechange = answere;
+		xmlHttp.send(null);
+	}
+}
+
+function answere() {
+	if (xmlHttp.readyState == 4) {
+		var idpart = xmlHttp.responseText.split("|");
+		var id = idpart[0]
+		document.getElementById(id).innerHTML = idpart[1]
+	}
+}
+							</code>
+						</pre>
+						<p>Siehe <a href="https://css-tricks.com/the-complete-guide-to-lazy-loading-images/" target="_blank">CSS-Tricks</a></p>
+					</section>
+					<section>
+						<h4>Jquery Asynchronous Image Loader (JAIL)</h4>
+						<pre>
+							<code data-trim data-noescape data-line-numbers>
+&lt;img class=&quot;lazy&quot; src=&quot;/img/blank.gif&quot; data-src=&quot;/img/image1.jpg&quot;/&gt;
+&lt;noscript&gt;
+&lt;img src=&quot;/img/image1.jpg&quot;/&gt;
+&lt;noscript&gt;
+&lt;script src=&quot;/lib/jquery.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;/src/jail.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+$(function(){
+	$(&#39;img.lazy&#39;).jail();
+});
+&lt;/script&gt;
+							</code>
+						</pre>
+						<p>Siehe <a href="https://sebarmeli.github.io/JAIL/" target="_blank">Jail Beispiel</a></p>
+					</section>
+					<section>
+						<h4>Vorteile von asynchronen Laden</h4>
+						<ul class="r-fit-text">
+							<li>Entkoppelung von Darstellung relevanter Inhalte und der vollständigen Anzeige und Nutzbarkeit der Website</li>
+							<li>Der Nutzer erhält schneller ein Ergebnis</li>
+							<li>Die Website reagiert agiler, weil früher mehr zu sehen ist und genutzt werden kann</li>
+							<li>Außerdem lässt sich steuern, wann der Inhalt anzeigt wird (z.B. über javascript)</li>
+							<li>Dieser lässt sich optisch ansprechend darstellen, was den Joy-of-Use erhöhen kann</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Nachteile von asynchronen Laden</h4>
+						<ul class="r-fit-text">
+							<li>Die Voraussetzung, dass JavaScript zur Verfügung stehen muss (Noscript)</li>
+							<li>In der Wirkung kann die Seite allgemein als „unruhig“ empfunden werden (Bewegungen)</li>
+							<li>Durch zu viele AJAX-Requests kann Ladezeit auch negativ beeinflusst werden</li>
+							<li>Caching-management, damit Inhalte nicht mehrfach geladen werden (z. B. nach einem Seitenwechsel)</li>
+							<li>Siehe <a href="https://www.industrialempathy.com/posts/image-optimizations/" target="_blank">Blogbeitrag zur Ladezeitenoptimierung</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Maßnahmen zur Optimierung</h4>
+						<figure class="">
+							<img src="../images/vl7/pictureasyncloading.png" alt="Maßnahmen zur Optimierung">
+						</figure>
+					</section>
+					<section>
+						<h4>Live-Beispiel</h4>
+						<ul>
+							<li><a href="https://poetter-sebastian.github.io/MMWP-2024/images/vl7/sample/index.html" target="_blank">Unoptimiert</a></li>
+							<li><a href="https://poetter-sebastian.github.io/MMWP-2024/images/vl7/sample/lazy.html" target="_blank">Asynchron</a></li>
+							<li><a href="https://poetter-sebastian.github.io/MMWP-2024/images/vl7/sample/supportive.html" target="_blank">Mehrfachsupport</a></li>
+							<li><a href="https://poetter-sebastian.github.io/MMWP-2024/images/vl7/sample/optimized.html" target="_blank">Zugeschnittene Bilder</a></li>
+						</ul>
+					</section>
+				</section>
+				<section data-name="High Density">
+					<section>
+						<h4>High Density Pixel</h4>
+						<figure class="">
+							<img src="../images/vl7/highdensity.png" alt="High Density pixels">
+						</figure>
+						<ul class="r-fit-text">
+							<li>Pixel per Inch (PPI) ist das Analogon zur Größe DPI in der Druckereiindustrie</li>
+							<li>ab 240 PPI spricht man von High Density</li>
+							<li>ab 287 PPI soll ein durchschnittlicher Mensch die Einzelpixel im Bild nicht mehr sehen können (modulo Sehschärfe und Geräteabstand)</li>
+						</ul>
+					</section>
+					<section>
+						<h4>High Density Displays</h4>
+						<figure class="">
+							<img src="../images/vl7/high-density-difference.png" width="600" alt="High Density Displays">
+							<figcaption>
+								<a href="https://wiki.selfhtml.org/wiki/HTML/Tutorials/Bilder_im_Internet/Formate_und_Gr%C3%B6%C3%9Fen" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>High Density Displays - Maßeinheiten</h4>
+						<ul>
+							<li>Um Bilder nicht sinnlos klein dargestellt zu bekommen, wurden verschiedene PixelMaße eingeführt</li>
+							<li>Physische Pixel: Tatsächliche Ausmaße eines Objektes auf einem Display in Pixeln (Breite mal Höhe)</li>
+							<li>Logische Pixel: Konstanter, für die interne Kalkulation verwendeter Wert, auch dips (device-independent pixels) oder CSS-Pixel genannt</li>
+							<li>Bei unterschiedlichen Zoom-Leveln einer Webseite werden immer die CSS-Pixel-Werte angegeben</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Viewport</h4>
+						<ul>
+							<li>Für Desktops ist bzw. war der sichtbare Bereich im Browserfenster gleich dem Bereich für Layout-Berechnungen</li>
+							<li>Bei Smartphones, Tablets etc. wurde dies direkt eingeführt</li>
+							<li>Visual Viewport: sichtbarer Bereich</li>
+							<li>Layout Viewport: Bereich für Layout-Berechnungen (auch teilweise unsichtbar)</li>
+							<li>Standard ist somit, den Layout Viewport zu rendern und das Ergebnis in den Visual Viewport hineinzuzoomen (meist zu verkleinern)</li>
+						</ul>
+					</section>
+					<section>
+						<h4>High Density Displays - Smarthpones</h4>
+						<ul>
+							<li>Im Ergebnis sieht man die gesamte Webseite auf dem Display des Smartphones, Tablets etc.: Gerätedisplaybreite ist gleich Webseitenbreite.</li>
+							<li>Um vor dem Rendern den Standard Layout Viewport zu überschreiben und den Visual Viewport mit dem Layout Viewport gleichzusetzen, gibt es zwei alternative Anweisungen:</li>
+						</ul>
+						<pre>
+							<code>
+HTML
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+
+CSS
+@viewport {width : device-width; zoom : 100%;}
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Viewport Methoden und Parameter</h4>
+						<figure class="">
+							<img src="../images/vl7/viewport-params.png" alt="Viewport Methoden und Parameter">
+							<figcaption>
+								<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Viewport_meta_tag" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Viewport Support</h4>
+						<figure class="">
+							<img src="../images/vl7/viewport-support-units.png" alt="Viewport Support">
+							<figcaption>
+								<a href="https://caniuse.com/?search=viewport" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Mit Viewport Tag und ohne Voreinstellung</h4>
+						<a href="https://www.w3schools.com/css/css_rwd_viewport.asp" target="_blank">Beispiel</a>
+					</section>
+					<section>
+						<h4>Testseite von Peter-Paul Koch</h4>
+						<ul>
+							<li>Eine sehr gute Testseite für Browser gibt es unter</li>
+							<li><a href="https://www.quirksmode.org/m/tests/widthtest.html" target="_blank">Grid und responsive Testseite</a></li>
+							<li>Dort kann man über zwei Links die Weite des Viewports setzen bzw. im Standardmodus die natürliche Weite (DPR) des Viewports abfragen</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Historische Daten über Viewport</h4>
+						<ul>
+							<li>Das meta-Element viewport wurde von Apples iPhone-Safari-Browser etwa 2008 eingeführt</li>
+							<li>„CSS Device Adaption Module Level 1“ – Editor‘ Draft, 05. 07. 2018 (siehe <a href="https://drafts.csswg.org/css-device-adapt/" target="_blank">Draft Approach</a>)</li>
+							<li>Vernünftiges Aussehen erzielt man mit responsivem Design und seinen Methoden</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Device Pixel Ratio (DPR)</h4>
+						<ul>
+							<li>Displays unter 200 DPI haben DPR=1</li>
+							<li>Displays zwischen 200 und 300 DPI haben DPR=2</li>
+							<li>Displays mit mehr als 300 PPI: DPI = (PPI /150)abgerundet</li>
+							<li>Neuere Algorithmen zur Bestimmung der Darstellungsgröße von Bildern bauen auf der Größe DPR auf</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Device Pixel Ratio (DPR) - Beispiele - 1</h4>
+						<ul>
+							<li>Beispiel zur Nutzung eines bestimmten Bildes bei mindestens DPR=2 bzw. mindestens DPI=192:</li>
+							<li>So kann vor dem Hochladen eines Bildes entschieden werden, welches Bild es sein soll (96dpi = 1dppx, Fallback)</li>
+							<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/resolution" target="_blank">Resolution Dokumentation</a></li>
+						</ul>
+						<pre>
+							<code data-trim data-noescape data-line-numbers>
+@media only screen and (-webkit-min-device-pixel-ratio: 2),
+	only screen and (min-resolution: 2dppx),
+	only screen and (min-resolution: 192dpi),
+	.btn {background-image: url(image@2x.jpg);
+}
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Device Pixel Ratio (DPR) - Beispiel - 2</h4>
+						<ul>
+							<li>Beispiel zur Nutzung eines bestimmten Bildes bei mindestens DPR=2 bzw. mindestens DPI=192:</li>
+							<li>So kann vor dem Hochladen eines Bildes entschieden werden, welches Bild es sein soll (96dpi = 1dppx, Fallback)</li>
+						</ul>
+						<pre>
+							<code data-trim data-noescape data-line-numbers>
+&lt;figure&gt;
+	&lt;picture&gt;
+		&lt;source media=&quot;(min-resolution: 4dppx)&quot; srcset=&quot;image@4x.jpg&quot;&gt;
+		&lt;source media=&quot;(min-resolution: 2dppx)&quot; srcset=&quot;image@2x.jpg&quot;&gt;
+		&lt;img src=&quot;small.jpg&quot; alt=&quot;The president giving an award.&quot;&gt;
+	&lt;/picture&gt;
+	&lt;figcaption&gt;Beispiel&lt;/figcaption&gt;
+&lt;/figure&gt;
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Beispiel</h4>
+						<figure class="">
+							<img src="../images/vl7/mona-inch-dpi.jpg" alt="Viewport Support">
+							<figcaption>
+								<a href="https://letsenhance.io/blog/all/how-to-increase-dpi/" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Device Pixel Ratio (DPR) - Beispiel - 2</h4>
+						<ul>
+							<li>HTML Living Standard <a href="https://html.spec.whatwg.org/multipage/embedded-content.html#the-picture-element">HTML-Picture standard</a>(Updated 23 October 2024)</li>
+							<li>zur Unterstützung älterer Browser gibt es z.B. Picturefill (Responsive Image Polyfill) (siehe <a href="https://scottjehl.github.io/picturefill/" target="_blank">Picturefill</a>)</li>
+							<li>Polyfill bzw. Emulation von &lt;picture&gt;-Element (Es stellt Bilder je nach Bildschirmgröße, Viewport-Größe und Auflösung angemessen dar)</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Bilder zur Wahl je nach DPR - 1</h4>
+						<p>Das WHATWG hat folgende Syntax vorgeschlagen, um minimalistisch eine Auswahllösung zu schaffen:</p>
+						<pre>
+							<code class="html">
+&lt;img src=&quot;/uploads/100-marie-lloyd.jpg&quot;
+	 srcset=&quot;/uploads/150-marie-lloyd.jpg 1.5x,/uploads/200-marie-lloyd.jpg 2x&quot;
+	 alt=&quot;&quot; width=&quot;100&quot; height=&quot;150&quot;&gt;
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Bilder zur Wahl je nach DPR - 2</h4>
+						<pre>
+							<code class="html" data-trim data-noescape data-line-numbers>
+&lt;div class=&quot;container&quot;&gt;
+	&lt;img src=&quot;https://www.mediaevent.de/xhtml/img/needles-1440.jpg&quot;
+		 srcset=&quot;https://www.mediaevent.de/xhtml/img/needles-780.jpg 780w,
+	https://www.mediaevent.de/xhtml/img/needles-1024.jpg 1024w,
+	https://www.mediaevent.de/xhtml/img/needles-1440.jpg 1440w,
+	https://www.mediaevent.de/xhtml/img/needles-2400.jpg 2400w&quot;
+		 sizes = &quot;(min-width: 1600px) 1200px, // ViewPort mindestens 1600 px, nimm Bild mit 1200px Breite
+	(min-width: 1400px) 1100px, // ViewPort mindestens 1400 px, nimm Bild mit 1100px Breite
+	(min-width:1000px) 900px, // ViewPort mindestens 1000 px, nimm Bild mit 900px Breite
+	100vw&quot;
+	// kleinerer ViewPort: volle Breite des ViewPorts (100vw)
+	width=&quot;780&quot; height=&quot;521&quot;
+	alt=&quot;HTML img srcset &ndash; Bilder je nach Breite des Viewports laden&quot;&gt;
+&lt;/div&gt;
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Bilder zur Wahl je nach DPR - 3</h4>
+						<pre>
+							<code class="html" data-trim data-noescape data-line-numbers>
+&lt;img src=&quot;one.png&quot;
+	 srcset=&quot;two.png 100w, three.png 500w, four.png 1000w&quot;
+	 sizes=&quot;(min-width: 900px) 1000px,
+(max-width: 900px) and (min-width: 400px) 50em,
+( not (orientation: portrait) ) 300px,
+( (orientation: landscape) or (min-width: 1000px) ) 50vw,
+100vw&quot;&gt;
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Picture - Support</h4>
+						<figure class="">
+							<img src="../images/vl7/picture-support.png" alt="DPR, Width, Viewport-Width">
+							<figcaption>
+								<a href="https://caniuse.com/?search=viewport" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+				</section>
+				<section data-name="Responsive Images">
+					<section>
+						<h4>Responsive Images</h4>
+						<ul>
+							<li>Es wurde eine Lösung gesucht, die allein für ein einziges img-Element schon
+								funktioniert und wesentlich flexibler reagiert
+							</li>
+							<li>HTML Living Standard: <a href="https://html.spec.whatwg.org/multipage/embedded-content.html">Embedded content standard</a>(Updated 23 October 2024)</li>
+							<li>Picture-Element als Container mit:
+								<ul>
+									<li>source-Element zum Anbieten verschiedener Bilder</li>
+									<li>img-Element als Fallback zur Darstellung eines Default-Bildes</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Vorstellungen</h4>
+						<figure class="">
+							<img src="../images/vl7/browsersettings.png" alt="Vorstellungen">
+							<figcaption>
+								<a href="https://ericportis.com/posts/2014/srcset-sizes/" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Responsive Bilder Beispiele - 1</h4>
+						<pre>
+							<code class="html">
+&lt;img sizes=&quot;100vw&quot;
+	srcset=&quot;wolf-400.jpg 400w, wolf-800.jpg 800w, wolf-1600.jpg
+	1600w&quot;
+	src=&quot;wolf-400.jpg&quot;
+	alt=&quot;The red wolf&quot;&gt;
+							</code>
+						</pre>
+						<figure class="">
+							<img src="../images/vl7/responsiveimages-examples.png" alt="VH, VW und Width">
+						</figure>
+					</section>
+					<section>
+						<h4>Responsive Bilder Beispiele - 1</h4>
+						<ul>
+							<li>Wenn der Bildschirm des Nutzers 320 CSS-Pixel groß ist, dann müsste die Spezifikation lauten: wolf-400.jpg 1.25x, wolf-800.jpg 2.5x, wolf-1600.jpg 5x</li>
+							<li>Wenn der Bildschirm des Nutzers 1200 CSS-Pixel groß ist, dann müsste die Spezifikation lauten: wolf-400.jpg 0.33x, wolf-800.jpg 0.67x, wolf-1600.jpg 1.33x</li>
+							<li>Der Browser des Nutzers kann die korrekte Wahl des zu ladenden Bildes einleiten</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Responsive Bilder Beispiele - 2</h4>
+						<ul>
+							<li>Mit Responsive Design werden drei Layouts definiert:</li>
+							<li>Schmaler Viewport: eine Spalte Bilder</li>
+							<li>Mittlerer Viewport: zwei Spalten Bilder</li>
+							<li>Breiter Viewport: drei Spalten Bilder</li>
+							<li>Beispielsweise Breakpoints: 30em und 50em</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Responsive Bilder Beispiele - 2</h4>
+						<pre>
+							<code class="html">
+	&lt;img sizes=&quot;(max-width: 30em) 100vw, (max-width: 50em) 50vw, calc(33vw &ndash; 100px)&quot;
+		 srcset=&quot;swing-200.jpg 200w, swing-400.jpg 400w, swing-800.jpg 800w,
+swing-1600.jpg 1600w&quot;
+		 src=&quot;swing-400.jpg&quot;
+		 alt=&quot;Kettlebell Swing&quot;&gt;
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Responsive Bilder Beispiele - 2</h4>
+						<ul>
+							<li>Ist die Viewport-Breite 29em, dann wird die Bedingung (max-width: 30em) erfüllt und 100vw wird benutzt</li>
+							<li>Das Bildmaß für die Wahl der Bilddatei ist dann 29em</li>
+							<li>Wenn die Viewport-Breite 32em ist, dann wird die Bedingung (max-width: 30em) nicht erfüllt, jedoch die Bedingung (max-width: 50em)</li>
+							<li>Also: der Wert 50vw wird benutzt und das Ergebnis ist: die Bilder werden schmaler</li>
+						</ul>
+					</section>
+					<section>
+						<h4>SrcSet - Support</h4>
+						<figure class="">
+							<img src="../images/vl7/srcset-support.png" alt="SrcSet - Support">
+							<figcaption>
+								<a href="https://ericportis.com/posts/2014/srcset-sizes/" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+				</section>
+				<section>
+					<h4></h4>
+					<ul>
+						<li><a href="https://www.in2white.com/" target="_blank">Größtes Webbild im Internet</a></li>
+						<li><a href="https://tpiros.dev/blog/compare-image-loading-speeds/" target="_blank">Ladeverhalten von Bildformaten</a></li>
+					</ul>
+				</section>
+				<section>
+					<h4>Weiterführende Informationen</h4>
+					<ul class="r-fit-text">
+						<li><a href="https://css-tricks.com/a-guide-to-the-responsive-images-syntax-in-html/" target="_blank">HTML Responsive Images Guide</a> (12.11.2024)</li>
+						<li><a href="https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images" target="_blank">Mozilla - Responsive images</a> (12.11.2024)</li>
+						<li><a href="https://kulturbanause.de/blog/responsive-images-srcset-sizes-adaptive/" target="_blank">Tutorial auf Kulturbanause</a></li>
+					</ul>
+				</section>
+				<section>
+					<h4>Quellen</h4>
+					<ul class="r-fit-text">
+						<li>Framework „Adaptive Images“ (minimalistisch, effektiv): <a href="https://adaptive-images.com" target="_blank">Quelle</a></li>
+						<li>weitere Tipps und Links zu Bibliotheken bzw. Frameworks: <a href="https://www.smashingmagazine.com/2013/07/08/choosing-a-responsive-image-solution/" target="_blank">Quelle</a></li>
+					</ul>
+				</section>
+				<section>
+					<h4>Abspann</h4>
+					<p>
+						Siebtes Level geschafft weitere Folgen!
+					</p>
+					<p>Fragen und Feedback?</p>
+				</section>
+			</div>
+		</div>
+		<footer class="slide-footer">
+			Sebastian Pötter - HTWK - MMWP2024 - VL07 - Bilder in HTML5
+		</footer>
+		<script src="../dist/reveal.js"></script>
+		<script src="../plugin/notes/notes.js"></script>
+		<script src="../plugin/markdown/markdown.js"></script>
+		<script src="../plugin/highlight/highlight.js"></script>
+		<script src="../plugin/simplemenu/simplemenu.js"></script>
+		<script src="../plugin/copycode/copycode.js"></script>
+		<script>
+			Reveal.initialize({
+				maxScale: 1.0,
+				margin: 0.2,
+				controls: true,
+				progress: true,
+				center: true,
+				hash: true,
+				slideNumber: 'c/t',
+				plugins: [RevealMarkdown, RevealHighlight, RevealNotes, CopyCode, Simplemenu],
+				simplemenu: {
+					barhtml: {
+						header: "<div class='menubar' style='font-size: 1.5rem'><ul class='menu'></ul></div>",
+						footer: ""
+					}
+				},
+			});
+		</script>
+	</body>
+</html>
