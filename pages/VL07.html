@@ -281,22 +281,23 @@ selector :: pseudo-element { property: value; }
 							<code data-trim data-noescape data-line-numbers>
 function lazyload () {
 	if(lazyloadThrottleTimeout) {
-	clearTimeout(lazyloadThrottleTimeout);
-}
-
-lazyloadThrottleTimeout = setTimeout(function() {
-	var scrollTop = window.pageYOffset;
-	lazyloadImages.forEach(function(img) {
-		if(img.offsetTop < (window.innerHeight + scrollTop)) {
-		img.src = img.dataset.src;
-		img.classList.remove('lazy');
+		clearTimeout(lazyloadThrottleTimeout);
 	}
-});
 
-if(lazyloadImages.length == 0) {
-	document.removeEventListener("scroll", lazyload);
-	window.removeEventListener("resize", lazyload);
-	window.removeEventListener("orientationChange", lazyload);
+	lazyloadThrottleTimeout = setTimeout(function() {
+		var scrollTop = window.pageYOffset;
+		lazyloadImages.forEach(function(img) {
+			if(img.offsetTop < (window.innerHeight + scrollTop)) {
+			img.src = img.dataset.src;
+			img.classList.remove('lazy');
+		}
+	});
+
+	if(lazyloadImages.length == 0) {
+		document.removeEventListener("scroll", lazyload);
+		window.removeEventListener("resize", lazyload);
+		window.removeEventListener("orientationChange", lazyload);
+	}
 }
 							</code>
 						</pre>
@@ -319,12 +320,19 @@ var xmlHttp = false; //globale Instanz von XMLHttpRequest
 //XMLHttpRequest-Instanz erstellen
 try {
 	xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
-} catch(e) { try {
-	xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
-} catch(e) { xmlHttp = false; } } //... für Internet Explorer
+} catch(e) {
+	try {
+		//... für Internet Explorer
+		xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+	} catch(e) {
+		xmlHttp = false;
+	}
+}
+
 //... für Mozilla, Opera, Safari usw.
 if (!xmlHttp && typeof XMLHttpRequest != 'undefined') {
-	xmlHttp = new XMLHttpRequest(); }
+	xmlHttp = new XMLHttpRequest();
+}
 
 function loadData(url,id) {
 	if (xmlHttp) {
@@ -337,8 +345,8 @@ function loadData(url,id) {
 function answere() {
 	if (xmlHttp.readyState == 4) {
 		var idpart = xmlHttp.responseText.split("|");
-		var id = idpart[0]
-		document.getElementById(id).innerHTML = idpart[1]
+		var id = idpart[0];
+		document.getElementById(id).innerHTML = idpart[1];
 	}
 }
 							</code>
@@ -398,6 +406,10 @@ $(function(){
 							<li><a href="https://poetter-sebastian.github.io/MMWP-2024/images/vl7/sample/supportive.html" target="_blank">Mehrfachsupport</a></li>
 							<li><a href="https://poetter-sebastian.github.io/MMWP-2024/images/vl7/sample/optimized.html" target="_blank">Zugeschnittene Bilder</a></li>
 						</ul>
+					</section>
+					<section>
+						<h4>Vorteile von neuen Datentypen</h4>
+						<a href="https://jakearchibald.com/2020/avif-has-landed/" target="_blank">Beispiel und technische Erklärungen</a>
 					</section>
 				</section>
 				<section data-name="High Density">

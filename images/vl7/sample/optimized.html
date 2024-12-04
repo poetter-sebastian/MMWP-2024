@@ -18,9 +18,8 @@
         nav {
             backdrop-filter: blur(15px);
         }
-
-        img {
-            height: auto;
+        figure {
+            height: 554px;
             width: 100%;
         }
     </style>
@@ -57,10 +56,12 @@
         <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
             <figure>
                 <img src="src/img/1.jpg" class="w-100 shadow-1-strong rounded mb-4" alt="JPG Version" loading="lazy" decoding="async">
+                <source type="image/webp" srcset="src/img/1.webp">
                 <figcaption>jpg</figcaption>
             </figure>
             <figure>
                 <img src="src/img/2.png" class="w-100 shadow-1-strong rounded mb-4" alt="PNG Version" loading="lazy" decoding="async">
+                <source type="image/webp" srcset="src/img/2.webp">
                 <figcaption>png</figcaption>
             </figure>
         </div>
@@ -73,6 +74,7 @@
             <figure>
                 <img src="src/img/4.jpg" class="w-100 shadow-1-strong rounded mb-4" alt="AVIF Version" loading="lazy" decoding="async">
                 <source type="src/image/avif" srcset="src/img/4.avif">
+                <source type="image/webp" srcset="src/img/4.webp">
                 <figcaption>avif</figcaption>
             </figure>
         </div>
@@ -80,10 +82,12 @@
         <div class="col-lg-4 mb-4 mb-lg-0">
             <figure>
                 <img src="src/img/5.svg" class="w-100 shadow-1-strong rounded mb-4" alt="SVG Version" loading="lazy" decoding="async">
+                <source type="image/webp" srcset="src/img/5.webp">
                 <figcaption>SVG</figcaption>
             </figure>
             <figure>
                 <img src="src/img/6.gif" class="w-100 shadow-1-strong rounded mb-4" alt="GIF Version" loading="lazy" decoding="async">
+                <source type="image/webp" srcset="src/img/6.webp">
                 <figcaption>gif</figcaption>
             </figure>
         </div>
