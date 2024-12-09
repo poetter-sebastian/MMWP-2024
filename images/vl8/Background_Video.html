@@ -1,0 +1,31 @@
+<!--Beispiel von https://be-jo.net/2014/04/video-als-hintergrundbild-mit-html5-und-css/ (modifiziert)-->
+<video id="video_background" preload="auto" autoplay="true" loop="loop" muted="muted" volume="0"> 
+   <source src="big_buck_bunny.webm" type="video/webm"> 
+   <source src="big_buck_bunny.mp4" type="video/mp4"> 
+   <source src="big_buck_bunny.ogv" type="video/ogg ogv">
+Video not supported </video>
+<h1>Hello World !!!</h1> 
+<div id="video_pattern"></div>
+<style>
+#video_background {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	min-width: 100%;
+	min-height: 100%;
+	width: auto;
+	height: auto;
+	z-index: -1000;
+	overflow: hidden;
+}
+#video_pattern {
+	background-image: url(./pattern.png);
+	position: fixed;
+	opacity: 0.5;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: -1;
+}
+</style>

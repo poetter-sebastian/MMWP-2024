@@ -1,0 +1,800 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>MMWP2024 - LV08</title>
+
+		<link rel="stylesheet" href="../dist/reset.css">
+		<link rel="stylesheet" href="../dist/reveal.css">
+		<link rel="stylesheet" href="../dist/theme/white.css">
+		<link rel="stylesheet" href="../dist/style.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="../plugin/highlight/monokai.css">
+		<link rel="stylesheet" href="../plugin/simplemenu/simplemenu.css">
+		<link rel="stylesheet" href="../plugin/copycode/copycode.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-transition="fade" data-state="hide-menubar hide-menu" data-background-image="../images/vl8/presentationstart.png" data-background-position="bottom" data-background-opacity="0.1">
+					<h1>Videos in HTML5</h1>
+					<h3>MMWP2024 - LV08</h3>
+				</section>
+				<section data-name="TOC" data-sm="false">
+					<h4>Inhaltsverzeichnis</h4>
+					<ul class="menu"></ul>
+				</section>
+				<section data-name="Organisation">
+					<section>
+						<h4>Inhaltsschwerpunkte</h4>
+						<ul>
+							<li>Einführung von Videos in HTML5</li>
+							<li>Gängige Videoformate für Webseiten</li>
+							<li>Videostreaming im Webkontext</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Voraussetzung</h4>
+						<p>Der Ausgangspunkt dieser Vorlesungsreihe ist das Wissen über funktionsweise von Inhaltseinbildung in HTML5 und Mediendateien</p>
+						<ul>
+							<li>Verständnis von CSS-Regeln wie bei Bildern</li>
+							<li>Aufbau von Videos und gebräuchliche Videodatentypen</li>
+							<li>Funktionsweise von BrowserAPIs und CSS-Filtern</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Ziele</h4>
+						<p>Vorstellung von:</p>
+						<ul>
+							<li>HTML5 Videoplayer</li>
+							<li>Videoformate für Webseiten und Streaming</li>
+							<li>Videos und Canvas-API</li>
+							<li>Video- und Audio-API</li>
+						</ul>
+					</section>
+				</section>
+				<section data-name="HTML5 Video Element">
+					<section>
+						<h4>Geschichte der Videos in Webbrowsern - 1</h4>
+						<ul>
+							<li>Die Geschichte beginnt etwa 1996</li>
+							<li>Zuerst waren Applikationen mit Plug-Ins im Webbrowser für die Videowiedergabe erforderlich</li>
+							<li>von RealNetworks: RealPlayer (1997)</li>
+							<li>von Apple: QuickTime 4 (1999) </li>
+							<li>von Microsoft: Windows Media Player</li>
+							<li>Die Formate richteten sich nach den Playern</li>
+							<li>Das Platzieren der Videos im Kontext war z.B. mit QuickTime unmöglich, da die Darstellung in einem Popup-Fenster erfolgte</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Geschichte der Videos in Webbrowsern - 2</h4>
+						<ul>
+							<li>Später kam dann die Flash-Technologie von Macromedia / Adobe für Webbrowser,
+								die ursprünglich von Macromedia (Markenname Shockwave) vorangetrieben
+								wurde
+							</li>
+							<li>Hier waren ab 1997 der Shockwave-Player oder ab 2005 der Adobe Flash Player die
+								angesagten Plug-Ins
+							</li>
+							<li>Formate waren SWF (mit Ziffern für die Formatversionen hinten dran, seit 1997),
+								später FLV als Streamingformat (seit 2002)
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Geschichte der Videos in Webbrowsern - 3</h4>
+						<ul>
+							<li>2010 kündigte Apple an, den Flash Player auf Apple-Produkten nicht mehr native
+								anzubieten
+							</li>
+							<li>Ende 2011 wurde dann die Weiterentwicklung von Flash für mobile Geräte
+								eingestellt
+							</li>
+							<li>Es gibt den Flash Player meist noch als App zum Nachinstallieren, aber in veralteter
+								Version (Problematisch für Systemsicherheit)
+							</li>
+							<li>Das Element &lt;video&gt; wurde 2007 von Opera für HTML5 vorgeschlagen</li>
+							<li>Inzwischen wird es von allen aktuellen Webbrowsern grundlegend unterstützt</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Video - Support</h4>
+						<figure class="">
+							<img src="../images/vl8/video-support.png" alt="Video - Support">
+							<figcaption>
+								<a href="https://caniuse.com/?search=video" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Besonderheit von Video- und Audio-Elementen</h4>
+						<ul>
+							<li>
+								Die meisten Browser nutzen vorhandene Medienwiedergabe-Frameworks zur
+								Dekodierung und Wiedergabe
+							</li>
+							<li>
+								Dadurch ergeben sich verschiedene Kombinationen
+								an Formaten und Codecs - je nach Browser, Betriebssystem und installierten
+								Codecs
+							</li>
+							<li>
+								Videodateien in verschiedenen Formaten durch mehrere
+								&lt;source&gt;-Elemente, oder durch JavaScript unterstützte Formate
+								abfragen
+							</li>
+							<li>Neu: Videotracks welche zurzeit noch in Arbeit sind</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Video - Track Support</h4>
+						<figure class="">
+							<img src="../images/vl8/video-tracks-support.png" alt="Video - Support">
+							<figcaption>
+								<a href="https://caniuse.com/?search=video" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Test auf &lt;video&gt;-Unterstützung - 1</h4>
+						<ul>
+							<li>
+								Den Test auf Unterstützung des Elementes &lt;video&gt; kann man in JavaScript
+								dynamisch tätigen
+							</li>
+							<li>
+								<pre><code class="js">var videoSupport = !!(document.createElement(′video′).canPlayType);</code></pre>
+							</li>
+							<li>
+								Durch die doppelte Verneinung wird die Variable boolesch und kann ausgewertet
+								werden
+							</li>
+							<li>Auch modernizr.js kann eingesetzt werden (siehe <a href="https://github.com/Modernizr/Modernizr" target="_blank">GitHub</a>)</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Test auf &lt;video&gt;-Unterstützung - 2</h4>
+						<ul>
+							<li>
+								Alternativ kann eine genauere Abfrage erfolgen
+							</li>
+							<li>
+								<pre>
+									<code class="js">
+let x = document.createElement("VIDEO");
+isSupp = x.canPlayType(vidType+';codecs="'+codType+'"');
+									</code>
+								</pre>
+							</li>
+							<li>"probably" - the browser most likely supports this video type</li>
+							<li>"maybe" - the browser might support this video type</li>
+							<li>"" - (empty string) the browser does not support this video type</li>
+							<li><a href="https://www.w3schools.com/jsref/met_video_canplaytype.asp" target="_blank">Can I play</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Test auf Videoformate</h4>
+						<pre>
+							<code>
+let videoSupportOgg = !!(document.createElement(′video′).canPlayType(′video/ogg; codecs=″theora″′).replace(/^no$/,′′););
+let videoSupportH264 = !!(document.createElement(′video′).canPlayType(′video/mp4; codecs=″avc1.42E01E″′).replace(/^no$/,′′););
+var videoSupportWebM =!!(document.createElement(′video′).canPlayType(′video/webm;
+
+codecs=″vp8,vorbis″′).replace(/^no$/,′′););
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Format MP4</h4>
+						<ul>
+							<li>MP4, bzw. MPEG-4 Teil 14, ist die Weiterentwicklung des Quicktime-Formats. Container-Format</li>
+							<li>Videospur: H.264 / Audiospur: AAC</li>
+							<li>Beide Codecs sind patentrechtlich geschützt und Lizenzgebührenpflichtig</li>
+							<li>MP4 unterstützt DRM-Mechaniken (siehe <a href="https://docs.unified-streaming.com/documentation/drm/common-encryption.html" target="_blank">Unified streaming</a>)</li>
+							<li>Es gibt eine weitverbreitete Hardwarebeschleunigung für den H.264-Codec</li>
+							<li>X.264 ist der OpenSource-Standard, wird aber praktisch nicht genutzt</li>
+						</ul>
+					</section>
+					<section>
+						<h4>H.264 - support</h4>
+						<figure class="">
+							<img src="../images/vl8/h264-support.png" alt="H.264 - support">
+							<figcaption>
+								<a href="https://caniuse.com/?search=H.264" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Format Ogg</h4>
+						<ul>
+							<li>Ogg ist ein Containerformat, das lizenzfrei ist</li>
+							<li>Videospur: Theora, Audiospur: Vorbis oder Opus</li>
+							<li>Vorteil von Ogg ist, das es gestreamt werden kann</li>
+							<li>MP4 unterstützt DRM-Mechaniken (siehe <a href="https://docs.unified-streaming.com/documentation/drm/common-encryption.html" target="_blank">Verschlüsselung</a>)</li>
+							<li>Es gibt eine weitverbreitete Hardwarebeschleunigung für den H.264-Codec</li>
+							<li>X.264 ist der OpenSource-Standard und auch verbreitet</li>
+						</ul>
+					</section>
+					<section>
+						<h4>OGG Vorbis - support</h4>
+						<figure class="">
+							<img src="../images/vl8/drm-protection.png" alt="H.265 - support">
+							<figcaption>
+								<a href="https://caniuse.com/?search=ogg" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>OGG Theora - support</h4>
+						<figure class="">
+							<img src="../images/vl8/drm-protection.png" alt="H.265 - support">
+							<figcaption>
+								<a href="https://caniuse.com/?search=ogg" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Format WebM</h4>
+						<ul>
+							<li>WebM ist ein Videoformat, das u.a. von Google, Mozilla und Opera als freies Format stetig weiterentwickelt wird</li>
+							<li>Erklärtes Ziel ist die Patentfreiheit</li>
+							<li>WebM ist ein Containerformat mit P8, VP9, AV1 als Video-Codec und Vorbis, Opus als Audiocodec</li>
+							<li>Unterstützung von VP9 seit Chrome 25, Firefox 29 und Opera 16</li>
+							<li>Ein Grund für die weite Verbreitung von WebM ist, dass Youtube seine Videos seit Dezember 2013 beginnend im Format VP9 anbot</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Format WebM - Support</h4>
+						<figure class="">
+							<img src="../images/vl8/webm-support.png" alt="Format WebM - Support">
+							<figcaption>
+								<a href="https://caniuse.com/?search=webm" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Dateidaten für Youtube - 1</h4>
+						<ul>
+							<li>Upload-Empfehlungen von Youtube am 17.05.2019</li>
+							<li><a href="https://support.google.com/youtube/troubleshooter/2888402" target="_blank">Supported YouTube file formats</a></li>
+							<li><a href="https://support.google.com/youtube/answer/1722171" target="_blank">YouTube recommended upload encoding settings</a></li>
+							<li>Container: MP4 und "moov"-Atom am Anfang der Datei (Schnellstart)</li>
+							<li>Audio-Codec: AAC-LC (Kanäle: Stereo oder Stereo + 5.1, Abtastrate: 96 kHz oder 48 kHz)</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Dateidaten für Youtube - 2</h4>
+						<ul>
+							<li>Video-Codec: H.264</li>
+							<li>Progressiver Scan (kein Zeilensprungverfahren) zusammen mit Profil "High"</li>
+							<li><a href="https://support.google.com/youtube/answer/1722171" target="_blank">YouTube recommended upload encoding settings</a></li>
+							<li>Container: MP4 und "moov"-Atom am Anfang der Datei (Schnellstart)</li>
+							<li>Audio-Codec: AAC-LC (Kanäle: Stereo oder Stereo + 5.1, Abtastrate: 96 kHz oder 48 kHz)</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Format H.265 bzw. HEVC</h4>
+						<ul>
+							<li>In Konkurrenz zu VP9 und VP10 von Google entwickelte die MPEG-Gruppe 2011-2013 das Format H.265 als Nachfolger von H. 264</li>
+							<li>Offizielle Bezeichnung: MPEG-H Teil 2</li>
+							<li>ITU-Standard seit 2013 (Lizenzpflichtig!)</li>
+							<li>Neben der Ermöglichung effektiver Internetübertragungen können höhere Auflösungen von Videos bis 8K UHD effektiv kodiert werden</li>
+						</ul>
+					</section>
+					<section>
+						<h4>H.265 - support</h4>
+						<figure class="">
+							<img src="../images/vl8/h265-support.png" alt="H.265 - support">
+							<figcaption>
+								<a href="https://caniuse.com/?search=H.265" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Video Tests</h4>
+						<p><a href="https://tekeye.uk/html/html5-video-test-page" target="_blank">Html5 video Testseite</a></p>
+					</section>
+					<section>
+						<h4>Player und Plug-Ins</h4>
+						<ul>
+							<li>Google Chrome: Plug-In libde265 (X.265) (in Versionen) <a href="https://github.com/strukturag/libde265" target="_blank">libde265</a></li>
+							<li>Alle Browser: DivX-Plug-In <a href="https://www.divx.com/en/software/technologies/hevc" target="_blank">hevc</a></li>
+							<li>Die Lizenzgebühren sind ein ständiges Problem für Browserproduzenten</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Alliance for Open Media (AOMedia)</h4>
+						<ul>
+							<li>2015 wurde die Alliance for Open Media gegründet, um für das Internet ein garantiert lizenzgebührenfreies Videoformat zu finden</li>
+							<li>Die Alliance for Open Media wird von den Gründerfirmen geleitet: Amazon, ARM, Cisco, Google, Intel, Microsoft, Mozilla, Netflix and NVIDIA</li>
+							<li>Die Lizenzgebühren sind ein ständiges Problem für Browserproduzenten</li>
+							<li><a href="https://aomedia.org/" target="_blank">AO Media</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>AOMedia Video 1 (AV1)</h4>
+						<ul>
+							<li>Es ist ein offener, lizenzfreier Video-Codec. Er ist für die Video-Übertragung über das Internet konstruiert</li>
+							<li>AV1 ist als der Nachfolger von VP9 und als Konkurrent zu HEVC/H.265 aufgestellt</li>
+							<li>Er wurde am 28. März 2018 veröffentlicht</li>
+							<li>AV1 soll mit Opus zusammen in WebM für HTML5-Video genutzt werden können</li>
+							<li>Es gibt Konkurrenten: NetVC</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Videokonverter für AV1</h4>
+						<ul>
+							<li>ffmpeg (<a href="https://www.ffmpeg.org" target="_blank">FFMPEG</a>)</li>
+							<li>Miro Video Converter (<a href="https://www.mirovideoconverter.com" target="_blank">Miro Video</a>)</li>
+							<li>VLC media player (<a href="https://www.videolan.org/vlc/" target="_blank">VLC Player</a>)</li>
+							<li>Handbrake: <a href="https://handbrake.fr/" target="_blank">Handbrake</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>AV1 - support</h4>
+						<figure class="">
+							<img src="../images/vl8/av1-support.png" alt="AV1 - support">
+							<figcaption>
+								<a href="https://caniuse.com/?search=av1" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Video einbinden - Syntax - 1</h4>
+						<ul>
+							<li>Videos lassen sich einfach mittels &lt;video&gt;-Elements einbinden</li>
+							<li>Optional kann man sie durch viele Attribute, mögliche Unterelemente, JavaScript-Methoden und Ereignisse für den Ereignismanager genauer konfigurieren</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Video einbinden - Syntax - 2</h4>
+						<pre>
+							<code>
+// Das Bild zur Vorschau wird beim Laden angezeigt.
+&lt;video src=&Prime;videofile.mp4&Prime; poster=&Prime;vorschau.jpg&Prime; controls&gt;
+Nachricht, falls der Browser das Videoelement nicht
+unterst&amp;uuml;tzt.
+&lt;/video&gt;
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Video einbinden - Syntax - 3</h4>
+						<figure class="">
+							<img src="../images/vl8/video-attributes.png" alt="Video einbinden - Syntax">
+						</figure>
+					</section>
+					<section>
+						<h4>Video einbinden - Syntax - 4</h4>
+						<pre>
+							<code>
+&lt;video controls&gt;
+	&lt;source src=&Prime;videofile.webm&Prime; type=&Prime;video/webm&Prime; /&gt;
+	&lt;source src=&Prime;videofile.ogg&Prime; type=&Prime;video/ogg&Prime; /&gt;
+	&lt;source src=&Prime;videofile.mp4&Prime; type=&Prime;video/mp4&Prime; /&gt;
+	The &lt;code&gt;video&lt;/code&gt; element is not supported.
+&lt;/video&gt;
+							</code>
+						</pre>
+						<ul class="r-fit-text">
+							<li>Der Browser wählt automatisch das Format aus, welches er am besten unterstützt</li>
+							<li>
+								Zusätzlich kann noch ein Attribut media hinzugefügt werden, welches das
+								Zielmedium angibt
+							</li>
+							<li>Es gibt 30 JavaScript-Eigenschaften der Media JavaScript API, 26 Ereignisse, 5 Methoden</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Tracks einbinden - Syntax - 1</h4>
+						<ul>
+							<li>Mit dem Unterelement &lt;track&gt; können Audio- und Video-Elementen Untertitel,
+								Beschreibungen für die Ausgabe per Screenreader, Szenenüberschriften etc. zum Teil
+								mehrsprachig mitgegeben werden</li>
+							<li>
+								<pre><code>
+&lt;track src=&Prime;de_subtitles.vtt&Prime; srclang=&Prime;de&Prime; kind=&Prime;subtitles&Prime; label=&Prime;German&Prime; /&gt;
+								</code></pre>
+							</li>
+							<li>Zusätzlich gibt es noch das Attribut default für &lt;track&gt;-Informationen, die zuerst genommen werden sollen</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Tracks einbinden - Syntax - 2</h4>
+						<figure class="">
+							<img src="../images/vl8/video-tracks-attributes.png" alt="Tracks einbinden">
+						</figure>
+					</section>
+					<section>
+						<h4>Video - Support</h4>
+						<figure class="">
+							<img src="../images/vl8/video-support.png" alt="Video - Support">
+							<figcaption>
+								<a href="https://caniuse.com/?search=video" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Tracks - Support</h4>
+						<figure class="">
+							<img src="../images/vl8/video-tracks-support.png" alt="Tracks - Support">
+						</figure>
+					</section>
+					<section>
+						<h4>VTT – Video Text Tracks</h4>
+						<ul>
+							<li>Aufbau einer WebVTT-Datei
+								<ul>
+									<li>Mit Kopfzeile „WEBVTT“ evtl. mit Titel</li>
+									<li>Eine Leerzeile</li>
+									<li>durch Leerzeilen getrennte cues [Zeiger der Art: VTTCue( startTime, endTime, Text )]</li>
+								</ul>
+							</li>
+							<li>Dateiendung: *.vtt</li>
+							<li>VTT-Dateien können aber auch sehr komplexe Syntax enthalten</li>
+							<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Video_Text_Tracks_Format" target="_blank">Mozilla Video Tracks</a></li>
+							<li><a href="https://w3c.github.io/webvtt/" target="_blank">WebBTT</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>VTT – Video Text Tracks</h4>
+						<pre>
+							<code>
+WEBVTT – Beispiel
+14
+00:01:14.815 --> 00:01:18.114
+What? - Where are we now?
+15
+00:01:18.171 --> 00:01:20.991
+This is big bat country.
+16
+00:01:21.058 --> 00:01:23.868
+[ Bats Screeching ] - They won't get in your hair. They're after the bugs.
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Tracks - Support</h4>
+						<figure class="">
+							<img src="../images/vl8/webvtt-support.png" alt="Tracks - Support">
+							<figcaption>
+								<a href="https://caniuse.com/?search=webvtt" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Videos - Fallbacks - 1</h4>
+						<p>Wenn keine der angebotenen Videovarianten über das Element &lt;video&gt; greift, muss man Fallback-Lösungen anbieten, z.B.:</p>
+						<pre>
+							<code>
+&lt;video controls&gt;
+	&lt;source src=&quot;videofile.mp4&quot; type=&quot;video/mp4&quot;&gt;
+	&lt;/source&gt; &lt;!-- weitere Quellen --&gt;
+	&lt;a href=&quot;videofile.mp4&quot;&gt;
+	&lt;img src=&quot;dynamicsearch.jpg&quot; alt=&quot;Video&quot;&gt; &lt;/a&gt;
+	&lt;p&gt;Click image to play a video demo.&lt;/p&gt;
+&lt;/video&gt;
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Videos - Fallbacks - 2</h4>
+						<p><a href="https://css-tricks.com/snippets/html/video-for-everybody-html5-video-with-flash-fallback/" target="_blank">Fallback tricks</a></p>
+					</section>
+				</section>
+				<section data-name="Weitere Video-Elemente">
+					<section>
+						<h4>Aufnahme von Medien</h4>
+						<ul>
+							<li>Seit 2009 wird an einem Standard zum Aufnehmen von Bild, Video und Audio aus Webseiten heraus gearbeitet</li>
+							<li>Ein Tutorial mit Demos: <a href="https://web.dev/articles/getusermedia-intro" target="_blank">User media capture</a></li>
+							<li>WebRTC demos und samples: <a href="https://webrtc.github.io/samples/" target="_blank">WebRTC Beispiele</a></li>
+							<li>Devices and Sensors Working Group: <a href="https://www.w3.org/das/" target="_blank">Device and Sensors Working Group</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Verschiedene Streams API</h4>
+						<ul>
+							<li>Vorgängertechnologie (deprecated): <a href="https://developer.mozilla.org/de/docs/Web/API/Navigator/getUserMedia" target="_blank">GetUserMedia</a></li>
+							<li>Aktuelle Anleitung: <a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia" target="_blank">GetUserMedia (neu)</a></li>
+							<li>W3C vom 03.10.2017: <a href="https://www.w3.org/TR/mediacapture-streams/" target="_blank">Quelle</a></li>
+							<li>Die Implementierung ist browserabhängig und wird von gängigen Browser vielseitig unterstützt</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Videostreaming - Topologie</h4>
+						<figure class="">
+							<img src="../images/vl8/video-streaming.png" alt="videostreaming Topologie">
+							<figcaption>
+								<a href="https://dev.to/fahimulhaq/hack-the-system-design-interview-5-core-problem-types-to-master-183b" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Audi-Videostreaming - Topologie</h4>
+						<figure class="">
+							<img src="../images/vl8/video-audio-stream.png" alt="Stream API">
+							<figcaption>
+								<a href="https://medium.com/@lazygeek78/design-of-youtube-cf77b4cc47d9" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Stream API</h4>
+						<figure class="">
+							<img src="../images/vl8/streamapi-support.png" alt="Stream API">
+							<figcaption>
+								<a href="https://caniuse.com/?search=stream api" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Stream API - Support</h4>
+						<figure class="">
+							<img src="../images/vl8/videocapture-support.png" alt="Stream API - Support">
+							<figcaption>
+								<a href="https://caniuse.com/?search=capture" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Audio und Video mit Canvas API</h4>
+						<ul>
+							<li>Der Durchbruch der Einbettung und Veränderung von Video und Audio in der Canvas API war die Idee des Zugriffes auf den Frame-Buffer einmal geladener Dateien</li>
+							<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Manipulating_video_using_canvas" target="_blank">Beispiel Canvas Video</a></li>
+							<li><a href="https://mdn.dev/archives/media/samples/video/chroma-key/index.xhtml" target="_blank">Manipulating video using canvas</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Weitere Audio und Video Beispiele</h4>
+						<ul>
+							<li><a href="https://videojs.com/" target="_blank">Open source HTML5 player framework</a></li>
+							<li><a href="https://jplayer.org/" target="_blank">jQuery HTML5 Audio / Video Library</a></li>
+							<li><a href="https://www.w3schools.com/html/html5_video.asp" target="_blank">W3Schools - HTML videos</a></li>
+							<li><a href="https://www.w3schools.com/html/html_youtube.asp" target="_blank">W3Schools - YouTube videos</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Videos als Hintergrund</h4>
+						<ul>
+							<li><a href="https://www.w3schools.com/howto/howto_css_fullscreen_video.asp" target="_blank">W3Schools fullscreen video</a></li>
+							<li><a href="https://codepen.io/DigitalReligion/pen/OpXxZV" target="_blank">Fullscreen video</a></li>
+							<li><a href="https://css-tricks.com/full-page-background-video-styles/" target="_blank">CSS-Tricks Background videos</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Filter auf Bilder und Videos - 1</h4>
+						<ul>
+							<li><a href="https://drafts.fxtf.org/filter-effects/#typedef-filter-function-list" target="_blank">Filter function list</a></li>
+							<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_filter_effects/Using_filter_effects" target="_blank">Mozilla Filter Guide</a></li>
+							<li><a href="https://css-tricks.com/almanac/properties/f/filter/" target="_blank">CSS-Tricks Bilder</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4><a href="https://www.w3schools.com/cssref/css3_pr_filter.php" target="_blank">Filter auf Bilder und Videos - 2</a></h4>
+						<pre>
+							<code>
+.blur {
+  filter: blur(4px);
+}
+
+.brightness {
+  filter: brightness(0.30);
+}
+
+.contrast {
+  filter: contrast(180%);
+}
+
+.grayscale {
+  filter: grayscale(100%);
+}
+
+.huerotate {
+  filter: hue-rotate(180deg);
+}
+
+.invert {
+  filter: invert(100%);
+}
+
+.opacity {
+  filter: opacity(50%);
+}
+
+.saturate {
+  filter: saturate(7);
+}
+
+.sepia {
+  filter: sepia(100%);
+}
+
+.shadow {
+  filter: drop-shadow(8px 8px 10px green);
+}
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Backdrop Filter - 1</h4>
+						<ul>
+							<li><a href="https://www.w3schools.com/cssref/css3_pr_backdrop-filter.php" target="_blank">W3Schools Back</a></li>
+							<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_filter_effects/Using_filter_effects" target="_blank">Mozilla Beispiele</a></li>
+							<li><a href="https://css-tricks.com/almanac/properties/f/filter/" target="_blank">CSS-Tricks Filter</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Backdrop Filter vs Filter</h4>
+						<figure class="">
+							<img src="../images/vl8/filtervsbackdrop.png" alt="Backdrop Filter vs Filter">
+							<figcaption>
+								<a href="https://codepen.io/rafaelavlucas/pen/ExyBKVE" target="_blank">Filter Beispiel</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Filter - Support</h4>
+						<figure class="">
+							<img src="../images/vl8/filter-support.png" alt="Filter - Support">
+							<figcaption>
+								<a href="https://caniuse.com/?search=filter" target="_blank">CSS Filter</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Backdrop Filter - Support</h4>
+						<figure class="">
+							<img src="../images/vl8/backdropfilter-support.png" alt="Backdrop Filter - Support">
+							<figcaption>
+								<a href="https://caniuse.com/?search=Backdrop%20Filter" target="_blank">CSS Backdrop Filter</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Videos und Filteranwendungen</h4>
+						<ul>
+							<li>Durch Canvas, Filter und WebStreaming können Videos im Browser bearbeitet werden</li>
+							<li>Z.B. <a href="https://etrojs.dev/" target="_blank">Etrojs.dev</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Netflix - Erster Mediaserver 262TB HDD cache</h4>
+						<figure class="">
+							<img src="../images/vl8/first-netflix-server.webp" alt="Netflix Server">
+							<figcaption>
+								<a href="https://highscalability.com/netflix-what-happens-when-you-press-play/" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Netflix - Audio-video-streaming Server - 1</h4>
+						<figure class="">
+							<img src="../images/vl8/netflix-server.jpg" alt="Netflix Server">
+							<figcaption>
+								<a href="https://highscalability.com/netflix-what-happens-when-you-press-play/" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Netflix - Audio-video-streaming Server - 2</h4>
+						<figure class="">
+							<img src="../images/vl8/netflix-server.jpg" alt="Audio-video-streaming Server cluster">
+							<figcaption>
+								<a href="https://highscalability.com/netflix-what-happens-when-you-press-play/" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Netflix - Audio-video-streaming Server - 3</h4>
+						<figure class="">
+							<img src="../images/vl8/netflix-server-location.jpg" alt="Netflix Datenzentren">
+							<figcaption>
+								<a href="https://highscalability.com/netflix-what-happens-when-you-press-play/" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Netflix - Audio-video-streaming Server - 4</h4>
+						<figure class="">
+							<img src="../images/vl8/netflix-demand.jpg" alt="Netflix Datenzentren">
+							<figcaption>
+								<a href="https://highscalability.com/netflix-what-happens-when-you-press-play/" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Web Audio API</h4>
+						<ul>
+							<li>Für Audio-Anwendungen gibt es das umfangreiche Web Audio API des W3C</li>
+							<li><a href="https://webaudio.github.io/web-audio-api/" target="_blank">Web Audio API</a></li>
+							<li>Empfehlung: <a href="https://www.w3.org/TR/webaudio/" target="_blank">W3 Webaudio</a></li>
+							<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API" target="_blank">Mozilla Web audio API</a></li>
+							<li><a href="https://web.dev/articles/webaudio-intro" target="_blank">Google Web audio API</a></li>
+							<li><a href="https://nicolahibbert.com/web-audio-api-tutorial/Web_Audio_API" target="_blank">Web audio API Beispiel</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Web Audio API - Weitere Beispiele</h4>
+						<ul>
+							<li><a href="https://webaudiodemos.appspot.com/" target="_blank">Web Audio Demos</a></li>
+							<li><a href="https://blog.teamtreehouse.com/building-a-synthesizer-with-the-web-audio-api" target="_blank">Building a synthesizer</a></li>
+							<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API" target="_blank">Web Audio API</a></li>
+							<li><a href="https://webaudioapi.com/samples/" target="_blank">Quelle</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Web Audio API - Support</h4>
+						<figure class="">
+							<img src="../images/vl8/webaudioapi-support.png" alt="Web Audio API - Support">
+							<figcaption>
+								<a href="https://caniuse.com/?search=webaudio" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Web Audio API - Filter</h4>
+						<a href="https://developer.mozilla.org/en-US/docs/Web/API/BiquadFilterNode" target="_blank">BiquadFilterNode</a>
+					</section>
+				</section>
+				<section>
+					<h4>Quellen - 1</h4>
+					<ul class="r-fit-text">
+						<li>Mark Kotsarev, „Analyse der HTML5-Videofunktion und deren Anwendung an einem praxisorientierten Beispiel“, Bachelorarbeit, Juni 2014</li>
+						<li>Tutorial: <a href="https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Video_and_audio_content" target="_blank">Quelle</a></li>
+						<li>Medienformate, die Browser akzeptieren: <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Supported_media_formats" target="_blank">Quelle</a></li>
+						<li>Ereignisse und Methoden des HTMLMediaElement: <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement" target="_blank">Quelle</a></li>
+						<li>Media Events im Kontext von &lt;audio&gt; und &lt;video&gt;: <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Media_events" target="_blank">Quelle</a></li>
+					</ul>
+				</section>
+				<section>
+					<h4>Quellen - 2</h4>
+					<ul class="r-fit-text">
+						<li>Erfinder der Technik, den Video-Buffer der Canvas API auszunutzen, um Kopien eines Videos effektiv zu rendern: <a href="https://www.craftymind.com/blowing-up-html5-video-and-mapping-it-into-3d-space/" target="_blank">Quelle</a></li>
+						<li>Experiment von Jekyll: <a href="https://www.kaizou.org/demos/video-text-track-demo/" target="_blank">Quelle</a></li>
+						<li>Anwendung zahlreicher Filter auf Videos, von Jekyll:<a href="https://www.kaizou.org/2012/09/frame-by-frame-video-effects-using-html5-and/" target="_blank">Quelle</a></li>
+						<li>Experiment von Jekyll: <a href="https://www.kaizou.org/demos/video-effects-demo/" target="_blank">Quelle</a></li>
+						<li>Damian Brock, Bachelorarbeit zum Web Audio API, HTWK, April 2015</li>
+					</ul>
+				</section>
+				<section>
+					<h4>Abspann</h4>
+					<p>
+						Achtes Level geschafft fünf weitere Folgen!
+					</p>
+					<p>Fragen und Feedback?</p>
+				</section>
+			</div>
+		</div>
+		<footer class="slide-footer">
+			Sebastian Pötter - HTWK - MMWP2024 - VL08 - Videos in HTML5
+		</footer>
+		<script src="../dist/reveal.js"></script>
+		<script src="../plugin/notes/notes.js"></script>
+		<script src="../plugin/markdown/markdown.js"></script>
+		<script src="../plugin/highlight/highlight.js"></script>
+		<script src="../plugin/simplemenu/simplemenu.js"></script>
+		<script src="../plugin/copycode/copycode.js"></script>
+		<script>
+			Reveal.initialize({
+				maxScale: 1.0,
+				margin: 0.2,
+				controls: true,
+				progress: true,
+				center: true,
+				hash: true,
+				slideNumber: 'c/t',
+				plugins: [RevealMarkdown, RevealHighlight, RevealNotes, CopyCode, Simplemenu],
+				simplemenu: {
+					barhtml: {
+						header: "<div class='menubar' style='font-size: 1.5rem'><ul class='menu'></ul></div>",
+						footer: ""
+					}
+				},
+			});
+		</script>
+	</body>
+</html>
