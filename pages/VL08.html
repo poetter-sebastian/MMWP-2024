@@ -212,16 +212,13 @@ codecs=″vp8,vorbis″′).replace(/^no$/,′′););
 						<ul>
 							<li>Ogg ist ein Containerformat, das lizenzfrei ist</li>
 							<li>Videospur: Theora, Audiospur: Vorbis oder Opus</li>
-							<li>Vorteil von Ogg ist, das es gestreamt werden kann</li>
-							<li>MP4 unterstützt DRM-Mechaniken (siehe <a href="https://docs.unified-streaming.com/documentation/drm/common-encryption.html" target="_blank">Verschlüsselung</a>)</li>
-							<li>Es gibt eine weitverbreitete Hardwarebeschleunigung für den H.264-Codec</li>
-							<li>X.264 ist der OpenSource-Standard und auch verbreitet</li>
+							<li>Vorteil von Ogg ist, das es gestreamt werden kann (früher Alleinstellungsmerkmal)</li>
 						</ul>
 					</section>
 					<section>
 						<h4>OGG Vorbis - support</h4>
 						<figure class="">
-							<img src="../images/vl8/drm-protection.png" alt="H.265 - support">
+							<img src="../images/vl8/ogg-vorbis-support.png" alt="H.265 - support">
 							<figcaption>
 								<a href="https://caniuse.com/?search=ogg" target="_blank">Quelle</a>
 							</figcaption>
@@ -230,7 +227,7 @@ codecs=″vp8,vorbis″′).replace(/^no$/,′′););
 					<section>
 						<h4>OGG Theora - support</h4>
 						<figure class="">
-							<img src="../images/vl8/drm-protection.png" alt="H.265 - support">
+							<img src="../images/vl8/ogg-theora-support.png" alt="H.265 - support">
 							<figcaption>
 								<a href="https://caniuse.com/?search=ogg" target="_blank">Quelle</a>
 							</figcaption>
@@ -310,7 +307,6 @@ codecs=″vp8,vorbis″′).replace(/^no$/,′′););
 						<ul>
 							<li>2015 wurde die Alliance for Open Media gegründet, um für das Internet ein garantiert lizenzgebührenfreies Videoformat zu finden</li>
 							<li>Die Alliance for Open Media wird von den Gründerfirmen geleitet: Amazon, ARM, Cisco, Google, Intel, Microsoft, Mozilla, Netflix and NVIDIA</li>
-							<li>Die Lizenzgebühren sind ein ständiges Problem für Browserproduzenten</li>
 							<li><a href="https://aomedia.org/" target="_blank">AO Media</a></li>
 						</ul>
 					</section>
@@ -325,15 +321,6 @@ codecs=″vp8,vorbis″′).replace(/^no$/,′′););
 						</ul>
 					</section>
 					<section>
-						<h4>Videokonverter für AV1</h4>
-						<ul>
-							<li>ffmpeg (<a href="https://www.ffmpeg.org" target="_blank">FFMPEG</a>)</li>
-							<li>Miro Video Converter (<a href="https://www.mirovideoconverter.com" target="_blank">Miro Video</a>)</li>
-							<li>VLC media player (<a href="https://www.videolan.org/vlc/" target="_blank">VLC Player</a>)</li>
-							<li>Handbrake: <a href="https://handbrake.fr/" target="_blank">Handbrake</a></li>
-						</ul>
-					</section>
-					<section>
 						<h4>AV1 - support</h4>
 						<figure class="">
 							<img src="../images/vl8/av1-support.png" alt="AV1 - support">
@@ -341,6 +328,15 @@ codecs=″vp8,vorbis″′).replace(/^no$/,′′););
 								<a href="https://caniuse.com/?search=av1" target="_blank">Quelle</a>
 							</figcaption>
 						</figure>
+					</section>
+					<section>
+						<h4>Videokonverter für AV1</h4>
+						<ul>
+							<li>ffmpeg (<a href="https://www.ffmpeg.org" target="_blank">FFMPEG</a>)</li>
+							<li>Miro Video Converter (<a href="https://www.mirovideoconverter.com" target="_blank">Miro Video</a>)</li>
+							<li>VLC media player (<a href="https://www.videolan.org/vlc/" target="_blank">VLC Player</a>)</li>
+							<li>Handbrake: <a href="https://handbrake.fr/" target="_blank">Handbrake</a></li>
+						</ul>
 					</section>
 					<section>
 						<h4>Video einbinden - Syntax - 1</h4>
@@ -356,7 +352,7 @@ codecs=″vp8,vorbis″′).replace(/^no$/,′′););
 // Das Bild zur Vorschau wird beim Laden angezeigt.
 &lt;video src=&Prime;videofile.mp4&Prime; poster=&Prime;vorschau.jpg&Prime; controls&gt;
 Nachricht, falls der Browser das Videoelement nicht
-unterst&amp;uuml;tzt.
+unterstützt.
 &lt;/video&gt;
 							</code>
 						</pre>
@@ -395,7 +391,7 @@ unterst&amp;uuml;tzt.
 								Beschreibungen für die Ausgabe per Screenreader, Szenenüberschriften etc. zum Teil
 								mehrsprachig mitgegeben werden</li>
 							<li>
-								<pre><code>
+								<pre><code class="html">
 &lt;track src=&Prime;de_subtitles.vtt&Prime; srclang=&Prime;de&Prime; kind=&Prime;subtitles&Prime; label=&Prime;German&Prime; /&gt;
 								</code></pre>
 							</li>
@@ -500,7 +496,7 @@ This is big bat country.
 						<ul>
 							<li>Vorgängertechnologie (deprecated): <a href="https://developer.mozilla.org/de/docs/Web/API/Navigator/getUserMedia" target="_blank">GetUserMedia</a></li>
 							<li>Aktuelle Anleitung: <a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia" target="_blank">GetUserMedia (neu)</a></li>
-							<li>W3C vom 03.10.2017: <a href="https://www.w3.org/TR/mediacapture-streams/" target="_blank">Quelle</a></li>
+							<li>W3C vom 05.12.2024: <a href="https://www.w3.org/TR/mediacapture-streams/" target="_blank">Quelle</a></li>
 							<li>Die Implementierung ist browserabhängig und wird von gängigen Browser vielseitig unterstützt</li>
 						</ul>
 					</section>
@@ -523,7 +519,16 @@ This is big bat country.
 						</figure>
 					</section>
 					<section>
-						<h4>Stream API</h4>
+						<h4>Video Capture - Support</h4>
+						<figure class="">
+							<img src="../images/vl8/videocapture-support.png" alt="Video Capture - Support">
+							<figcaption>
+								<a href="https://caniuse.com/?search=capture" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Stream API - Support</h4>
 						<figure class="">
 							<img src="../images/vl8/streamapi-support.png" alt="Stream API">
 							<figcaption>
@@ -532,20 +537,11 @@ This is big bat country.
 						</figure>
 					</section>
 					<section>
-						<h4>Stream API - Support</h4>
-						<figure class="">
-							<img src="../images/vl8/videocapture-support.png" alt="Stream API - Support">
-							<figcaption>
-								<a href="https://caniuse.com/?search=capture" target="_blank">Quelle</a>
-							</figcaption>
-						</figure>
-					</section>
-					<section>
 						<h4>Audio und Video mit Canvas API</h4>
 						<ul>
 							<li>Der Durchbruch der Einbettung und Veränderung von Video und Audio in der Canvas API war die Idee des Zugriffes auf den Frame-Buffer einmal geladener Dateien</li>
 							<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Manipulating_video_using_canvas" target="_blank">Beispiel Canvas Video</a></li>
-							<li><a href="https://mdn.dev/archives/media/samples/video/chroma-key/index.xhtml" target="_blank">Manipulating video using canvas</a></li>
+							<li><a href="https://mdn.github.io/dom-examples/canvas/chroma-keying/" target="_blank">Manipulating video using canvas</a></li>
 						</ul>
 					</section>
 					<section>
@@ -662,7 +658,16 @@ This is big bat country.
 						</ul>
 					</section>
 					<section>
-						<h4>Netflix - Erster Mediaserver 262TB HDD cache</h4>
+						<h4>Netflix - Audio-video-streaming Server</h4>
+						<figure class="">
+							<img src="../images/vl8/netflix-demand.jpg" alt="Netflix Datenzentren">
+							<figcaption>
+								<a href="https://highscalability.com/netflix-what-happens-when-you-press-play/" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Netflix - Erster Mediaserver 262TB HDD cache - 1</h4>
 						<figure class="">
 							<img src="../images/vl8/first-netflix-server.webp" alt="Netflix Server">
 							<figcaption>
@@ -671,20 +676,29 @@ This is big bat country.
 						</figure>
 					</section>
 					<section>
-						<h4>Netflix - Audio-video-streaming Server - 1</h4>
+						<h4>Netflix - Erster Mediaserver 262TB HDD cache - 2</h4>
 						<figure class="">
-							<img src="../images/vl8/netflix-server.jpg" alt="Netflix Server">
+							<img src="../images/vl8/netflix-first-server-open.webp" alt="Netflix Server">
 							<figcaption>
 								<a href="https://highscalability.com/netflix-what-happens-when-you-press-play/" target="_blank">Quelle</a>
 							</figcaption>
 						</figure>
 					</section>
 					<section>
-						<h4>Netflix - Audio-video-streaming Server - 2</h4>
+						<h4>Netflix - Audio-video-streaming Server - 1 (262TB)</h4>
 						<figure class="">
-							<img src="../images/vl8/netflix-server.jpg" alt="Audio-video-streaming Server cluster">
+							<img src="../images/vl8/netflix-server.jpg" alt="Netflix Server">
 							<figcaption>
-								<a href="https://highscalability.com/netflix-what-happens-when-you-press-play/" target="_blank">Quelle</a>
+								<a href="https://blog.bytebytego.com/p/a-brief-history-of-scaling-netflix" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Netflix - Audio-video-streaming Server - 2 (10.48PB)</h4>
+						<figure class="">
+							<img src="../images/vl8/netflix-server-cluster.webp" alt="Audio-video-streaming Server cluster">
+							<figcaption>
+								<a href="https://blog.bytebytego.com/p/a-brief-history-of-scaling-netflix" target="_blank">Quelle</a>
 							</figcaption>
 						</figure>
 					</section>
@@ -692,15 +706,6 @@ This is big bat country.
 						<h4>Netflix - Audio-video-streaming Server - 3</h4>
 						<figure class="">
 							<img src="../images/vl8/netflix-server-location.jpg" alt="Netflix Datenzentren">
-							<figcaption>
-								<a href="https://highscalability.com/netflix-what-happens-when-you-press-play/" target="_blank">Quelle</a>
-							</figcaption>
-						</figure>
-					</section>
-					<section>
-						<h4>Netflix - Audio-video-streaming Server - 4</h4>
-						<figure class="">
-							<img src="../images/vl8/netflix-demand.jpg" alt="Netflix Datenzentren">
 							<figcaption>
 								<a href="https://highscalability.com/netflix-what-happens-when-you-press-play/" target="_blank">Quelle</a>
 							</figcaption>
