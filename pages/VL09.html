@@ -1,0 +1,937 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>MMWP2024 - LV09</title>
+
+		<link rel="stylesheet" href="../dist/reset.css">
+		<link rel="stylesheet" href="../dist/reveal.css">
+		<link rel="stylesheet" href="../dist/theme/white.css">
+		<link rel="stylesheet" href="../dist/style.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="../plugin/highlight/monokai.css">
+		<link rel="stylesheet" href="../plugin/simplemenu/simplemenu.css">
+		<link rel="stylesheet" href="../plugin/copycode/copycode.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-transition="fade" data-state="hide-menubar hide-menu" data-background-image="../images/vl9/presentationstart.png" data-background-position="bottom" data-background-opacity="0.1">
+					<h1>Forms - Ein- und Ausgabe von Daten</h1>
+					<h3>MMWP2024 - LV09</h3>
+				</section>
+				<section data-name="TOC" data-sm="false">
+					<h4>Inhaltsverzeichnis</h4>
+					<ul class="menu"></ul>
+				</section>
+				<section data-name="Organisation">
+					<section>
+						<h4>Inhaltsschwerpunkte</h4>
+						<ul>
+							<li>Ein- und Ausgabe von Daten in Browsern</li>
+							<li>Gängige Datenüberermittlungsmöglichkeiten</li>
+							<li>Datenvalidierung und Asynchronität</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Voraussetzung</h4>
+						<p>Der Ausgangspunkt dieser Vorlesungsreihe ist das Wissen über funktionsweise und Struktur von:</p>
+						<ul>
+							<li>DOM-Tree</li>
+							<li>HTML5 Elemente</li>
+							<li>Events und Selektoren von Javascript</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Ziele</h4>
+						<p>Vorstellung von:</p>
+						<ul>
+							<li>Formular Elementen</li>
+							<li>POST und GET Verfahren</li>
+							<li>Datenübermittlung über Ajax</li>
+							<li>Live-Beispielen</li>
+						</ul>
+					</section>
+				</section>
+				<section data-name="Formulare">
+					<section>
+						<h4>Formulare</h4>
+						<ul>
+							<li>Dienen der Interaktion mit Nutzenden</li>
+							<li>Dienen der Erfassung und Übermittlung von Benutzerinformationen</li>
+							<li>Anwendungen in: Suchmasken, Benutzername- und Passwortabfrage, Gästebücher, Online-Shops, Social Media, etc.</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Formularbereich definieren</h4>
+						<ul>
+							<li>&lt;form&gt; ... &lt;/form&gt;</li>
+							<li>Notwendig, wenn die Formulardaten (über den definierten Weg) an einen Server gesendet werden sollen</li>
+							<li>Darf in allen Elementen vorkommen, die Flusselemente als Inhalt erlauben (außer form)</li>
+							<li>Erlaubte Inhalte: beliebig viele Flusselemente (außer form)</li>
+						</ul>
+					</section>
+					<section>
+						<h4>&lt;form&gt; Element Attribute - 1</h4>
+						<ul>
+							<li>action: definiert, an welche URI die Werte der Eingabeelemente gesendet werden (wenn nicht gesetzt, wird die aktuell geladene Seite genutzt)</li>
+							<li>accept-charset: Liste von unterstützten Zeichensätzen</li>
+							<li>autocomplete [on, off]: aktiviert automatische Vervollständigung aller enthaltenen Eingabeelemente</li>
+							<li>enctype: definiert Codierung des Medientyps</li>
+						</ul>
+					</section>
+					<section>
+						<h4>&lt;form&gt; Element Attribute - 2</h4>
+						<ul>
+							<li>name: Identifizierungsname des Formulars</li>
+							<li>novalidate: deaktiviert Prüfung der Eingabeelemente vor dem absenden</li>
+							<li>target: bestimmt den Fensternamen des Verweisziels</li>
+						</ul>
+					</section>
+					<section>
+						<h4>&lt;form&gt; Element Actions - 1</h4>
+						<ul class="r-fit-text">
+							<li>method: HTTP-Methode, mit der Eingabedaten gesendet werden</li>
+							<li>GET:
+								<ul>
+									<li>Die Daten werden, getrennt durch ein Fragezeichen, an die URI angehangen (sind in der Adresszeile des Browsers sichtbar)</li>
+									<li>URI?name1=wert1&name2=wert2</li>
+									<li>Geeignet, wenn durch den Request nur andere Daten als Antwort empfangen werden</li>
+									<li>Ungeeignet bei sensiblen Daten</li>
+								</ul>
+							</li>
+							<li>POST:
+								<ul>
+									<li>Geeignet, um große Datenmengen (mehrere MByte) zu übertragen</li>
+									<li>Daten werden im Header-(Body) der Anfrage übertragen</li>
+									<li>Geeignete Möglichkeit, wenn Daten auf dem Server verändert werden sollen, oder Logindaten (Passwörter) übertragen werden sollen</li>
+									<li>Ungeeignet um Aktionen nochmals auszuführen oder zu speichern (z.B. Suchen in einer Suchmaschine)</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h4>&lt;form&gt; Element Actions - 2</h4>
+						<ul class="r-fit-text">
+							<li>HEAD:
+								<ul>
+									<li>Weist den Server an, lediglich einen HTTP-Header wie bei GET zu senden, aber ohne den Dokumentinhalt</li>
+									<li>Geeignete Möglichkeit, um Server ping zu testen und unterstützte Formate abzufragen</li>
+								</ul>
+							</li>
+							<li>PUT:
+								<ul>
+									<li>Direktes Hochladen von Daten auf den Webserver, ohne dass ein Skript zur Datenverarbeitung aufgerufen wird</li>
+									<li>Nur bei Webservern für WebDAV oder RESTful Web Services verfügbar (asynchrones Hochladen)</li>
+									<li>Geeignete Möglichkeit, um bestehende Daten zu aktualisieren</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h4>&lt;form&gt; Element Actions - 3</h4>
+						<ul class="r-fit-text">
+							<li>DELETE:
+								<ul>
+									<li>Löscht angegebene Ressource auf dem Server</li>
+									<li>Nur bei Webservern für WebDAV oder RESTful Web Services verfügbar</li>
+									<li>Geeignete Möglichkeit, um bestehende Daten zu löschen</li>
+								</ul>
+							</li>
+							<li>TRACE:
+								<ul>
+									<li>Liefert die Anfrage so zurück, wie der Server sie empfangen hat (zum debuggen der Verbindung)</li>
+									<li>Wird häufig von Servern aus Sicherheitsgründen blockiert</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h4>&lt;form&gt; Element Actions - 4</h4>
+						<ul class="r-fit-text">
+							<li>OPTIONS:
+								<ul>
+									<li>Liefert eine Liste der vom Server unterstützten Methoden und Merkmale</li>
+									<li>Z.B. unterstütze Protokolle, Datenformate, En/De-Codierungen und Authentifizierungsmethoden</li>
+								</ul>
+							</li>
+							<li>CONNECT:
+								<ul>
+									<li>Von Proxyservern implementierte Methode, die SSL-Tunnel zur Verfügung stellen können</li>
+									<li>Tunneln der Anfrage über einen Proxy, der verschlüsseltes Packet (HTTPS), weitergibt</li>
+									<li>Meist über HTTP/1.2-1.3</li>
+								</ul>
+							</li>
+							<li><a href="https://wiki.selfhtml.org/wiki/Referenz:HTML/form" target="_blank">FORM Element</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Formular support</h4>
+						<figure class="">
+							<img src="../images/vl9/form-support.png" alt="Formular support">
+							<figcaption>
+								<a href="https://caniuse.com/?search=form" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Formular - Eingabe Elemente</h4>
+						<p>allgemeine Attribute:</p>
+						<ul class="r-fit-text">
+							<li>readonly:
+								<ul>
+									<li>Der vorgeschlagene Wert kann nicht verändert werden</li>
+									<li>Veränderung dieses Attributs über JavaScript möglich</li>
+								</ul>
+							</li>
+							<li>disabled:
+								<ul>
+									<li>Eingabefeld soll weder benutzt noch seine Daten mit übertragen werden</li>
+									<li>Wird vom Browser üblicherweise ausgegraut dargestellt</li>
+									<li><a href="https://wiki.selfhtml.org/wiki/HTML/Formulare/ausgrauen_mit_readonly,_disabled" target="_blank">Input readonly</a></li>
+								</ul>
+							</li>
+							<li>name:
+								<ul>
+									<li>Gibt dem Formularelement einen eindeutigen Namen</li>
+									<li>Wird zusammen mit dem Wert des Eingabefeldes an den Webserver übertragen</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Formular - Eingabe Elemente - 2</h4>
+						<p>allgemeine Attribute:</p>
+						<ul class="r-fit-text">
+							<li>value: Vorbelegungswert des Eingabeelements</li>
+							<li>placeholder: gibt einen Beispieltext für das Eingabefeld an, der bei der ersten Eingabe verschwindet</li>
+							<li>autofocus: setzt den Cursor beim Laden der Seite automatisch auf das Eingabefeld</li>
+							<li>autocomplete: zeigt dem Browser, ob ein Eingabefeld automatisch ausgefüllt werden soll</li>
+							<li>inputmode: hilft Browsern mit Bildschirmtastatur die passende Belegung zu wählen</li>
+							<li><a href="https://wiki.selfhtml.org/wiki/Formulare/Was_ist_ein_Webformular%3F" target="_blank">Weitere Informationen</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Formular - Eingabe Elemente - 3</h4>
+						<p>allgemeine Attribute:</p>
+						<ul class="r-fit-text">
+							<li>required:
+								<ul>
+									<li>Erzwingt die Eingabe in das Eingabefeld, bevor das Formular abgesendet werden kann</li>
+									<li>Durch CSS Pseudoklassen :valid und :invalid lassen sich Elemente mit ungültigen Daten hervorheben (neu in CSS3-2023)</li>
+								</ul>
+							</li>
+							<li>pattern:
+								<ul>
+									<li>Gibt einen regulären Ausdruck an, dem der Eintrag des Eingabefeldes entsprechen muss (neu in CSS3-2022)</li>
+								</ul>
+							</li>
+							<li><a href="https://wiki.selfhtml.org/wiki/Formulare/Benutzereingaben_zug%C3%A4nglich_gestalten" target="_blank">Validierung</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Formular - Eingabe Elemente - 3</h4>
+						<pre><code>
+&lt;input type=&quot;button&quot;&gt;
+&lt;input type=&quot;checkbox&quot;&gt;
+&lt;input type=&quot;color&quot;&gt;
+&lt;input type=&quot;date&quot;&gt;
+&lt;input type=&quot;datetime-local&quot;&gt;
+&lt;input type=&quot;email&quot;&gt;
+&lt;input type=&quot;file&quot;&gt;
+&lt;input type=&quot;hidden&quot;&gt;
+&lt;input type=&quot;image&quot;&gt;
+&lt;input type=&quot;month&quot;&gt;
+&lt;input type=&quot;number&quot;&gt;
+&lt;input type=&quot;password&quot;&gt;
+&lt;input type=&quot;radio&quot;&gt;
+&lt;input type=&quot;range&quot;&gt;
+&lt;input type=&quot;reset&quot;&gt;
+&lt;input type=&quot;search&quot;&gt;
+&lt;input type=&quot;submit&quot;&gt;
+&lt;input type=&quot;tel&quot;&gt;
+&lt;input type=&quot;text&quot;&gt;
+&lt;input type=&quot;time&quot;&gt;
+&lt;input type=&quot;url&quot;&gt;
+&lt;input type=&quot;week&quot;&gt;
+						</code></pre>
+						<p><a href="https://www.w3schools.com/html/html_form_input_types.asp" target="_blank">Input typen</a></p>
+					</section>
+					<section>
+						<h4>Einzeiliges Texteingabefeld</h4>
+						<ul>
+							<li>&lt;input type=&quot;text&quot;&gt; zur Eingabe kurzer einzeiliger Texte</li>
+							<li>Attribute:
+								<ul>
+									<li>size: Anzahl der angezeigten Zeichen (besser: CSS-Angabe width)</li>
+									<li>maxlength: maximale Feldlänge in Zeichen</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Einzeiliges Suchfeld</h4>
+						<ul>
+							<li>&lt;input type=&quot;search&quot;&gt; entspricht einzeiligem Texteingabefeld</li>
+							<li>Manche Browser ergänzen ein Lupensymbol oder einen Knopf zum Löschen des Eingabefeldes</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Passwort-Eingabefeld</h4>
+						<ul>
+							<li>&lt;input type=&quot;password&quot;&gt; ähnliche Eigenschaften wie einzeiliges Texteingabefeld</li>
+							<li>Eingegebene Zeichen werden durch Platzhalter (Punkte, Sterne) dargestellt</li>
+							<li>Browser kann die Eingabe speichern, um diese beim nächsten Mal wieder anzubieten</li>
+							<li>Übertragung erfolgt nur verschlüsselt, wenn der Server HTTPs anbietet!</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Telefonnummer-Eingabefeld</h4>
+						<ul>
+							<li>&lt;input type=&quot;tel&quot;&gt; entspricht einzeiligem Texteingabefeld</li>
+							<li>Bildschirmtastaturen können ein numerisches Tastenfeld darstellen (Mobilgeräte oder Bildschirmtastaturen)</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Webadressen-Eingabefeld</h4>
+						<ul>
+							<li>&lt;input type=&quot;url&quot;&gt; entspricht einzeiligem Texteingabefeld</li>
+							<li>Während der Eingabe wird auf das Format einer validen Internetadresse geprüft</li>
+							<li>Bildschirmtastaturen können eine Taste .com anzeigen (Mobilgeräte oder Bildschirmtastaturen)</li>
+						</ul>
+					</section>
+					<section>
+						<h4>E-Mail-Eingabefeld</h4>
+						<ul>
+							<li>&lt;input type=&quot;email&quot;&gt; Eingabe wird auf Format einer E-Mail-Adresse geprüft</li>
+							<li>Bildschirmtastaturen können eine Taste mit @-Symbol anzeigen (Mobilgeräte oder Bildschirmtastaturen)</li>
+							<li><a href="https://wiki.selfhtml.org/wiki/Formulare/Eingabe_von_Text#type_.3D_.22email.22" target="_blank">Input Text</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Zahlen-Eingabefeld</h4>
+						<ul>
+							<li>&lt;input type=&quot;number&quot;&gt; entspricht einzeiligem Texteingabefeld</li>
+							<li>Bildschirmtastaturen können ein numerisches Tastenfeld darstellen (Mobilgeräte oder Bildschirmtastaturen)</li>
+							<li>Attribute:
+								<ul>
+									<li>max: Maximalwert</li>
+									<li>min: Minimalwert</li>
+									<li>step: legt fest, in welchen Stufen die Werte eingegeben werden dürfen</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Schieberegler</h4>
+						<ul class="r-fit-text">
+							<li>&lt;input type=&quot;range&quot;&gt; ermöglicht grafische Eingabe von Werten über Schieberegler</li>
+							<li>Bildschirmtastaturen können ein numerisches Tastenfeld darstellen</li>
+							<li>Attribute:
+								<ul>
+									<li>max: Maximalwert (Standard: 100)</li>
+									<li>min: Minimalwert (Standard: 0)</li>
+									<li>step: legt fest, in welchen Stufen die Werte eingegeben werden dürfen</li>
+									<li>orient: vertical stellt einen vertikalen Schieberegler dar (alternativ in CSS: transform:rotate(270deg))</li>
+									<li><a href="https://wiki.selfhtml.org/wiki/Formulare/Eingabe_von_Zahlen#type_.3D_.22number.22" target="_blank">Input Number</a></li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Datums-Eingabefelder</h4>
+						<ul>
+							<li>&lt;input type=&quot;date&quot;&gt; Browser können eine Kalenderdarstellung zur Eingabe anbieten</li>
+							<li>Bildschirmtastaturen können ein numerisches Tastenfeld darstellen</li>
+							<li>Datums-Eingabefeld mit Uhrzeit in der Zeitzone des Nutzers:
+								<ul>
+									<li>&lt;input type=&quot;datetime-local&quot;&gt;</li>
+									<li>Browser können eine Kalenderdarstellung zur Eingabe anbieten</li>
+									<li>Mittlerweile von aktuellen Browser unterstützt</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Datetime Locale</h4>
+						<figure class="">
+							<img src="../images/vl9/localdate-support.png" alt="Datetime Locale">
+							<figcaption>
+								<a href="https://caniuse.com/?search=datetime-local" target="_blank">Input Datetime</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Wochen-Eingabefeld</h4>
+						<ul>
+							<li>&lt;input type=&quot;week&quot;&gt; Kombination von Wochenangabe mit Jahreszahl</li>
+							<li>Browser können eine Kalenderdarstellung zur Eingabe anbieten</li>
+							<li>Attribute:
+								<ul>
+									<li>list: Angabe mehrerer Optionen in Verbindung mit &lt;datalist&gt;</li>
+									<li>value: String im Format YYYYw-WW mit YYYY als Jahreszahl und WW als Wochennummer (bis 52 bzw. 53)</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Datum und Zeiteingabefelder</h4>
+						<ul>
+							<li>Datums-Eingabefeld: &lt;input type=&quot;month&quot;&gt; Kombination von Monatsangabe mit Jahreszahl</li>
+							<li>Uhrzeit-Eingabefeld: &lt;input type=&quot;time&quot;&gt; Browser können individuelle Darstellung zur Eingabe anbieten</li>
+							<li>Browser können eine Kalenderdarstellung zur Eingabe anbieten</li>
+							<li><a href="https://wiki.selfhtml.org/wiki/Formulare/Eingabe_von_Zeitangaben#type_.3D_.22time.22" target="_blank">Input time</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Versteckte Felder</h4>
+						<ul>
+							<li>&lt;input type=&quot;hidden&quot;&gt; Eingabefelder, die dem Nutzer nicht angezeigt werden</li>
+							<li>Daten dieser Felder werden mit an Server übertragen</li>
+							<li>Nützlich für Bot-Erkennung bei automatisierter Eingabe von Formularen</li>
+							<li>Übertragung von Tokens für die Authentifizierung</li>
+							<li><a href="https://wiki.selfhtml.org/wiki/Formulare/Versteckte_Elemente" target="_blank">Input hidden</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Datei-Upload-Feld - 1</h4>
+						<ul class="r-fit-text">
+							<li>&lt;input type=&quot;file&quot;&gt; Dateien vom lokalen Gerät an den Webserver übertragen</li>
+							<li>Funktioniert nur mit POST-Methode</li>
+							<li>Im Formular muss Attribut enctype="multipart/form-data" notiert werden, damit nicht nur der Name, sondern auch die Datei mit übertragen wird</li>
+							<li>Maximale Dateigröße wird im Webserver konfiguriert</li>
+							<li>Webserver speichert empfangene Dateien nur temporär bis zur Verarbeitung der aktuellen Anfrage, das Verarbeitungsskript des Servers muss sich sofort um die Sicherung der Dateien kümmern</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Datei-Upload-Feld - 2</h4>
+						<p>Attribute</p>
+						<ul>
+							<li>accept: kommagetrennte Liste von MIME-Typen (können auch Wildcards enthalten)</li>
+							<li>multiple: ermöglicht die Auswahl mehrerer gleichzeitig zu sendender Dateien, dabei sollte das Attribut name mit eckigen Klammern [] enden</li>
+							<li><a href="https://wiki.selfhtml.org/wiki/File_Upload" target="_blank">Input upload</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Farbauswahl-Element</h4>
+						<ul>
+							<li>&lt;input type=&quot;color&quot;&gt; nach Farbauswahl enthält das Attribut value den sechsstelligen hexadezimalen Farbcode mit führendem #</li>
+							<li><a href="https://wiki.selfhtml.org/wiki/Farbw%C3%A4hler" target="_blank">Input color</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Radio-Buttons</h4>
+						<ul>
+							<li>&lt;input type=&quot;radio&quot;&gt; erlauben die gleichzeitige Auswahl einer von zur Verfügung stehenden Optionen</li>
+							<li>Attribute:
+								<ul>
+									<li>name: Buttons mit gleicher Belegung dieses Attributs bilden eine Auswahlgruppe</li>
+									<li>value: legt den zum Button gehörigen Wert fest, der zusammen mit dem Wert von name übertragen wird</li>
+									<li>checked: zur Vorselektierung des Buttons beim Laden der Seite</li>
+								</ul>
+							</li>
+							<li><a href="https://wiki.selfhtml.org/wiki/Formulare/Auswahllisten#Radio-Buttons" target="_blank">Input radio</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Checkboxen</h4>
+						<ul>
+							<li>&lt;input type=&quot;checkbox&quot;&gt; erlauben die gleichzeitige Auswahl von beliebig vielen Optionen (Multiple Choice)</li>
+							<li>Attribute:
+								<ul>
+									<li>name: Buttons mit gleicher Belegung dieses Attributs bilden eine Auswahlgruppe, dabei
+										muss der Name auf eckige Klammern [] enden</li>
+								</ul>
+							</li>
+							<li><a href="https://wiki.selfhtml.org/wiki/Formulare/Auswahllisten" target="_blank">Input Checkbox</a></li>
+							<li><a href="https://getbootstrap.com/docs/5.3/forms/checks-radios/#switches" target="_blank">Switches bei Mobilgeräten</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Buttons - 1</h4>
+						<p>Attribute:</p>
+						<ul>
+							<li>form: Zuordnung zur ID des Formulars, zu dem der Button gehören soll</li>
+							<li>formaction: überschreibt die im action-Attribut des zugehörigen Formulars angegebene URL</li>
+							<li>formmethod: überschreibt die im method-Attribut des zugehörigen Formulars angegebene Sendemethode</li>
+							<li>formenctype: überschreibt die im enctype-Attribut des zugehörigen Formulars angegebene Codierung</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Buttons - 2</h4>
+						<p>Attribute:</p>
+						<ul class="r-fit-text">
+							<li>Auslösebutton
+								<ul>
+									<li>&lt;button type=&quot;button&quot;&gt; ehemals &lt;input type=&quot;button&quot;&gt; löst clientseitige Aktionen aus</li>
+									<li>durch addEventListener lässt sich eine JavaScript-Funktion zum Button zuweisen, die beim Anklicken ausgelöst wird</li>
+								</ul>
+							</li>
+							<li>Absendebutton
+								<ul>
+									<li>&lt;button type=&quot;submit&quot;&gt; ehemals &lt;input type=&quot;submit&quot;&gt; sendet das zugehörige Formular zum Webserver</li>
+									<li>durch addEventListener lässt sich eine JavaScript-Funktion zum Button zuweisen, die beim Anklicken ausgelöst wird</li>
+								</ul>
+							</li>
+							<li>Resetbutton
+								<ul>
+									<li>&lt;button type=&quot;reset&quot;&gt; ehemals &lt;input type=&quot;reset&quot;&gt; setzt die Werte des zugehörigen Formulars zurück</li>
+								</ul>
+							</li>
+							<li><a href="https://wiki.selfhtml.org/wiki/HTML/Elemente/button" target="_blank">Input Button</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Grafischer Absendebutton</h4>
+						<ul class="r-fit-text">
+							<li>&lt;input type=&quot;image&quot;&gt; Absendeknopf, der mit einem Bild unterlegt ist</li>
+							<li>zusätzlich zu den Formulardaten werden die Koordinaten des Klicks zum Server übertragen in der Form name.x und name.y</li>
+							<li>Browser können eine Kalenderdarstellung zur Eingabe anbieten</li>
+							<li>Attribute:
+								<ul>
+									<li>src: URL der unterlegten Grafik</li>
+									<li>width: Breite der Grafik</li>
+									<li>height: Höhe der Grafik</li>
+									<li>alt: Alternativtext, falls die Grafik nicht geladen werden kann</li>
+								</ul>
+							</li>
+							<li><a href="https://wiki.selfhtml.org/wiki/Formulare/Ausl%C3%B6sen_von_Benutzeraktionen#input_type_.3D_.22image.22" target="_blank">Input Button</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Mehrzeiliges Text-Eingabefeld</h4>
+						<ul>
+							<li>&lt;textarea&gt;&lt;/textarea&gt; dient der Eingabe von mehrzeiligen Texten</li>
+							<li>Größe des Textfeldes lässt sich vom Nutzer verändern</li>
+							<li>Attribute:
+								<ul>
+									<li>rows: bestimmt die Anzahl der angezeigten Zeilen</li>
+									<li>cols: bestimmt die Anzahl der angezeigten Spalten</li>
+									<li>wrap [hard, soft]: legt fest, ob Text umgebrochen werden soll</li>
+								</ul>
+							</li>
+							<li><a href="https://wiki.selfhtml.org/wiki/HTML/Elemente/textarea" target="_blank">Input Text area</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Auswahllisten - 1</h4>
+						<ul>
+							<li>&lt;select&gt; ... &lt;/select&gt; enthält beliebige Anzahl an Auswahloptionen (option), aus denen der Nutzer wählen kann</li>
+							<li>Attribute:
+								<ul>
+									<li>size: legt Anzahl der Angezeigten Zeilen der Auswahlliste fest (Standardwert 1 erzeugt Dropdown-Liste)</li>
+									<li>multiple: ermöglicht die gleichzeitige Auswahl mehrerer Einträge, dabei muss dem name-Attribut ein Arrayname (mit abschließenden eckigen Klammern) zugewiesen werden</li>
+								</ul>
+							</li>
+							<li><a href="https://wiki.selfhtml.org/wiki/HTML/Elemente/select" target="_blank">Input select</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Auswahllisten - 1</h4>
+						<ul>
+							<li>&lt;option&gt;...&lt;/option&gt; definiert jeweils einen auswählbaren Eintrag der Auswahlliste</li>
+							<li>Attribute:
+								<ul>
+									<li>selected: Vorauswahl des Eintrages</li>
+									<li>value: gibt den Wert an, der bei gewähltem Eintrag anstelle des angezeigten Eintragstextes übertragen wird</li>
+								</ul>
+							</li>
+							<li><a href="https://wiki.selfhtml.org/wiki/JavaScript/DOM/Document/forms/elements/options" target="_blank">Input select options</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Verschachtelte Auswahllisten</h4>
+						<ul>
+							<li>&lt;optgroup&gt;&lt;option&gt;... &lt;/option&gt;&lt;option&gt;...&lt;/option&gt;&lt;/optgroup&gt;</li>
+							<li>Auswahlelemente sollen in hierarchisch verschachtelten Menüstrukturen dargestellt werden</li>
+							<li>In vielen Browsern werden die Auswahlelemente jedoch nur gruppiert unter den Hauptoptionen angezeigt</li>
+							<li>Nur eine Verschachtelungsebene erlaubt</li>
+							<li><a href="https://wiki.selfhtml.org/wiki/HTML/Elemente/optgroup" target="_blank">Input selection optgroup</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Datenlisten</h4>
+						<ul>
+							<li>&lt;datalist&gt;&lt;option&gt;...&lt;/option&gt;&lt;option&gt;...&lt;/option&gt;&lt;/datalist&gt;</li>
+							<li>erlaubt die unterstützte Eingabe in ein Textfeld durch eine vordefinierte Liste von Einträgen</li>
+							<li>dem list-Attribut des input-Elements wird dabei die id der datalist zugewiesen, welche die zu nutzenden Elemente enthält</li>
+							<li><a href="https://wiki.selfhtml.org/wiki/HTML/Elemente/datalist" target="_blank">Input selection datalist</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Fortschrittsanzeige</h4>
+						<ul>
+							<li>&lt;progress&gt;&lt;/progress&gt; stellt den Fortschritt einer Aktion dar</li>
+							<li>Attribute:
+								<ul>
+									<li>max: gibt an, wie viele Schritte maximal möglich sind (Standardwert: 1)</li>
+									<li>value: Anzahl der abgearbeiteten Schritte (sollte kleiner als max sein)</li>
+								</ul>
+							</li>
+							<li><a href="https://wiki.selfhtml.org/wiki/HTML/Elemente/progress" target="_blank">Input Progression</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Ausgabeelement</h4>
+						<ul>
+							<li>&lt;output&gt;...&lt;/output&gt; dient zur Ausgabe des Ergebnisses einer Benutzereingabe oder Berechnung</li>
+							<li>Attribute:
+								<ul>
+									<li>for: gibt die Identifikation des Elements an, auf welches sich dieses Element beziehen soll</li>
+								</ul>
+							</li>
+							<li><a href="https://wiki.selfhtml.org/wiki/HTML/Elemente/output" target="_blank">Input Output</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Gruppierung</h4>
+						<ul class="r-fit-text">
+							<li>&lt;fieldset&gt; ... &lt;/fieldset&gt; erlaubt die Zusammenfassung mehrerer Eingabeelemente zu einer Gruppe</li>
+							<li>Attribute:
+								<ul>
+									<li>disabled: deaktiviert die Eingabeelemente und graut sie aus</li>
+									<li>form: erlaubt die Zuordnung zu einem Formular mit der angegebenen Identifikation</li>
+									<li>name: Identifizierungsname des Elementes</li>
+									<li>Ein legend-Element, um eine Überschrift der Gruppe zu definieren</li>
+									<li>beliebig viele Fluss-Elemente</li>
+								</ul>
+							</li>
+							<li><a href="https://wiki.selfhtml.org/wiki/HTML/Elemente/fieldset" target="_blank">Input Fieldset</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Überschrift für Formularbereich</h4>
+						<ul>
+							<li>&lt;legend&gt; ... &lt;/legend&gt; darf nur als erstes Element in einem fieldset-Element vorkommen</li>
+							<li>Attribute:
+								<ul>
+									<li>beliebig viele Stil-Elemente</li>
+									<li>Überschriften</li>
+								</ul>
+							</li>
+							<li><a href="https://wiki.selfhtml.org/wiki/HTML/Elemente/legend" target="_blank">Form Element Beschreibung</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Formular-Elementenbeschriftungen</h4>
+						<ul class="r-fit-text">
+							<li>&lt;label&gt;...&lt;/label&gt; durch Anklicken der Beschriftung wird das dazugehörige Eingabeelement aktiviert (Vergrößerung der aktiven Eingabeelementfläche)</li>
+							<li>Beschriftung kann dadurch zugefügt werden, dass das Formularelement innerhalb der label-Tags steht, oder durch Nutzung des for-Attributs</li>
+							<li>Attribute:
+								<ul>
+									<li>for: gibt die Identifikation des Formularelements an, auf die sich die Beschriftung beziehen soll</li>
+									<li>form: gibt die Identifikation des Formulars an, zu dem die Beschriftung gehören soll</li>
+								</ul>
+							</li>
+							<li><a href="https://wiki.selfhtml.org/wiki/HTML/Formulare/label" target="_blank">Form Element Beschreibung</a></li>
+						</ul>
+					</section>
+				</section>
+				<section data-name="Übermittelungsverfahren">
+					<section>
+						<h4>Übermittelungsverfahren</h4>
+						<figure class="">
+							<img src="../images/vl9/httpoperation.png" alt="Übermittelungsverfahren">
+							<figcaption>
+								<a href="https://restfulapi.net/http-methods/" target="_blank">Quelle</a> und <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status" target="_blank">Status Codes</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>GET</h4>
+						<p><a href="https://www.w3schools.com/tags/att_form_method.asp" target="_blank">Get Beispiel</a></p>
+					</section>
+					<section>
+						<h4>POST</h4>
+						<p><a href="https://www.w3schools.com/tags/att_form_method.asp" target="_blank">Post Beispiel</a></p>
+					</section>
+					<section>
+						<h4>PUT</h4>
+						<p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/PUT" target="_blank">Put Beispiel</a></p>
+						<pre>
+							<code>
+Anfrage:
+PUT /new.html HTTP/1.1
+Host: example.com
+Content-type: text/html
+Content-length: 16
+
+&lt;p&gt;New File&lt;/p&gt;
+
+Antwort:
+HTTP/1.1 201 Created
+Content-Location: /new.html
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>OPTIONS</h4>
+						<p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/OPTIONS" target="_blank">Options Beispiel</a></p>
+						<pre>
+							<code>
+Anfrage:
+OPTIONS / HTTP/2
+Host: example.org
+User-Agent: curl/8.7.1
+Accept: */*
+
+Antwort:
+HTTP/1.1 204 No Content
+Allow: OPTIONS, GET, HEAD, POST
+Cache-Control: max-age=604800
+Date: Thu, 13 Oct 2016 11:45:00 GMT
+Server: EOS (lax004/2813)
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>HEAD</h4>
+						<p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/HEAD" target="_blank">Head Beispiel</a></p>
+						<pre>
+							<code>
+Anfrage:
+HEAD / HTTP/1.1
+Host: example.com
+User-Agent: curl/8.6.0
+Accept: */*
+
+Antwort:
+HTTP/1.1 200 OK
+Content-Type: text/html; charset=UTF-8
+Date: Wed, 04 Sep 2024 10:33:11 GMT
+Content-Length: 1234567
+
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>DELETE</h4>
+						<p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/DELETE" target="_blank">Delete Beispiel</a></p>
+						<pre>
+							<code>
+Anfrage:
+DELETE /file.html HTTP/1.1
+Host: example.com
+
+Antwort:
+HTTP/1.1 200 OK
+Content-Type: text/html; charset=UTF-8
+Date: Fri, 21 Jun 2024 14:18:33 GMT
+Content-Length: 1234
+
+&lt;html&gt;
+  &lt;body&gt;
+    &lt;h1&gt;File &quot;file.html&quot; deleted.&lt;/h1&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>REST-Services</h4>
+						<ul class="r-fit-text">
+							<li>REST ist ein Akronym für REpresentational State Transfer und ein Architekturstil für verteilte Hypermedia-Systeme</li>
+							<li>Eine Web-API (oder ein Webdienst), die dem REST-Architekturstil entspricht, wird als REST-API (oder RESTful-API) bezeichnet</li>
+							<li>Einzelne Ressourcen werden in Anfragen mithilfe von URIs identifiziert</li>
+							<li>XML oder JSON Objekte für Datenübermittlung (Requests und Responses)</li>
+							<li>Zustandsloser Dienst (Keine Sitzung oder zeitbasierte Zugriffe)</li>
+							<li>Möglichkeit der Authentifizierung über API-KEY oder SSL-Zertifikate</li>
+						</ul>
+					</section>
+					<section>
+						<h4>REST-Service Guidelines</h4>
+						<figure class="">
+							<img src="../images/vl9/rest-guidelines.png" alt="REST-Service Guidelines">
+							<figcaption>
+								<a href="https://restfulapi.net/" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Swagger - Beispiel</h4>
+						<figure class="">
+							<img src="../images/vl9/swaggerexample.png" alt="Swagger Beispiel">
+						</figure>
+					</section>
+					<section>
+						<h4>Swagger - Beispiel</h4>
+						<figure class="">
+							<img src="../images/vl9/swagger-input.png" alt="Swagger Beispiel">
+						</figure>
+					</section>
+				</section>
+				<section data-name="Validierungen">
+					<section>
+						<h4>Formular Beispiel</h4>
+						<pre>
+							<code data-trim data-noescape data-line-numbers>
+&lt;!-- https://dev.to/info_generalhazedawn_a3d/form-validation-using-javascript-and-html-4g23 --&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;Form Validation Example&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;User Registration Form&lt;/h1&gt;
+    &lt;form id=&quot;registrationForm&quot;&gt;
+        &lt;label for=&quot;username&quot;&gt;Username (required):&lt;/label&gt;
+        &lt;input type=&quot;text&quot; id=&quot;username&quot; name=&quot;username&quot; required&gt;
+        &lt;br&gt;
+
+        &lt;label for=&quot;email&quot;&gt;Email (required):&lt;/label&gt;
+        &lt;input type=&quot;email&quot; id=&quot;email&quot; name=&quot;email&quot; required&gt;
+        &lt;br&gt;
+
+        &lt;label for=&quot;password&quot;&gt;Password (required):&lt;/label&gt;
+        &lt;input type=&quot;password&quot; id=&quot;password&quot; name=&quot;password&quot; required minlength=&quot;6&quot;&gt;
+        &lt;br&gt;
+
+        &lt;button type=&quot;submit&quot;&gt;Register&lt;/button&gt;
+    &lt;/form&gt;
+
+    &lt;div id=&quot;errorMessages&quot;&gt;&lt;/div&gt;
+    &lt;script src=&quot;script.js&quot;&gt;&lt;/script&gt; &lt;!-- Link to your JavaScript file --&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+							</code>
+						</pre>
+						<a href="https://dev.to/info_generalhazedawn_a3d/form-validation-using-javascript-and-html-4g23" target="_blank">Quelle</a>
+					</section>
+					<section>
+						<h4>Form validierung HTML5</h4>
+						<ul>
+							<li>Möglichkeit der HTML-Validierung über spezielle Input attribute</li>
+							<li><a href="https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation#different_types_of_client-side_validation" target="_blank">Client-side validation</a></li>
+							<li>Möglichkeit der erweiterten Client-side validierung über Javascript</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Javascript Form Validierung (Browserseitig)</h4>
+						<pre>
+							<code  data-trim data-noescape data-line-numbers>
+document.getElementById('registrationForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent form submission
+    const errorMessages = [];
+
+    // Validate Username
+    const username = document.getElementById('username').value;
+    if (username.trim() === '') {
+        errorMessages.push('Username is required.');
+    }
+
+    // Validate Email
+    const email = document.getElementById('email').value;
+    if (!validateEmail(email)) {
+        errorMessages.push('Please enter a valid email address.');
+    }
+
+    // Validate Password
+    const password = document.getElementById('password').value;
+    if (password.length < 6) {
+        errorMessages.push('Password must be at least 6 characters long.');
+    }
+
+    // Display Error Messages
+    const errorMessagesDiv = document.getElementById('errorMessages');
+    errorMessagesDiv.innerHTML = ''; // Clear previous messages
+    if (errorMessages.length > 0) {
+        errorMessages.forEach(message => {
+            const p = document.createElement('p');
+            p.textContent = message;
+            p.style.color = 'red'; // Style error messages
+            errorMessagesDiv.appendChild(p);
+        });
+    } else {
+        alert('Registration successful!'); // Simulate successful registration
+        // Here you can proceed with form submission or further processing
+    }
+});
+
+// Email validation function
+function validateEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Simple regex for email validation
+    return re.test(String(email).toLowerCase());
+}
+							</code>
+						</pre>
+						<a href="https://dev.to/info_generalhazedawn_a3d/form-validation-using-javascript-and-html-4g23" target="_blank">Quelle</a>
+					</section>
+					<section>
+						<h4>Serverseitige validierung - PHP</h4>
+						<p><a href="https://www.w3schools.com/php/php_form_validation.asp" target="_blank">PHP Daten Validierung</a></p>
+					</section>
+					<section>
+						<h4>Serverseitige validierung - Vue</h4>
+						<p><a href="https://vee-validate.logaretm.com/v4/examples/checkboxes-and-radio/" target="_blank">VEE-validate</a></p>
+					</section>
+					<section>
+						<h4>Serverseitige validierung - Angular</h4>
+						<p><a href="https://v17.angular.io/guide/form-validation" target="_blank">Angluar 17 Form Validierung</a></p>
+					</section>
+					<section>
+						<h4>Serverseitige validierung - ASPNet</h4>
+						<p><a href="https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-mvc-app/validation?view=aspnetcore-8.0" target="_blank">ASP.NET Core Daten validierung</a></p>
+					</section>
+				</section>
+				<section>
+					<h4>Weiteres</h4>
+					<ul>
+						<li><a href="https://developer.mozilla.org/en-US/docs/Learn/Forms/Your_first_form" target="_blank">Mozilla Form Guide</a></li>
+						<li><a href="https://www.w3schools.com/html/html_forms.asp" target="_blank">W3Schools HTML5 Elements</a></li>
+						<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form" target="_blank">Mozilla Form Tag</a></li>
+						<li><a href="https://www.google.com/forms/about/" target="_blank">Google Forms</a></li>
+					</ul>
+				</section>
+				<section>
+					<h4>Quellen</h4>
+					<ul>
+						<li>W3 Forms WIA (3.10.2024): <a href="https://www.w3.org/WAI/tutorials/forms/instructions/" target="_blank">Quelle</a></li>
+						<li>Whatwg Form Tag specification (3.10.2024): <a href="https://html.spec.whatwg.org/multipage/forms.html" target="_blank">Quelle</a></li>
+						<li>W3Schools Form guide (3.10.2024): <a href="https://www.w3schools.com/html/html_forms.asp" target="_blank">Quelle</a></li>
+						<li>Selfhtml.org guidance (3.10.2024): <a href="https://wiki.selfhtml.org/wiki/HTML/Elemente/input" target="_blank">Quelle</a></li>
+						<li>W3.org Form standard (3.10.2024): <a href="https://www.w3.org/TR/REC-html40/interact/forms.html" target="_blank">Quelle</a></li>
+					</ul>
+				</section>
+				<section>
+					<h4>Abspann</h4>
+					<p>
+						Neuntes Level geschafft!
+					</p>
+					<p>Fragen und Feedback?</p>
+				</section>
+			</div>
+		</div>
+		<footer class="slide-footer">
+			Sebastian Pötter - HTWK - MMWP2024 - VL09 - Ein- und Ausgabe von Daten
+		</footer>
+		<script src="../dist/reveal.js"></script>
+		<script src="../plugin/notes/notes.js"></script>
+		<script src="../plugin/markdown/markdown.js"></script>
+		<script src="../plugin/highlight/highlight.js"></script>
+		<script src="../plugin/simplemenu/simplemenu.js"></script>
+		<script src="../plugin/copycode/copycode.js"></script>
+		<script>
+			Reveal.initialize({
+				maxScale: 1.0,
+				margin: 0.2,
+				controls: true,
+				progress: true,
+				center: true,
+				hash: true,
+				slideNumber: 'c/t',
+				plugins: [RevealMarkdown, RevealHighlight, RevealNotes, CopyCode, Simplemenu],
+				simplemenu: {
+					barhtml: {
+						header: "<div class='menubar' style='font-size: 1.5rem'><ul class='menu'></ul></div>",
+						footer: ""
+					}
+				},
+			});
+		</script>
+	</body>
+</html>
