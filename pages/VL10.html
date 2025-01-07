@@ -1,0 +1,585 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>MMWP2024 - LV10</title>
+
+		<link rel="stylesheet" href="../dist/reset.css">
+		<link rel="stylesheet" href="../dist/reveal.css">
+		<link rel="stylesheet" href="../dist/theme/white.css">
+		<link rel="stylesheet" href="../dist/style.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="../plugin/highlight/monokai.css">
+		<link rel="stylesheet" href="../plugin/simplemenu/simplemenu.css">
+		<link rel="stylesheet" href="../plugin/copycode/copycode.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-transition="fade" data-state="hide-menubar hide-menu" data-background-image="../images/vl10/presentationstart.png" data-background-position="bottom" data-background-opacity="0.1">
+					<h1>Language Extensions für CSS3</h1>
+					<h3>MMWP2024 - LV10</h3>
+				</section>
+				<section data-name="TOC" data-sm="false">
+					<h4>Inhaltsverzeichnis</h4>
+					<ul class="menu"></ul>
+				</section>
+				<section data-name="Organisation">
+					<section>
+						<h4>Inhaltsschwerpunkte</h4>
+						<ul>
+							<li>CSS-PreProcessors</li>
+							<li>Integration von CSS-Erweiterungssprachen</li>
+							<li>SASS-SCSS PreProcessors</li>
+							<li>Aktelle Entwicklungen von Erweiterungssprachen</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Voraussetzung</h4>
+						<p>Der Ausgangspunkt dieser Vorlesungsreihe ist das Wissen über Themen:</p>
+						<ul>
+							<li>Wissen über CSS und gängige Konzepte wie MediaQueries</li>
+							<li>Funktionsweisen von PreProcessors</li>
+							<li>Grundlegende Verständnisse von Compiler- und Interpreter-Konzepten</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Ziele</h4>
+						<p>Vorstellung von:</p>
+						<ul>
+							<li>SASS/SCSS</li>
+							<li>CSS-Variablen und SASS-Funktionen</li>
+							<li>Andere CSS-Erweiterungssprachen</li>
+							<li>Frameworks welche Erweiterungssprachen selbständig benutzen</li>
+						</ul>
+					</section>
+				</section>
+				<section data-name="Erweiterungssprachen">
+					<section>
+						<h4>Erweiterungssprachen - Anwendungsgründe</h4>
+						<ul>
+							<li>Codewiederholung vermeiden (oft müssen n-fach verwendete CSS-Anweisungsblöcke auch n-fach ausgeschrieben werden)</li>
+							<li>Browserpräfixe verarbeiten</li>
+							<li>Vorberechnung von Werten für die CSS-Definitionen</li>
+							<li>Bessere Strukturierung und Hierarchie bei Komplexität erreichen</li>
+							<li>Bedingungen und Transitivität bei Vererbung besser verarbeiten</li>
+							<li>Schleifen bedingte CSS Regeln automatisiert generieren</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Erweiterungssprachen - Strukturierung und Hierarchie</h4>
+						<ul>
+							<li>Angabe von CSS3-Strukturen in verschachtelter Schreibweise (nested properties)</li>
+							<li>Mithilfe von Selektorenverschachtelung</li>
+							<li>Nutzung von vor- und selbstdefinierten Funktionen (Mixins)</li>
+							<li>Verbesserte Lesbarkeiten der CSS-Regeln</li>
+							<li>Media-Queries erlauben doppelte Schachtelung durch Angaben in den Media-Queries, was (im Moment) nicht unterstützt wird</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Erweiterungssprachen - Bedingtheit und Variabilität</h4>
+						<ul>
+							<li>Der Einsatz von Variablen und bedingten Anweisungen soll möglich werden</li>
+							<li>Die Beschränkungen der calc()-Funktion sollen überwunden werden</li>
+							<li>Auch hier: Bedingte Anweisungen durch Media-Queries funktionieren (noch) nicht</li>
+							<li>Bestimmte Selektoren mit Angabe von Bedingungen bei Elementen, z.B. bestimmte Attributwerte werden kaum Unterstützt</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Erweiterungssprachen - Kompatibilität</h4>
+						<ul>
+							<li>Angaben zu CSS-Eigenschaften, die Browserpräfixe für die Quer-/Abwärtskompatibilität benötigen</li>
+							<li>Durch Angabe des CompileBefehls werden aus Stamm-CSS-Regeln, Browserspezifische CSS-Regeln</li>
+							<li>Die Beschränkungen der calc()-Funktion sollen überwunden werden</li>
+							<li>Auch hier: Bedingte Anweisungen durch Media-Queries funktionieren (noch) nicht</li>
+							<li>Bestimmte Selektoren mit Angabe von Bedingungen bei Elementen, z.B. bestimmte Attributwerte werden kaum Unterstützt</li>
+							<li><a href="https://developer.mozilla.org/en-US/docs/Glossary/Vendor_Prefix" target="_blank">Browser Prefixe</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Erweiterungssprachen - Kritik</h4>
+						<ul>
+							<li>Großer Aufwand um marginale Probleme zu lösen</li>
+							<li>Nicht standardisierte Syntax (jede Erweiterungssprache ist unterschiedlich)</li>
+							<li>bei Compilerfehlfunktion wird kein CSS ausgeliefert</li>
+							<li>Ähnliche Funktionen lassen sich serverseitig durch Sprachen wie PHP oder NodeJS realisieren</li>
+							<li><a href="https://meiert.com/en/blog/no-css-preprocessors/" target="_blank">CSS Preprocessors</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Verbreitete Erweiterungssprachen</h4>
+						<ul>
+							<li>LESS: <a href="https://lesscss.org" target="_blank">LESS Seite</a></li>
+							<li>Sass/SCSS: <a href="https://sass-lang.com" target="_blank">SASS Seite</a></li>
+							<li>Stylus: <a href="https://stylus-lang.com" target="_blank">Stylus Seite</a></li>
+							<li>PostCSS: <a href="https://postcss.org" target="_blank">PostCSS Seite</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Weitere Erweiterungssprachen</h4>
+						<ul>
+							<li>CSS-crush: <a href="https://the-echoplex.net/csscrush/" target="_blank">CSSCrush</a></li>
+							<li>Rework (mit node.js zusammen): <a href="https://github.com/reworkcss/rework" target="_blank">Rework</a></li>
+							<li>Myth (auf Basis von Rework): <a href="https://www.myth.io" target="_blank">Myth</a></li>
+							<li>Clay (als Embedded Domain Specific Language, Haskell-basiert): <a href="https://fvisser.nl/clay/" target="_blank">Clay</a></li>
+							<li>DtCSS (als PHP-Skript): <a href="https://code.google.com/archive/p/dtcss/" target="_blank">DTCSS</a></li>
+							<li>CSS-on-diet : <a href="https://github.com/wyderkat/css-on-diet" target="_blank">CSS on diet</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Erweiterungssprachen Nutzeranteil</h4>
+						<figure class="">
+							<img src="../images/vl10/preprocessorsversions.png" alt="Erweiterungssprachen Nutzeranteil">
+							<figcaption>
+								<a href="https://www.slant.co/topics/217/~best-css-preprocessors-postprocessors" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Erweiterungssprachen Suchanfragen</h4>
+						<figure class="">
+							<img src="../images/vl10/searchvalues.png" alt="Erweiterungssprachen Nutzeranteil">
+							<figcaption>
+								<a href="https://trends.google.co.uk/trends/explore?date=now%201-d&q=SASS,SCSS,Stylus,PostCSS&hl=de" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Integration</h4>
+						<ul>
+							<li>Präprozessor: Konvertiert die Ausgangsdatei in der LE-Sprache nach Validierung in CSS, wobei die Zieldatei abgespeichert und gegebenenfalls gleich verwendet wird</li>
+							<li>Clientseitig: LESS bei Chrome, Firefox, Safari und IE, mit JavaScript-Unterstützung über DOM (live)
+							</li>
+							<li>Serverseitig: Sass/SCSS, Stylus und LESS, Abspeicherung im Quellverzeichnis der Website (offline). Eventuell „watchdog“ für Updates mit sofortiger Kompilierung</li>
+						</ul>
+					</section>
+				</section>
+				<section data-name="SASS und LESS">
+					<section>
+						<h4>Grundlagen - SASS</h4>
+						<ul>
+							<li>Nutzung einer Dart-RTE, einer C/C++-RTE (LibSass) oder Ruby-RTE (wird nicht mehr entwickelt) möglich</li>
+							<li>Kompression der CSS-Dateien möglich</li>
+							<li>Zusammenfassung der CSS-Dateien als eine Hauptstyle-Datei</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Grundlagen - LESS</h4>
+						<ul>
+							<li>Nutzung von NodeJS</li>
+							<li>Kompression der CSS-Dateien möglich (nicht mehr empfohlen → Zusatzbibliotheken nutzen)</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Grundlagen - SASS/SCSS vs LESS</h4>
+						<ul>
+							<li>SASS/SCSS
+								<ul>
+									<li>Sass imperativ orientiert</li>
+									<li>SCSS gestaltet die Syntax als CSS-Erweiterung aus</li>
+									<li>Grundphilosophie bei Sass ist die eines klassischen Programmierers</li>
+								</ul>
+							</li>
+							<li>LESS
+								<ul>
+									<li>Deklarativ-funktional orientiert (Schleifen als Rekursionen, if-Anweisungen als Guard-Bedingungen für Mixins)</li>
+									<li>Grundphilosophie dem Designer näher</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Grundlagen - Schreibweisen</h4>
+						<ul>
+							<li>Prinzip des Einrückens (Strukturierung Sass):
+								<ul>
+									<li>Selektoren und jede Eigenschaftsdeklaration stehen in separaten Zeilen, letztere
+										werden gegenüber dem Selektor eingerückt, keine Zeichen am Zeilenende notwendig</li>
+									<li>Nacheinander stehende Zeilenanfänge auf gleicher Einrückungstiefe bilden einen Block</li>
+									<li>Der Doppelpunkt ist das Signal zu Wertzuweisung für Eigenschaften</li>
+								</ul>
+							</li>
+							<li>LESS
+								<ul>
+									<li>Schreibweise (fast) wie in CSS-Dateien</li>
+									<li>@import auch lokal möglich</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Nested Properties in Sass</h4>
+						<pre>
+							<code class="sass" data-trim data-noescape data-line-numbers>
+.selector {
+	border-width: 10px;
+	border-color: black;
+}
+.selector {
+	border: {
+		width: 10px;
+		color: black;
+	}
+}
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Variablen - 1</h4>
+						<pre>
+							<code class="sass" data-trim data-noescape data-line-numbers>
+//Sass
+$color: red; // erste!
+#menu a {
+	color: $color;
+}
+$color: ″rot″; // zweite!
+#menu-{$color} a {
+	border-color: red;
+}
+
+//LESS
+@color: red; //final, global
+#menu {
+	color: @color;
+	@color: green; // final, lokal
+	a {
+		border-color: @color;
+	}
+}
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Variablen - 2</h4>
+						<ul class="r-fit-text">
+							<li>SASS/SCSS
+								<ul>
+									<li>Globale und lokale Variablen (auch mit selben Namen, dann beziehen sich lokale Zuweisungen nur auf die lokale Variable → Shadowing)</li>
+									<li>Neubelegung der Variablen beim Kompilieren zulässig, dabei Typisierung</li>
+									<li>Typ der Variable kann beim Kompilieren wechseln</li>
+									<li><a href="https://sass-lang.com/documentation/variables/" target="_blank">Quelle</a></li>
+								</ul>
+							</li>
+							<li>LESS
+								<ul>
+									<li>Globale und lokale Variablen, letzte Belegung zählt</li>
+									<li>Suche nach Variable von innen nach außen, bei mehrfachem Vorkommen mit gleichem Namen</li>
+									<li>Es gibt Variablentypen</li>
+									<li><a href="https://lesscss.org/features/" target="_blank">Quelle</a></li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Datentypen</h4>
+						<figure class="">
+							<img src="../images/vl10/sassdatatype.png" alt="Datentypen">
+						</figure>
+					</section>
+					<section>
+						<h4>Mixins in Sass</h4>
+						<ul>
+							<li>Ein Mixin ist in Sass ein Definitionsblock von CSS-Styles, der einen eindeutigen Bezeichner besitzt und vielfach wieder aufgerufen werden kann</li>
+							<li>Es kann parametrisiert werden, was beim Aufruf andere Parametersetzungen erlaubt</li>
+							<li>Definition: Über @mixin-Kennung</li>
+							<li>Aufruf: Über @include-Kennung, mit Setzung eventueller Parameter im Mixin</li>
+							<li><a href="https://sass-lang.com/documentation/at-rules/mixin/" target="_blank">Quelle</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Mixin-Beispiel</h4>
+						<pre>
+							<code class="sass" data-trim data-noescape data-line-numbers>
+@mixin bordered-box($farbe,$breite){
+	border:{
+		width: $breite+px;
+		style: solid;
+		color: $farbe;
+	}
+}
+#red-box {
+	@include bordered-box(red,4);
+}
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Mixin in LESS</h4>
+						<ul>
+							<li>Mixins in LESS sind Definitionsblöcke mit z.B. Stilangaben, die sich wiederverwenden lassen</li>
+							<li>De facto sind es künstlich erzeugte Selektoren</li>
+							<li>Wenn Klammern hinter dem definierenden Wort des Mixins stehen, so erfolgt eine Ausgabe in die erzeugte CSS-Datei hinein, andernfalls nicht</li>
+							<li>Mixins können rekursiv verwendet werden</li>
+							<li>Mixin-Guards garantieren die Abbruchbedingungen</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Mixin-Guards-Beispiele - 1</h4>
+						<pre>
+							<code class="sass" data-trim data-noescape data-line-numbers>
+.mixin (@farbe) when (lightness(@farbe) >= 50%) {
+	background-color:black;
+}
+.mixin (@farbe) when (lightness(@farbe) < 50%) {
+	background-color:white;
+}
+.mixin (@farbe) {
+	color: @farbe;
+}
+#box {
+	.mixin(#eeeeee);
+}
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Mixin-Guards-Beispiele - 2</h4>
+						<pre>
+							<code class="sass" data-trim data-noescape data-line-numbers>
+& when (lightness(@farbe) >= 50%) {
+	background-color:black;
+	p {
+		color:@farbe;
+	}
+}
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Kontrollierter Import</h4>
+						<ul>
+							<li>Wichtig: CSS-Präprozessoren ignorieren beim @import-Befehl Dateien mit einer .css-Endung</li>
+							<li>Importieren lassen sich somit nur proprietäre Dateien, die beispielsweise auf .less, .scss oder .sass enden</li>
+							<li>Zuerst wird beim Kompilieren der Quelltext aller importierten Dateien mit einbezogen (außer CSS!), und dann entsteht genau eine CSS-Datei</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Kontrollierter Import - Ursprungsquelltext</h4>
+						<pre>
+							<code class="sass" data-trim data-noescape data-line-numbers>
+/* file.{type} */
+body {
+	background: black;
+}
+
+@import "reset.css";
+@import "file.{type}";
+p {
+	background: white;
+}
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Kontrollierter Import - Resultat</h4>
+						<pre>
+							<code class="sass" data-trim data-noescape data-line-numbers>
+@import "reset.css";
+/* kompilierter Anteil … */
+body {
+	background: black;
+}
+p {
+	background: white;
+}
+
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Funktionen</h4>
+						<p>LESS hat eine Sammlung von Funktionen in seiner Bibliothek. Sass erlaubt es, eigene Funktionen zu erzeugen</p>
+						<pre>
+							<code class="sass" data-trim data-noescape data-line-numbers>
+@function column-width ($page-width){
+	@return $page-width / 3 – 10px;
+}
+
+$red: #ff0000;
+$dark-red: $red / 2;
+
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Funktionen</h4>
+						<p>Es gibt Bedingungen zur Ablaufsteuerung und es gibt for-, while- und each-Schleifen in Sass</p>
+						<pre>
+							<code class="sass" data-trim data-noescape data-line-numbers>
+.selektor {
+	@if $variable == "wert1" { color: red; }
+	@else if $variable == "wert2" { color: green; }
+	@else $variable == "wert3" { color: blue; }
+}
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Ablaufsteuerung in Sass - 1</h4>
+						<pre>
+							<code class="sass" data-trim data-noescape data-line-numbers>
+/* for-Schleife mit 5 Durchläufen */
+@for $i from 1 through 5 {
+	#objekt-#{$i} { margin-top: $i * 10px; }
+}
+
+/* while-Schleife */
+$i: 1;
+@while $i < 10 {
+	.item-#{$i} { width: 2em * $i; }
+	$i: $i + 2;
+}
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Ablaufsteuerung in Sass - 2</h4>
+						<pre>
+							<code class="sass" data-trim data-noescape data-line-numbers>
+/* each-Schleife mit Laufvariablen-Liste */
+@each $name, $farbe, $abstand in (anton, orange, 100px), (berti, green, 140px), (conni, white, 200px) {
+	.#{$name} {
+		position: absolute;
+		top: $abstand;
+		background-image: url('/images/#{$name}.png');
+		border: 10px solid $farbe;
+	}
+}
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>@extend-Erweiterung in Sass</h4>
+						<p>Erweiterung funktioniert wie Vererbung bei Klassen</p>
+						<pre>
+							<code class="sass" data-trim data-noescape data-line-numbers>
+.box { //bleibt unverändert
+	padding: 10px;
+}
+
+.box-mit-rahmen {
+	@extend .box; //padding: 10px;
+	border: 1px solid red;
+}
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>&:extend-Erweiterung in LESS</h4>
+						<p>In LESS folgt das Thema der Erweiterung eher dem Gedanken der Wiederverwendung z.B. von CSS-Klassen</p>
+						<pre>
+							<code class="sass" data-trim data-noescape data-line-numbers>
+nav ul {
+	&:extend(.inline);
+	background: blue;
+}
+
+.inline {
+	color: red;
+}
+							</code>
+						</pre>
+					</section>
+				</section>
+				<section data-name="Frameworks und Pakete">
+					<section>
+						<h4>Frameworks und Pakete</h4>
+						<ul class="">
+							<li>Sass/SCSS, LESS
+								<ul>
+									<li>Bootstrap 5+: <a href="https://getbootstrap.com/" target="_blank">SASS Support</a></li>
+								</ul>
+							</li>
+							<li>Sass/SCSS
+								<ul>
+									<li>Foundation 5+: <a href="https://foundation.zurb.com" target="_blank">Foundation Seite</a></li>
+									<li>Bourbon – a mixin library: <a href="https://www.bourbon.io" target="_blank">Bourbon</a></li>
+									<li>Susy: <a href="https://www.oddbird.net/susy" target="_blank">Susy Seite</a></li>
+									<li><a href="https://sierra-library.github.io/" target="_blank">Sierra</a></li>
+									<li><a href="https://materializecss.com/" target="_blank">Materializecss</a></li>
+									<li><a href="https://gridle.org/" target="_blank">Gridle</a></li>
+								</ul>
+							</li>
+							<li>LESS
+								<ul>
+									<li>3L: <a href="https://mateuszkocz.github.io/3l/" target="_blank">Quelle</a></li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Installation und Nutzung</h4>
+						<ul class="">
+							<li><a href="https://lesscss.org/" target="_blank">LESS</a></li>
+							<li><a href="https://sass-lang.com/install/s.org/" target="_blank">Sass</a></li>
+							<li><a href="https://stylus-lang.com/docs/executable" target="_blank">Stylus</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Verschiedene Compiler</h4>
+						<p><a href="https://csspre.com/" target="_blank">CSSPRE Übersicht</a></p>
+					</section>
+
+				</section>
+				<section>
+					<h4>Weiteres</h4>
+					<ul>
+						<li><a href="https://speakerdeck.com/bermonpainter/css-pre-processors-stylus-less-and-sass" target="_blank">CSS Pre Prozessor Übersicht</a></li>
+						<li>große Sammlung mit Vergleichen zu Eigenschaften, Compilern, Konvertern und mehr: <a href="https://csspre.com" target="_blank">Quelle</a></li>
+						<li>Tutorial zu LESS: <a href="https://www.mindfiresolutions.com/blog/2013/06/26/beginners-guide-to-less- css-framework/" target="_blank">Quelle</a></li>
+						<li>sehr gutes, sechsteiliges Tutorial: <a href="https://www.heise.de/developer/artikel/CSS-Praeprozessoren- im-Vergleich-2288284.html" target="_blank">Quelle</a></li>
+						<li>Einführung und Vergleich der Syntax: <a href="https://htmlmag.com/article/an-introduction-to-css- preprocessors-sass-less-stylus" target="_blank">Quelle</a></li>
+					</ul>
+				</section>
+				<section>
+					<h4>Quellen</h4>
+					<ul>
+						<li>Vergleich der Fähigkeiten von Sass, LESS, Stylus nach Features, aktuell: <a href="https://csspre.com/compare" target="_blank">Quelle</a></li>
+						<li>Konverter nach CSS oder cross unter den Präprozessorsprachen: <a href="https://csspre.com/convert" target="_blank">CSS Konvertierung</a></li>
+						<li>Scott Logic, Vergleich: <a href="https://blog.scottlogic.com/2013/03/08/less-vs-sass-vs-stylus.html" target="_blank">LESS vs STYLUS vs SASS</a></li>
+						<li><a href="https://developer.mozilla.org/en-US/docs/Glossary/CSS_preprocessor" target="_blank">Mozilla CSS pre processor Übersicht</a></li>
+						<li><a href="https://sass-lang.com/" target="_blank">SASS Seite</a></li>
+					</ul>
+				</section>
+				<section>
+					<h4>Abspann</h4>
+					<p>
+						Zehntes Level geschafft zwei weitere folgen
+					</p>
+					<p>Fragen und Feedback?</p>
+				</section>
+			</div>
+		</div>
+		<footer class="slide-footer">
+			Sebastian Pötter - HTWK - MMWP2024 - VL10 - Language Extensions für CSS3
+		</footer>
+		<script src="../dist/reveal.js"></script>
+		<script src="../plugin/notes/notes.js"></script>
+		<script src="../plugin/markdown/markdown.js"></script>
+		<script src="../plugin/highlight/highlight.js"></script>
+		<script src="../plugin/simplemenu/simplemenu.js"></script>
+		<script src="../plugin/copycode/copycode.js"></script>
+		<script>
+			Reveal.initialize({
+				maxScale: 1.0,
+				margin: 0.2,
+				controls: true,
+				progress: true,
+				center: true,
+				hash: true,
+				slideNumber: 'c/t',
+				plugins: [RevealMarkdown, RevealHighlight, RevealNotes, CopyCode, Simplemenu],
+				simplemenu: {
+					barhtml: {
+						header: "<div class='menubar' style='font-size: 1.5rem'><ul class='menu'></ul></div>",
+						footer: ""
+					}
+				},
+			});
+		</script>
+	</body>
+</html>
