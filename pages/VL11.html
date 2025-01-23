@@ -1,0 +1,705 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>MMWP2024 - LV11</title>
+
+		<link rel="stylesheet" href="../dist/reset.css">
+		<link rel="stylesheet" href="../dist/reveal.css">
+		<link rel="stylesheet" href="../dist/theme/white.css">
+		<link rel="stylesheet" href="../dist/style.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="../plugin/highlight/monokai.css">
+		<link rel="stylesheet" href="../plugin/simplemenu/simplemenu.css">
+		<link rel="stylesheet" href="../plugin/copycode/copycode.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-transition="fade" data-state="hide-menubar hide-menu" data-background-image="../images/vl11/presentationstart.png" data-background-position="bottom" data-background-opacity="0.1">
+					<h1>Einführung in die XML-Sprache Scalable Vector Graphics</h1>
+					<h3>MMWP2024 - LV11</h3>
+				</section>
+				<section data-name="TOC" data-sm="false">
+					<h4>Inhaltsverzeichnis</h4>
+					<ul class="menu"></ul>
+				</section>
+				<section data-name="Organisation">
+					<section>
+						<h4>Inhaltsschwerpunkte</h4>
+						<ul>
+							<li>Einführung in SVGs</li>
+							<li>Pfade in SVG</li>
+							<li>Bézier-Kurven</li>
+							<li>Layertechnik</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Voraussetzung</h4>
+						<p>Der Ausgangspunkt dieser Vorlesungsreihe ist das Wissen über folgendes:</p>
+						<ul>
+							<li>Grundlegendes mathematisches Verständnis für Vektorgrafiken</li>
+							<li>HTML5 Strukturelemente</li>
+							<li>Bilddatentypen</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Ziele</h4>
+						<p>Vorstellung von:</p>
+						<ul>
+							<li>SVG-Datenbeschreibung</li>
+							<li>Vor und Nachteile von SVGs</li>
+							<li>Allgemeine SVG Elemente</li>
+							<li>Möglichkeiten und Funktionen von SVG</li>
+						</ul>
+					</section>
+				</section>
+				<section data-name="Scalable Vector Graphis">
+					<section>
+						<h4>Scalable Vector Graphis</h4>
+						<ul>
+							<li>SVG ist ein XML-Standard des W3C, d.h. es ist strukturiertes Textformat</li>
+							<li>Ziel ist die Erstellung komplexer zweidimensionaler Vektorgrafiken in Webbrowsern (teils per Plug-in)</li>
+							<li>Single Sourcing: Text, Bild und Animation können aus einer Quelldatei kommen</li>
+							<li>Zusätzliche Features: Animation bzw. Interaktivität über CSS und Javascript</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Entstehung - 1</h4>
+						<ul class="r-fit-text">
+							<li>
+								Erste Konzepte entstanden im April 1998: Adobe, IBM, Netscape und Sun
+								reichten beim W3C eine Entwurf über die Precision Graphics Markup Language (PGML) ein
+							</li>
+							<li>Angelehnt an PostScript</li>
+							<li>Im Mai 1998 reichten Hewlett Packard, Microsoft, Macromedia und Visio ihren
+								Vorschlag der Vector Markup Language (VML) beim W3C ein</li>
+							<li>Vorschlag von PRP (University of Plymouth, GB) und Orange PCSL
+								(Mobilfunkanbieter): Hyper Graphics Markup Language (HGML)</li>
+							<li>Zusammenfassung der Konzepte zu SVG erfolgte im Oktober 1998</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Entstehung - 2</h4>
+						<ul>
+							<li>Die unterschiedlichen Vorschläge verfolgten verschiedene Ansätze zur Schaffung von Grafik-Elementen in Websites</li>
+							<li>Diese Vorschläge wiesen verschiedene Vor- und Nachteile auf, teils mangelte es ihnen an inbegriffenen Features und Anwendungsgebieten</li>
+							<li>Parallel gab es weiterhin Vorstöße zu Neuentwicklungen im Grafikbereich (z.B. DrawML, <a href="https://www.w3.org/TR/1998/NOTE-drawml-19981203" target="_blank">Quelle</a>)</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Entstehung - 3</h4>
+						<ul class="r-fit-text">
+							<li>
+								Das W3C gründete die SVG Working Group, bestehend unter anderem aus:
+								Adobe, Apple, Autodesk, Canon, Corel, HP, IBM, Kodak, Macromedia, Microsoft,
+								Netscape/AOL, Quark, Sun, Xerox
+							</li>
+							<li>SVG 1.0 wurde offiziell am 04.09.2001 zur Recommendation des W3C (rund 600
+								DIN-A4-Seiten): technische Angaben zum Aufbau von SVG, die DTD und DOM-Interfaces zu SVG</li>
+							<li>SVG 1.1 ist Recommendation seit 14.01.2003/ 2nd edition 16.08.2011</li>
+							<li>SVG 1.2 Tiny ist Recommendation seit 22.12.2008</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Aktuelle W3C-Spezifikation</h4>
+						<ul>
+							<li>"Scalable Vector Graphics (SVG) 2"</li>
+							<li><a href="https://www.w3.org/TR/SVG2/" target="_blank">W3C Candidate Recommendation (04 Oktober 2018)</a></li>
+							<li><a href="https://svgwg.org/svg2-draft/" target="_blank">W3C Editor’s Draft (08 März 2023)</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Unterschiede von Canvas - SVG</h4>
+						<figure class="">
+							<img src="../images/vl11/svgvscanvas.png" alt="Unterschiede von Canvas - SVG">
+							<figcaption>
+								<a href="https://www.w3schools.com/Html/html5_svg.asp" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Konkurrierende Formate</h4>
+						<ul>
+							<li>Im Bereich proprietärer Datenformate gibt es eine große Anzahl an Dateiformaten</li>
+							<li>Siehe z.B. <a href="https://en.wikipedia.org/wiki/Image_file_formats#Vector_formats">hier</a></li>
+							<li>Im Internet häufig genutzte Formate sind überschaubar</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Vorteil von SVG</h4>
+						<ul>
+							<li>SVG ist offenes standardisiertes Format</li>
+							<li>SVG-Datei kann ohne Probleme in jeder Applikation geöffnet und weiterbearbeitet werden</li>
+							<li>SVG eignet sich ideal als Austauschformat</li>
+						</ul>
+					</section>
+					<section>
+						<h4>2D und 3D</h4>
+						<ul>
+							<li>SVG ist grundsätzlich für 2D-Vektorgrafiken konzipiert</li>
+							<li>3D-Grafiken werden mit 3D-Bibliotheken beschrieben, die u.a. auch dynamisches Navigieren in der Grafik unterstützen</li>
+							<li>Beispiele: VRML/X3D, Collada</li>
+							<li>Das W3C trennt beide Sphären (2D und 3D) in verschiedenen Standards</li>
+						</ul>
+					</section>
+					<section>
+						<h4>SVG - Support</h4>
+						<figure class="">
+							<img src="../images/vl11/svg-support.png" alt="SVG - Support">
+							<figcaption>
+								<a href="https://caniuse.com/?search=svg" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Inline SVG - Support</h4>
+						<figure class="">
+							<img src="../images/vl11/svg-support-inline.png" alt="Inline SVG - Support">
+							<figcaption>
+								<a href="https://caniuse.com/?search=inline svg" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>SVG Filter - Support</h4>
+						<figure class="">
+							<img src="../images/vl11/svg-support-filter.png" alt="SVG - Support">
+							<figcaption>
+								<a href="https://caniuse.com/?search=svg filter" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Online Editoren</h4>
+						<ul>
+							<li><a href="https://github.com/SVG-Edit/svgedit" target="_blank">SVG-edit</a></li>
+							<li><a href="https://editor.method.ac" target="_blank">Method Draw</a></li>
+							<li><a href="https://vectorpaint.yaks.co.nz" target="_blank">Vector Paint</a></li>
+							<li><a href="https://vectr.com" target="_blank">Vectr</a></li>
+							<li><a href="https://www.drawsvg.org" target="_blank">Draw SVG</a></li>
+							<li><a href="https://boxy-svg.com" target="_blank">Boxy SVG</a></li>
+							<li><a href="https://www.janvas.com" target="_blank">Janvas</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>SVG Fähige Programme</h4>
+						<ul>
+							<li>InkScape als OpenSource Anwendung: <a href="https://inkscape.org/" target="_blank">Link</a></li>
+							<li>Die grafischen Editoren Inkscape und Adobe Illustrator können die Zeichnungen im SVG-Format ausgeben</li>
+							<li>RollApp (Online-Version von Inkscape): <a href="https://www.rollapp.com/app/inkscape" target="_blank">Link zu RollApp</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Animationswerkzeuge</h4>
+						<ul>
+							<li><a href="https://svgcircus.com" target="_blank">SVG Circus</a></li>
+							<li>Liste 20 verschiedener SVG-Tools: <a href="https://www.hongkiat.com/blog/svg-tools/" target="_blank">Tool-Sammlung</a></li>
+							<li><a href="https://codepen.io/danjiro/post/9vae-introduction" target="_blank">9VAe</a></li>
+						</ul>
+					</section>
+				</section>
+				<section data-name="SVG Elemente">
+					<section>
+						<h4>Allgemeines</h4>
+						<ul>
+							<li>Der Suffix ist generell *.svg, bzw. *.svgz für GZIP-komprimierte Dateien (depreciated)</li>
+							<li>Der MIME-Type lautet: image/svg+xml</li>
+							<li>Der Bezeichner für den eindeutigen SVG-Namensraum (SVG Namespace) heißt: <a href="https://www.w3.org/2000/svg" target="_blank">SVG</a></li>
+							<li>Die Dokument-Typ-Deklaration von SVG (Public Identifier) lautet:
+								<pre><code>
+PUBLIC "-//W3C//DTD SVG 1.1//EN"
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"
+								</code></pre>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Nutzung in HTML5</h4>
+						<ul>
+							<li>SVG kann eigenständig oder als Fragment in anderen XML- oder HTML5-Dokumenten verwendet werden</li>
+							<li>SVG benötigt einen Zeichenbereich mit klaren Koordinaten</li>
+							<li>SVG befindet sich immer in einem svg-Element, das das primäre Koordinatensystem aufspannt</li>
+							<li>Dabei zeigt die x-Richtung von links nach rechts, die y-Richtung von oben nach unten</li>
+							<li>Der Zeichenbereich ist konzeptionell eine unendliche Ebene</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Einbindung in HTML5 - 1</h4>
+						<ul>
+							<li>Mit dem object-Tag einbinden</li>
+							<li>Im src-Attribut des img-Tags einsetzen</li>
+							<li>Direkt in das HTML-Markup schreiben</li>
+							<li>als Hintergrundbild via CSS einsetzen</li>
+							<li>Via iframe einsetzen</li>
+							<li>Als data-URI in CSS</li>
+							<li>Im picture-Tag mit alternativem Bitmap-Bild</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Einbindung in HTML5 - 2</h4>
+						<pre><code>&lt;img src="on-the-beach.svg" alt="Nutzung in HTML5" width="600" height="350"&gt;</code></pre>
+						<figure class="">
+							<img src="../images/vl11/svghtml5.png" alt="Unterschiede von Canvas - SVG">
+							<figcaption>
+								<a href="https://www.mediaevent.de/svg-in-html-seiten/" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Erweiterungen und Manipulation</h4>
+						<ul>
+							<li>Es gibt sieben verschiedene Nutzungsmöglichkeiten für CSS</li>
+							<li>JavaScript kann in die Grafik eingreifen und SVG kann mit CSS animiert werden</li>
+							<li>Es hat auch ein eigenes Animationsmodell</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Dokumentenaufbau</h4>
+						<p>Jedes SVG-Dokument beinhaltet:</p>
+						<ul>
+							<li>Header-Definitionen und Einstellungen zur Verarbeitung des Dokuments</li>
+							<li>Definitionsabschnitt – enthält nicht sichtbare Elemente</li>
+							<li>Maßeinheiten – Definition von Längen</li>
+							<li>Grundelemente – enthält die sichtbaren Elemente</li>
+							<li><a href="https://www.w3.org/TR/SVG2/struct.html	" target="_blank">Beispiele</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Header Beispiel</h4>
+						<pre>
+							<code data-trim data-noescape data-line-numbers>
+&lt;?xml version="1.0"?&gt;
+&lt;!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"&gt;
+&lt;svg
+	 xmlns="http://www.w3.org/2000/svg"
+	 xmlns:xlink="http://www.w3.org/1999/xlink"&gt;
+&lt;image x="10" y="10" width="100" height="119" xlink:href="tux.png" /&gt;
+&lt;/svg&gt;
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Das &lt;svg&gt; Element</h4>
+						<ul>
+							<li>Das Element svg ist ein Gruppierungselement und enthält ganz allgemein den SVG-Inhalt eines SVG-Dokumentes oder -Fragmentes</li>
+							<li>In den tiny-Profilen gibt es exakt ein svg-Element in einem SVG-Dokument</li>
+							<li>Dies ist das Haupt- oder Wurzelelement (englisch: root) des Dokumentes im Sinne von XML</li>
+							<li>In der Vollversion von SVG 1.1 können darin weitere svg-Elemente ohne diese besondere Funktion eines Wurzelelementes auftreten, welche aber auch einen eigenen Anzeigebereich erhalten</li>
+						</ul>
+					</section>
+					<section>
+						<h4>&lt;svg&gt; Attribute</h4>
+						<figure class="">
+							<img src="../images/vl11/svg-attribute.png" alt="SVG Attribute">
+							<figcaption>
+								<a href="https://de.wikibooks.org/wiki/SVG/_Dokumentstruktur" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Definitionsabschnitt - 1</h4>
+						<ul>
+							<li>Der Definitionsabschnitt ist eines der wichtigsten Elemente in SVG</li>
+							<li>Es dient dazu nicht sichtbare Elemente aufzunehmen</li>
+							<li>Dies bedeutet, dass die darin liegenden Objekte nicht gezeichnet, sondern lediglich definiert werden</li>
+						</ul>
+						<pre>
+							<code>
+&lt;defs&gt;
+	&lt;linearGradient id="verlauf"&gt;
+		&lt;stop offset="0%" style="stop-color:rgb(0,0,0);stop-opacity:1"/&gt;
+		&lt;stop offset="100%" style="stop-color:rgb(255,255,255);stop-opacity:1"/&gt;
+	&lt;/linearGradient&gt;
+&lt;/defs&gt;
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Definitionsabschnitt - 2</h4>
+						<ul>
+							<li>Diese Objekte können z.B. Farbverläufe, Filter oder Animationspfade sein</li>
+							<li>Eigene SVG-Elemente im Definitionsabschnitt erstellt werden</li>
+							<li>Die Elemente werden zwischen die Tags <defs> und </defs> geschrieben und müssen mit dem id-Attribut versehen werden</li>
+							<li>Nur dann ist es im Hauptteil möglich ein Element mittels url(#element_id) zu referenzieren</li>
+							<li>Siehe z.B. hier: <a href="https://www.w3.org/TR/SVG2/struct.html#DefsElement" target="_blank">W3 SVG</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Maßeinheiten - 1</h4>
+						<ul>
+							<li>Es können alle gängigen CSS-Maßeinheiten benutzt werden</li>
+							<li>Ist eine Grafik 200 Pixel hoch und wird darin ein Rechteck mit 50% Höhe deklariert ist die Höhe 100 Pixel</li>
+							<li>Wird überhaupt keine Einheit angegeben, so wird die Länge in sogenannten "user units" angenommen</li>
+							<li>"User"-Koordinatensystem entspricht dem "Viewport"-Koordinatensystem (und dessen Pixel-Netz), somit ist eine "user unit" identisch mit einem Pixel</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Maßeinheiten - 2</h4>
+						<figure class="">
+							<img src="../images/vl11/pixels.png" alt="SVG Maßeinheiten">
+							<figcaption>
+								<a href="https://www.selfsvg.info/?section=3.4" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Grundelemente</h4>
+						<p>Einige der wichtigsten Grundelemente, die gezeichnet werden können sind:</p>
+						<pre>
+							<code>
+&lt;rect&gt; - Rechteck
+&lt;circle&gt; - Kreis
+&lt;ellipse&gt; - Ellipse
+&lt;line&gt; - Linie
+&lt;polyline&gt; / &lt;polygon&gt; - Polylinie / Polygon
+&lt;path&gt; - Pfad
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Vektorgrafik im Detail</h4>
+						<p>Die Beschreibung von Details von Vektorgrafiken bezieht sich grundsätzlich auf folgende Fakten:</p>
+						<ul>
+							<li>Lage charakteristischer Punkte</li>
+							<li>Richtung der Pfade</li>
+							<li>Verlauf der Pfadsegmente (Kurven, Strecken)</li>
+							<li>Zusammenschluss von Pfaden zu Flächen</li>
+							<li>Ebenenreihenfolge der Elemente (vorn, hinten)</li>
+							<li>Gestaltende Formatierungen</li>
+						</ul>
+					</section>
+					<section>
+						<h4>SVG Koordinatenursprung - 1</h4>
+						<figure class="">
+							<img src="../images/vl11/svg-coordinates.png" alt="SVG Koordinatenursprung">
+						</figure>
+					</section>
+					<section>
+						<h4>SVG Koordinatenursprung - 2</h4>
+						<figure class="">
+							<img src="../images/vl11/svg-coordinates-2.png" alt="SVG Koordinatenursprung">
+						</figure>
+					</section>
+					<section>
+						<h4>SVG Element zusammensetzung - 1</h4>
+						<ul>
+							<li>Vektorgrafiken werden grundsätzlich in SVG aus einfachen Elementen zusammengesetzt</li>
+							<li>Besonders zu beachten ist die Ebenenreihenfolge, da die Elemente zum Teil übereinander bzw. überlappend angeordnet werden</li>
+						</ul>
+					</section>
+					<section>
+						<h4>SVG Element zusammensetzung - 2</h4>
+						<figure class="">
+							<img src="../images/vl11/world.svg" alt="SVG Element zusammensetzung">
+							<figcaption>
+								<a href="https://upload.wikimedia.org/wikipedia/commons/8/82/Island_nations.svg" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>SVG Element zusammensetzung - 3</h4>
+						<ul>
+							<li>Flächenfarben und Linienstärken sind Formatierungen, die nachträglich den eigentlichen Vektoren bzw. Pfaden zugewiesen wurden</li>
+							<li>TrueType- und PostScript-Zeichensätze sind Vektorgrafiken mit zusätzlichen typografischen Informationen</li>
+							<li>Punktvektoren: <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/points" target="_blank">Beispiel</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>Punktpositionen</h4>
+						<ul>
+							<li>Die Positionen von Punkten können in SVG absolut (d.h. bezogen auf den Nullvektor (0,0)) und relativ (d.h. bezogen auf ein zuvor benanntes Objekt) angegeben werden</li>
+							<li>Beide Positionsangaben sind in der Vektorgrafik möglich</li>
+						</ul>
+						<figure class="">
+							<img src="../images/vl11/vectorpoints.png" alt="SVG Punktpositionen">
+						</figure>
+					</section>
+					<section>
+						<h4>SVG-Pfadbeschreibung - 1</h4>
+						<ul class="">
+							<li>Absolute Positionen = große Buchstaben</li>
+							<li>Relative Positionen = kleine Buchstaben</li>
+							<li>Mögliche Elemente: <a href="https://www.w3schools.com/graphics/svg_path.asp" target="_blank">Line elements</a></li>
+							<li>Ohne mit Vektoren unbedingt rechnen zu wollen, sollte die Darstellung P1=(2,3), P2=(4,2) präsent sein</li>
+							<li><pre><code>
+&lt;path d="M0,0 L200,200 L300,200"/&gt;
+&lt;path d="M0,0 l200,200 l100,0"/&gt;
+							</code></pre></li>
+							<li>Im ersten Fall sind deren Koordinaten benannt, im zweiten Fall sind die Koordinaten relativ zum Vorgänger</li>
+						</ul>
+					</section>
+					<section>
+						<h4>SVG-Pfadbeschreibung - 2</h4>
+						<ul>
+							<li>Absolute und relative Beschreibungen des exakt inversen Weges:</li>
+							<li><pre><code>
+&lt;path d="M300,200 L200,200 L0,0"/&gt;
+&lt;path d="M300,200 l-100,0 l-200,-200"/&gt;
+							</code></pre></li>
+							<li>Die Richtung des Pfades ist von Bedeutung bei Pfeilspitzen zu einem Knoten des
+								Pfades, bei Linienmustern von einem Knoten weg, und bei Pfaden mit „Fehlstücken“
+								bzw. sich überlappenden Flächen</li>
+						</ul>
+					</section>
+					<section>
+						<h4>SVG-Pfadbeschreibung - 3</h4>
+						<ul>
+							<li>Zwei Punkte sind über unendlich viele Pfade miteinander verbindbar, der kürzeste ist in 2D die gerade Linie</li>
+							<li>Beispiel:
+								Man verbinde drei Punkte, die ersten zwei mit einer Strecke, den zweiten mit dem dritten mit einer (nicht-geraden) Kurve</li>
+						</ul>
+					</section>
+					<section>
+						<h4>SVG-Pfadbeschreibung - 4</h4>
+						<ul class="r-fit-text">
+							<li>Warnung: Die Zeichnung zeigt die Formatierungen der Vektorgrafik!</li>
+							<li>Dadurch kommt die XML-typische Trennung von Struktur und Formatierung zum Ausdruck</li>
+							<li>Die Pfade sind das mathematisch ausgedrückte Grundgerüst, das mit sichtbaren Eigenschaften wie Farbe, Linienstärke etc. belegt wird</li>
+							<li>Für die Beschreibung der Kurve wurden zwei weitere Punkte angefügt: die sogenannten Kontroll- oder Anfasserpunkte</li>
+							<li>Sie bilden eine Tangente zu einem am Beginn und am Ende der Kurve gedachten Kreissegment gleicher lokaler Krümmung ("Schmiegekurve")</li>
+						</ul>
+					</section>
+					<section>
+						<h4>SVG-Pfadbeschreibung - 5</h4>
+						<ul>
+							<li>Eine dritte Tangente wird dadurch beschrieben, dass die beiden (in die gleiche Richtung wegwärts von der Kurve) zeigenden Anfasserpunkte verbunden werden</li>
+							<li>Die Neigung dieser dritten Tangente entspricht der Neigung der Tangente am zur Verbindung nächsten Punkt der Kurve (Parallelverschiebung erforderlich)</li>
+							<li>In den anderen Fällen schneidet die Verbindungslinie die Kurve, ohne Bezug zu ihr</li>
+						</ul>
+					</section>
+					<section>
+						<h4>SVG-Pfadbeschreibung - 6</h4>
+						<figure class="">
+							<img src="../images/vl11/pathconnection.png" alt="SVG Pfadbeschreibung">
+						</figure>
+					</section>
+					<section>
+						<h4>Bézier-Kurven</h4>
+						<ul>
+							<li>Bézier-Kurven sind spezielle Verbindungslinien zwischen zwei Punkten, die als Vektorgleichung für die Menge ihrer Punkte beschrieben werden</li>
+							<li>In SVG werden (wie üblich) quadratische und kubische Bézier-Kurven unterstützt und genutzt</li>
+							<li>Grob gesagt, haben quadratische Bézier-Kurven einen Anfasserpunkt, und kubische Bézier-Kurven zwei Anfasserpunkte</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Bézier-Kurven - Historie</h4>
+						<ul>
+							<li>Sie wurde Anfang der 1960er Jahre unabhängig voneinander von Pièrre Etienne
+								Bézier bei Renault und Paul de Faget de Casteljau bei Citroën für Computer-Aided
+								Design (computerunterstützte Konstruktion) entwickelt</li>
+							<li>Paul de Casteljau gelang zwar die Entdeckung früher, Citroën hielt seine
+								Forschungen jedoch bis zum Ende der 1960er Jahre als Betriebsgeheimnis zurück</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Bézier-Kurven - kubisch - 1</h4>
+						<ul>
+							<li>Die Funktionen für kubische Bézier-Kurven in der Form einer einparametrigen Vektorgleichung lauten: <br>
+								P(t) = P0(1-t)3 + 3·P1(1-t)2t + 3·P2(1-t)t2 + P3t3 , t in [0, 1]</li>
+							<li>Damit wird eine Kurve zwischen den mit den Vektoren P0 und P3 bezeichneten Punkten beschrieben</li>
+							<li>Die zwei Anfasserpunkte werden durch die Vektoren P1 und P2 bezeichnet</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Bézier-Kurven - Kubisch - 2</h4>
+						<figure class="">
+							<img src="../images/vl11/bezierkurve.png" alt="Bézier-Kurven - Kubisch">
+							<figcaption>
+								<a href="https://science-to-go.com/bezier-kurven-und-karosseriedesign/" target="_blank">Quelle</a>
+							</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h4>Bézier-Kurven - Kubisch - 2</h4>
+						<figure class="">
+							<img src="../images/vl11/bezierkurve-körper.png" alt="Bézier-Kurven - Kubisch">
+						</figure>
+					</section>
+					<section>
+						<h4>Bézier-Kurven - SVG Kubisch</h4>
+						<pre>
+							<code data-trim data-noescape data-line-numbers>
+&lt;!-- &lt;?xml version="1.0"?&gt;
+&lt;!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-
+20010904/DTD/svg10.dtd"&gt; --&gt;
+								&lt;!-- --&gt;
+&lt;svg width="400" height="300" xmlns="http://www.w3.org/2000/svg"&gt;
+&lt;path d="M100,200 C100,100 400,100 400,200" stroke="black"/&gt;
+&lt;/svg&gt;
+
+Dabei wird mit „moveTo“, d.h. „M“, der Anfangspunkt vorgegeben, der „curveTo“-
+Befehl „C“ besteht aus zwei Anfasserpunkten und dem Endpunkt. Die Kurve wird
+nicht geschlossen.
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Bézier-Kurven - Quadratisch - 1</h4>
+						<ul>
+							<li>Die Funktion für quadratischen Bézier-Kurven lautet:<br>
+								P(t) = P0(1-t)2 + 2·P1(1-t)t + P2t2 , t in [0, 1]</li>
+							<li>Die Vektoren P0 und P2
+								beschreiben die zu verbindenden Punkte,
+								P1 beschreibt den Anfasserpunkt</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Bézier-Kurven - Quadratisch - 2</h4>
+						<figure class="">
+							<img src="../images/vl11/bezierkurve-quad.png" alt="Bézier-Kurven - Quadratisch">
+						</figure>
+					</section>
+					<section>
+						<h4>Bézier-Kurven - SVG Kubisch</h4>
+						<pre>
+							<code data-trim data-noescape data-line-numbers>
+&lt;!-- &lt;?xml version="1.0"?&gt;
+&lt;!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-
+20010904/DTD/svg10.dtd"&gt; --&gt;
+								&lt;!-- --&gt;
+&lt;svg width="400" height="300" xmlns="http://www.w3.org/2000/svg"&gt;
+&lt;path d="M100,200 Q100,250 400,200" stroke="black"/&gt;
+&lt;/svg&gt;
+
+Dabei wird mit „moveTo“, d.h. „M“, der Anfangspunkt vorgegeben, der „quadratic
+Bézier CurveTo“-Befehl „Q“ besteht aus einem Anfasserpunkt und dem Endpunkt.
+Die Kurve wird nicht geschlossen
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>Bézier-Kurven - Beispiele</h4>
+						<p>
+							<a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths" target="_blank">Weitere Path-Beispiele</a>
+						</p>
+					</section>
+					<section>
+						<h4>Layer in SVG</h4>
+						<ul>
+							<li>SVG ist mit (unendlich) vielen Layern
+								programmierbar</li>
+							<li>Ähnliches wie bei Z-Index bei CSS</li>
+							<li>Der SVG-Player/Webbrowser
+								berechnet dann sofort die Überdeckungen</li>
+							<li>Angabe als Attribut: z = “ganze Zahl“
+								default: 0</li>
+						</ul>
+					</section>
+					<section>
+						<h4>SVG Erweiterungen - 1</h4>
+						<ul>
+							<li>Raphaël: <a href="https://dmitrybaranovskiy.github.io/raphael" target="_blank">JavaScript-Bibliothek</a> zur Nachrüstung von SVG-Unterstützung bei alten Browsern</li>
+							<li>Resize.Js <a href="https://svgjs.dev/svg.resize.js/demo.html" target="_blank">SVGJS.dev</a></li>
+						</ul>
+					</section>
+					<section>
+						<h4>SVG Erweiterungen - 2</h4>
+						<ul>
+							<li>SVGweb
+								<ul>
+									<li>JavaScript-Bibliothek die SVG-Unterstützung in alten Browsern bietet</li>
+									<li>letzter Entwicklungsstand: 2011</li>
+									<li><a href="https://code.google.com/archive/p/svgweb/" target="_blank">Beispiel</a></li>
+								</ul>
+							</li>
+							<li>JSXGraph:
+								<ul>
+									<li>JavaScript-Bibliothek für interaktive Geometrie, Funktionsdarstellung und Datenvisualisierung</li>
+									<li><a href="https://jsxgraph.uni-bayreuth.de/wp/index.html" target="_blank">Beispiel</a></li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h4>SVG Erweiterungen - 3</h4>
+						<ul>
+							<li>Snap.svg
+								<ul>
+									<li>kann existierenden SVG-Code mit Animationen, Clipping, Masking, Filtering etc. anreichern</li>
+									<li><a href="https://snapsvg.io/" target="_blank">Beispielbibliothek</a></li>
+								</ul>
+							</li>
+							<li>d3.js:
+								<ul>
+									<li>mächtige Bibliothek zur Datenvisualisierung in dynamischer Anpassung an Veränderungen der Daten im Hintergrund der Darstellung</li>
+									<li><a href="https://d3js.org/" target="_blank">Wichtige Datenvisualisierungsbibliothek</a></li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Weitere SVG Bibliotheken</h4>
+						<ul>
+							<li>Velocity.js (Accelerated JavaScript animation): <a href="https://velocityjs.org" target="_blank">Quelle</a></li>
+							<li>SVG.js (klein und schnell, mit Beispielen): <a href="https://svgjs.com" target="_blank">Quelle</a></li>
+							<li>Walkway.js (Animationen von SVG-Grafiken): <a href="https://connoratherton.com/walkway" target="_blank">Quelle</a></li>
+							<li>BonsaiJS (kompakt und vielseitig, mit Beispielen): <a href="https://bonsaijs.org" target="_blank">Quelle</a></li>
+							<li>Lazy Line Painter (Zeichnen von Linien): <a href="https://lazylinepainter.info" target="_blank">Quelle</a></li>
+							<li>vivus.js (Zeichnen von Linien): <a href="https://maxwellito.github.io/vivus" target="_blank">Quelle</a></li>
+							<li>ProgressBar.js (Fortschrittsbalken): <a href="https://kimmobrunfeldt.github.io/progressbar.js/" target="_blank">Quelle</a></li>
+							<li>Two.js (zweidimensionale Zeichnungs-API, mit Beispielen): <a href="https://two.js.org" target="_blank">Quelle</a></li>
+						</ul>
+					</section>
+				</section>
+				<section>
+					<h4>Weiteres</h4>
+					<ul>
+						<li><a href="https://fontawesome.com/icons/dog?f=classic&s=solid" target="_blank">Beispiel</a></li>
+						<li><a href="https://www.w3schools.com/graphics/svg_intro.asp" target="_blank">W3schools svg intro</a></li>
+						<li><a href="https://developer.mozilla.org/en-US/docs/Web/SVG" target="_blank">Mozilla SVG</a></li>
+					</ul>
+				</section>
+				<section>
+					<h4>Quellen</h4>
+					<ul>
+						<li>Iris Fibinger, „SVG – Scalable Vector Graphics. Praxiswegweiser und Referenz für den neuen
+							Vektorgrafikstandard.“, Markt+Technik Verlag, München, 2002: www.svg-site.de</li>
+						<li><a href="https://www.w3.org/Graphics/SVG/" target="_blank">W3 Graphics SVG (20.10.2024)</a></li>
+						<li><a href="https://www.w3.org/Graphics/SVG/Overview.html" target="_blank">W3 Graphics (20.10.2024)</a></li>
+						<li><a href="https://www.w3.org/TR/SVG11/" target="_blank">Scalable Vector Graphics (SVG) 1.1 (Second Edition), W3C Recommendation 16 August 2011</a></li>
+						<li><a href="https://www.w3.org/TR/SVG12/" target="_blank">Scalable Vector Graphics (SVG) Full 1.2 Specification, W3C Working Draft 13 April 2005</a></li>
+					</ul>
+				</section>
+				<section>
+					<h4>Abspann</h4>
+					<p>
+						Elftes Level geschafft ein weiteres folgt!
+					</p>
+					<p>Fragen und Feedback?</p>
+				</section>
+			</div>
+		</div>
+		<footer class="slide-footer">
+			Sebastian Pötter - HTWK - MMWP2024 - VL11 -
+		</footer>
+		<script src="../dist/reveal.js"></script>
+		<script src="../plugin/notes/notes.js"></script>
+		<script src="../plugin/markdown/markdown.js"></script>
+		<script src="../plugin/highlight/highlight.js"></script>
+		<script src="../plugin/simplemenu/simplemenu.js"></script>
+		<script src="../plugin/copycode/copycode.js"></script>
+		<script>
+			Reveal.initialize({
+				maxScale: 1.0,
+				margin: 0.2,
+				controls: true,
+				progress: true,
+				center: true,
+				hash: true,
+				slideNumber: 'c/t',
+				plugins: [RevealMarkdown, RevealHighlight, RevealNotes, CopyCode, Simplemenu],
+				simplemenu: {
+					barhtml: {
+						header: "<div class='menubar' style='font-size: 1.5rem'><ul class='menu'></ul></div>",
+						footer: ""
+					}
+				},
+			});
+		</script>
+	</body>
+</html>
